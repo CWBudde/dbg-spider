@@ -1,0 +1,3 @@
+[submodule "External/VirtaulTreeView"]
+	path = External/VirtaulTreeView
+	url = git@github.com:Virtual-TreeView/Virtual-TreeView.git
