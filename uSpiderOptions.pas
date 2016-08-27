@@ -2,8 +2,9 @@ unit uSpiderOptions;
 
 interface
 
-uses Classes, XMLDoc, XMLIntf, DebugerTypes, DbgHookTypes, Graphics,
-  System.UITypes;
+uses
+  Classes, XMLDoc, XMLIntf, DebugerTypes, DbgHookTypes, Graphics,
+  UITypes;
 
 type
   TColorOptions = class
