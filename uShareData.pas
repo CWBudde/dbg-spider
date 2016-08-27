@@ -3,19 +3,19 @@ unit uShareData;
 interface
 
 uses
-  SysUtils, Classes, ImgList, Controls, JvImageList, XPMan, ActnMan,
-  ActnColorMaps, SynEditHighlighter, SynHighlighterPas, SynEditMiscClasses,
+  SysUtils, Classes, ImgList, Controls, XPMan, ActnMan, ActnColorMaps,
+  SynEditHighlighter, SynHighlighterPas, SynEditMiscClasses,
   SynEditRegexSearch, SynEditSearch, SynEditOptionsDialog;
 
 type
   TdmShareData = class(TDataModule)
     ilActionsSmall: TImageList;
-    imlMainSmall: TJvImageList;
-    imlMain: TJvImageList;
-    synPas1: TSynPasSyn;
-    synRegexSearch1: TSynEditRegexSearch;
-    synEditSearch1: TSynEditSearch;
-    synEditOptDlg1: TSynEditOptionsDialog;
+    imlMainSmall: TImageList;
+    imlMain: TImageList;
+    synPas: TSynPasSyn;
+    synRegexSearch: TSynEditRegexSearch;
+    synEditSearch: TSynEditSearch;
+    synEditOptDlg: TSynEditOptionsDialog;
   private
     { Private declarations }
   public

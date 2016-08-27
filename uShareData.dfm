@@ -410,12 +410,8 @@ object dmShareData: TdmShareData
       000000000000800F000000000000FFFF00000000000000000000000000000000
       000000000000}
   end
-  object imlMainSmall: TJvImageList
+  object imlMainSmall: TImageList
     ColorDepth = cd32Bit
-    Mode = imClassic
-    PixelFormat = pf32bit
-    TransparentMode = tmAuto
-    Items = <>
     Left = 224
     Top = 32
     Bitmap = {
@@ -1350,12 +1346,8 @@ object dmShareData: TdmShareData
       00000000EC37C00700010000FC3FC00F00000000000000000000000000000000
       000000000000}
   end
-  object imlMain: TJvImageList
+  object imlMain: TImageList
     ColorDepth = cd32Bit
-    Mode = imClassic
-    PixelFormat = pf32bit
-    TransparentMode = tmAuto
-    Items = <>
     Height = 32
     Width = 32
     Left = 160
@@ -5064,7 +5056,7 @@ object dmShareData: TdmShareData
       FFFFF00FFFFFFFFFFFF81FFFE00001FF00000000000000000000000000000000
       000000000000}
   end
-  object synPas1: TSynPasSyn
+  object synPas: TSynPasSyn
     Options.AutoDetectEnabled = True
     Options.AutoDetectLineLimit = 0
     Options.Visible = True
@@ -5081,15 +5073,15 @@ object dmShareData: TdmShareData
     Left = 384
     Top = 32
   end
-  object synRegexSearch1: TSynEditRegexSearch
+  object synRegexSearch: TSynEditRegexSearch
     Left = 384
     Top = 88
   end
-  object synEditSearch1: TSynEditSearch
+  object synEditSearch: TSynEditSearch
     Left = 384
     Top = 136
   end
-  object synEditOptDlg1: TSynEditOptionsDialog
+  object synEditOptDlg: TSynEditOptionsDialog
     UseExtendedStrings = False
     Left = 464
     Top = 32
