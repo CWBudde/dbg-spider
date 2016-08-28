@@ -1,20 +1,9 @@
 program Spider;
 
 uses
-  FastMM4,
   Vcl.Themes,
   Vcl.Styles,
   Forms,
-  ClassUtils in 'ClassUtils.pas',
-  DbgHookTypes in 'DbgHookTypes.pas',
-  Debuger in 'Debuger.pas',
-  DebugerTypes in 'DebugerTypes.pas',
-  DebugHook in 'DebugHook.pas',
-  DebugInfo in 'DebugInfo.pas',
-  DelphiDebugInfo in 'DelphiDebugInfo.pas',
-  JclPeImage in 'JclPeImage.pas',
-  JclTD32Ex in 'JclTD32Ex.pas',
-  WinAPIUtils in 'WinAPIUtils.pas',
   Collections.Bags in 'Collections\Collections.Bags.pas',
   Collections.Base in 'Collections\Collections.Base.pas',
   Collections.BidiDictionaries in 'Collections\Collections.BidiDictionaries.pas',
@@ -30,6 +19,20 @@ uses
   CollectList in 'CollectList.pas',
   GdiPlus in 'GdiPlus\GdiPlus.pas',
   GdiPlusHelpers in 'GdiPlus\GdiPlusHelpers.pas',
+  JclPeImage in 'JclPeImage.pas',
+  JclTD32Ex in 'JclTD32Ex.pas',
+  ClassUtils in 'ClassUtils.pas',
+  DbgCodeProfiler in 'DbgCodeProfiler.pas',
+  DbgHookTypes in 'DbgHookTypes.pas',
+  DbgMemoryProfiler in 'DbgMemoryProfiler.pas',
+  DbgSamplingProfiler in 'DbgSamplingProfiler.pas',
+  DbgSyncObjsProfiler in 'DbgSyncObjsProfiler.pas',
+  DbgWorkerThread in 'DbgWorkerThread.pas',
+  Debuger in 'Debuger.pas',
+  DebugerTypes in 'DebugerTypes.pas',
+  DebugHook in 'DebugHook.pas',
+  DebugInfo in 'DebugInfo.pas',
+  DelphiDebugInfo in 'DelphiDebugInfo.pas',
   MapDebugInfo in 'MapDebugInfo.pas',
   uActionController in 'uActionController.pas',
   uDebugerThread in 'uDebugerThread.pas',
@@ -47,16 +50,13 @@ uses
   uSpiderOptions in 'uSpiderOptions.pas',
   uSQLiteDB in 'uSQLiteDB.pas',
   uUpdateInfo in 'uUpdateInfo.pas',
-  DbgMemoryProfiler in 'DbgMemoryProfiler.pas',
-  DbgWorkerThread in 'DbgWorkerThread.pas',
-  DbgSyncObjsProfiler in 'DbgSyncObjsProfiler.pas',
-  DbgSamplingProfiler in 'DbgSamplingProfiler.pas',
-  DbgCodeProfiler in 'DbgCodeProfiler.pas';
+  WinAPIUtils in 'WinAPIUtils.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
+  TStyleManager.TrySetStyle('Silver');
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Spider';
   Application.CreateForm(TdmShareData, dmShareData);
