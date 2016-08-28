@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{5769B713-B63C-48E8-8145-EF5BBB15C728}</ProjectGuid>
         <ProjectVersion>16.1</ProjectVersion>
@@ -32,7 +32,8 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1049</VerInfo_Locale>
-        <DCC_DcuOutput>dcu_hook</DCC_DcuOutput>
+        <DCC_ExeOutput>..\Binaries</DCC_ExeOutput>
+        <DCC_DcuOutput>dcu</DCC_DcuOutput>
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
         <ImageDebugInfo>true</ImageDebugInfo>
         <DCC_DependencyCheckOutputName>DbgHook32.dll</DCC_DependencyCheckOutputName>
