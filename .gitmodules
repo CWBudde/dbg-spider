@@ -1,4 +1,4 @@
-[submodule "External/VirtaulTreeView"]
+[submodule "External/VirtualTreeView"]
 	path = External/VirtualTreeView
 	url = git@github.com:Virtual-TreeView/Virtual-TreeView.git
 [submodule "External/SynEdit"]
