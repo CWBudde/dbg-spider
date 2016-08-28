@@ -1,29 +1,31 @@
 unit DelphiDebugInfo;
 
-Interface
+interface
 
-Uses
-  SysUtils, Windows, Classes, DebugInfo, Debuger, DebugerTypes, JclTD32Ex;
+uses
+  WinApi.Windows, System.SysUtils, System.Classes, DebugInfo, Debuger,
+  DebugerTypes, JclTD32Ex;
 
-Type
-  TDelphiVersion = (dvAuto = 0, dvD1 = 8, dvD2 = 9, dvD3 = 10, dvD4 = 12, dvD5 = 13, dvD6 = 14, dvD7 = 15, dvD8 = 16, dvD2005 = 17, dvD2006_7 = 18,
-    dvD2009 = 20, dvD2010 = 21, dvDXE = 22, dvDXE2 = 23, dvDXE3 = 24, dvDXE4 = 25);
+type
+  TDelphiVersion = (dvAuto = 0, dvD1 = 8, dvD2 = 9, dvD3 = 10, dvD4 = 12,
+    dvD5 = 13, dvD6 = 14, dvD7 = 15, dvD8 = 16, dvD2005 = 17, dvD2006_7 = 18,
+    dvD2009 = 20, dvD2010 = 21, dvDXE = 22, dvDXE2 = 23, dvDXE3 = 24,
+    dvDXE4 = 25, dvDXE5 = 26, dvDXE6 = 27, dvDXE7 = 28, dvDXE8 = 29);
 
-  TDelphiDebugInfo = Class(TDebugInfo)
-  Private
+  TDelphiDebugInfo = class(TDebugInfo)
+  private
     FDelphiVersion: TDelphiVersion;
     FSystemUnits: TStringList;
     FAddressInfoList: TAddressInfoList;
     FIsHookSet: LongBool;
 
-    Function ImageBase: Cardinal;
-    Function ImageNames(const Index: TNameId): AnsiString;
+    function ImageBase: Cardinal;
+    function ImageNames(const Index: TNameId): AnsiString;
     function LoadVar(UnitInfo: TUnitInfo; VarSymbol: TJclTD32NamedSymbol; Func: TFuncInfo): TVarInfo;
     procedure LoadFunc(UnitInfo: TUnitInfo; FuncSymbol: TJclTD32ProcSymbolInfo);
     procedure LoadSymbols(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
     function GetUnitFileName(const UnitName: String): String;
     procedure LoadConst(OwnerInfo: TSegmentCodeInfo; ConstSymbol: TJclTD32ConstantSymbolInfo);
-    //procedure LoadLines(UnitInfo: TUnitInfo; Source: TJclTD32SourceModuleInfo);
     procedure LoadSourceLines(UnitInfo: TUnitInfo; UnitSourceModuleInfo: TUnitSourceModuleInfo; Source: TJclTD32SourceModuleInfo);
     procedure LoadSegments(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
     procedure LoadSourceModules(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
@@ -33,13 +35,13 @@ Type
 
     procedure InitSegments;
 
-    Function ParseUnit(Module: TJclTD32ModuleInfo): TUnitInfo;
+    function ParseUnit(Module: TJclTD32ModuleInfo): TUnitInfo;
 
-    Procedure ResolveUnits;
+    procedure ResolveUnits;
 
-    Function FindUnitByAddr(const Addr: Pointer): TUnitInfo;
-    Function FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo;
-    Function FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
+    function FindUnitByAddr(const Addr: Pointer): TUnitInfo;
+    function FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo;
+    function FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
 
     function CustomVariantAsString(const Value: Variant): String;
     procedure SetDelphiVersion(const Value: TDelphiVersion);
@@ -51,12 +53,12 @@ Type
 
     function GetDBGFileName(const FileName: String): String;
 
-    Function DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool; Override;
+    function DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool; Override;
   Public
     Constructor Create;
     Destructor Destroy; Override;
 
-    Function GetNameById(const Idx: TNameId): AnsiString; override;
+    function GetNameById(const Idx: TNameId): AnsiString; override;
 
     function ParseUnitName(UnitInfo: TUnitInfo; const WithExt: LongBool = True): String; override;
     function ParseFuncName(FuncInfo: TFuncInfo): String; override;
@@ -65,22 +67,22 @@ Type
     function ParseVarName(VarInfo: TVarInfo): String; override;
     function ParseStructMemberName(StructMember: TStructMember): String; override;
 
-    Procedure ClearDebugInfo; Override;
+    procedure ClearDebugInfo; Override;
 
-    Function HasDebugInfo(Const FileName: String): LongBool; Override;
+    function HasDebugInfo(Const FileName: String): LongBool; Override;
 
-    Function GetAddrInfo(Var Addr: Pointer; Const FileName: String; Line: Cardinal): TFindResult; Override;
+    function GetAddrInfo(Var Addr: Pointer; Const FileName: String; Line: Cardinal): TFindResult; Override;
 
-    Function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo; GetPrevLine: LongBool): TFindResult; Override;
+    function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo; GetPrevLine: LongBool): TFindResult; Override;
 
-    Function MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString; Override;
-    Function MakeFuncShortName(Const MethodName: AnsiString): AnsiString; Override;
-    Function MakeFuncNativeName(Const MethodName: AnsiString): AnsiString; Override;
+    function MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString; Override;
+    function MakeFuncShortName(Const MethodName: AnsiString): AnsiString; Override;
+    function MakeFuncNativeName(Const MethodName: AnsiString): AnsiString; Override;
 
-    Function Evaluate(BriefMode: LongBool; Const Expression: String; Const TimeOut: Cardinal = INFINITE): String; Override;
-    Function EvaluateVariable(VarInfo: TVarInfo): Variant; override;
+    function Evaluate(BriefMode: LongBool; Const Expression: String; Const TimeOut: Cardinal = INFINITE): String; Override;
+    function EvaluateVariable(VarInfo: TVarInfo): Variant; override;
 
-    Function VarValueAsString(const Value: Variant): String; override;
+    function VarValueAsString(const Value: Variant): String; override;
 
     function GetSystemUnit: TUnitInfo;
     function GetMemoryManager: TVarInfo; virtual;
@@ -90,22 +92,22 @@ Type
     procedure SetMemoryManagerBreakpoints; Override;
     procedure ResetMemoryManagerBreakpoints; Override;
 
-    Procedure InitDebugHook; Override;
+    procedure InitDebugHook; Override;
 
-    Function CheckAddr(Const Addr: Pointer): LongBool; Override;
+    function CheckAddr(Const Addr: Pointer): LongBool; Override;
 
-    Function GetClassName(Const ObjectPtr: Pointer): String; Override;
-    Function GetExceptionName(ExceptionRecord: PExceptionRecord): String; Override;
-    Function GetExceptionMessage(ExceptionRecord: PExceptionRecord; Const ThreadId: TThreadId): String; Override;
-    Function GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer; Override;
-    Function GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer; Override;
-    Function IsDelphiException(ExceptionRecord: PExceptionRecord): LongBool;
-    Function IsDelphiTraceException(ExceptionRecord: PExceptionRecord): LongBool;
-    Function CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool; Override;
-    Function CheckSystemFile(Const FileName: String): LongBool; Override;
+    function GetClassName(Const ObjectPtr: Pointer): String; Override;
+    function GetExceptionName(ExceptionRecord: PExceptionRecord): String; Override;
+    function GetExceptionMessage(ExceptionRecord: PExceptionRecord; Const ThreadId: TThreadId): String; Override;
+    function GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer; Override;
+    function GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer; Override;
+    function IsDelphiException(ExceptionRecord: PExceptionRecord): LongBool;
+    function IsDelphiTraceException(ExceptionRecord: PExceptionRecord): LongBool;
+    function CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool; Override;
+    function CheckSystemFile(Const FileName: String): LongBool; Override;
 
     property DelphiVersion: TDelphiVersion read FDelphiVersion write SetDelphiVersion;
-  End;
+  end;
 
 Function HasDelphiDebugInfo(Const AFileName: String): LongBool;
 
@@ -113,7 +115,7 @@ Implementation
 
 Uses
   JclDebug, JclPeImage, JclWin32,
-  Math, Variants, ClassUtils, DebugHook, System.StrUtils, System.Contnrs, Vcl.Forms;
+  Math, Variants, classUtils, DebugHook, System.StrUtils, System.Contnrs, Vcl.Forms;
 
 Const
   cContinuable = 0;
@@ -130,24 +132,24 @@ Const
 Function HasDelphiDebugInfo(Const AFileName: String): LongBool;
 Var
   PEImage: TJclPeBorTD32Image;
-Begin
+begin
   Result := FileExists(AFileName);
   If Result Then
-  Begin
+  begin
     PEImage := TJclPeBorTD32Image.Create(True);
     Try
       PEImage.FileName := AFileName;
       Result := PEImage.IsTD32DebugPresent;
     Finally
       PEImage.Free;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { TDelphiDebugInfo }
 
 Constructor TDelphiDebugInfo.Create;
-Begin
+begin
   Inherited Create;
 
   FImage := Nil;
@@ -157,7 +159,7 @@ Begin
   FIsHookSet := False;
 
   FillSystemUnits;
-End;
+end;
 
 function TDelphiDebugInfo.CustomVariantAsString(const Value: Variant): String;
 //var
@@ -181,7 +183,7 @@ begin
 end;
 
 Destructor TDelphiDebugInfo.Destroy;
-Begin
+begin
   ClearDebugInfo;
 
   FreeAndNil(FImage);
@@ -189,7 +191,7 @@ Begin
   FreeAndNil(FAddressInfoList);
 
   Inherited Destroy;
-End;
+end;
 
 function TDelphiDebugInfo.ParseConstName(ConstInfo: TConstInfo): String;
 var
@@ -279,7 +281,7 @@ begin
 end;
 
 Function TDelphiDebugInfo.ParseUnit(Module: TJclTD32ModuleInfo): TUnitInfo;
-Begin
+begin
   Result := TUnitInfo.Create;
   Result.SymbolInfo := Module;
 
@@ -292,7 +294,7 @@ Begin
   LoadUsedUnits(Result, Module);
   LoadSymbols(Result, Module);
   LoadSourceModules(Result, Module);
-End;
+end;
 
 function TDelphiDebugInfo.ParseUnitName(UnitInfo: TUnitInfo; const WithExt: LongBool = True): String;
 begin
@@ -328,7 +330,7 @@ Var
   S: String;
   Ext: String;
   ST: TUnitType;
-Begin
+begin
   S := AnsiLowerCase(ExtractFileName(UnitName));
 
   Ext := ExtractFileExt(S);
@@ -340,7 +342,7 @@ Begin
       Exit;
 
   Result := S;
-End;
+end;
 
 function TDelphiDebugInfo.GetVMTClassName: TConstInfo;
 const
@@ -376,15 +378,15 @@ begin
   Result := Nil;
 end;
 
-Procedure TDelphiDebugInfo.LoadSegments(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
-Var
+procedure TDelphiDebugInfo.LoadSegments(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
+var
   I: Integer;
   SegmentInfo: TSegmentInfo;
   S: TUnitSegmentInfo;
-Begin
+begin
   UnitInfo.Segments.Capacity := Module.SegmentCount;
   For I := 0 To Module.SegmentCount - 1 Do
-  Begin
+  begin
     SegmentInfo := Module.Segment[I];
 
     S := TUnitSegmentInfo.Create;
@@ -421,8 +423,8 @@ Begin
       RaiseDebugCoreException('');
 
     UnitInfo.Segments.Add(S);
-  End;
-End;
+  end;
+end;
 
 procedure TDelphiDebugInfo.LoadSourceLines(UnitInfo: TUnitInfo; UnitSourceModuleInfo: TUnitSourceModuleInfo; Source: TJclTD32SourceModuleInfo);
 Var
@@ -430,10 +432,10 @@ Var
   LineInfo: TJclTD32LineInfo;
   L: TLineInfo;
   F: TFuncInfo;
-Begin
+begin
   UnitSourceModuleInfo.Lines.Capacity := Source.LineCount;
   For I := 0 To Source.LineCount - 1 Do
-  Begin
+  begin
     LineInfo := Source.Line[I];
 
     L := TLineInfo.Create;
@@ -448,7 +450,7 @@ Begin
     F := FindFuncByAddr(UnitInfo, L.Address);
     If F <> Nil Then
       F.Lines.Add(L);
-  End;
+  end;
 end;
 
 procedure TDelphiDebugInfo.LoadSourceModules(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
@@ -458,7 +460,7 @@ Var
   SM: TUnitSourceModuleInfo;
 begin
   For I := 0 To Module.SourceModuleCount - 1 Do
-  Begin
+  begin
     SourceModuleInfo := Module.SourceModules[I];
 
     SM := TUnitSourceModuleInfo.Create;
@@ -470,37 +472,37 @@ begin
     LoadSourceLines(UnitInfo, SM, SourceModuleInfo);
 
     UnitInfo.SourceSegments.Add(SM);
-  End;
+  end;
 end;
 
-Procedure TDelphiDebugInfo.LoadUsedUnits(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
-Var
+procedure TDelphiDebugInfo.LoadUsedUnits(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
+var
   I: Integer;
   Idx: Integer;
   Name: String;
   UName: String;
-Begin
+begin
   UnitInfo.UsedUnits.Capacity := Module.UsedModuleNameIndexCount;
   For I := 0 To Module.UsedModuleNameIndexCount - 1 Do
-  Begin
+  begin
     Idx := Module.UsedModuleNameIndices[I];
     Name := String(ImageNames(Idx));
     UName := GetUnitFileName(Name);
     UnitInfo.UsedUnits.Add(UName);
-  End;
-End;
+  end;
+end;
 
 (*
-Procedure TDelphiDebugInfo.LoadLines(UnitInfo: TUnitInfo; Source: TJclTD32SourceModuleInfo);
-Var
+procedure TDelphiDebugInfo.LoadLines(UnitInfo: TUnitInfo; Source: TJclTD32SourceModuleInfo);
+var
   I: Integer;
   LineInfo: TJclTD32LineInfo;
   L: TLineInfo;
   F: TFuncInfo;
-Begin
+begin
   UnitInfo.Lines.Capacity := UnitInfo.Lines.Capacity + Source.LineCount;
   For I := 0 To Source.LineCount - 1 Do
-  Begin
+  begin
     LineInfo := Source.Line[I];
 
     L := TLineInfo.Create;
@@ -511,8 +513,8 @@ Begin
     F := FindFuncByAddr(UnitInfo, L.Address);
     If F <> Nil Then
       F.Lines.Add(L);
-  End;
-End;
+  end;
+end;
 *)
 
 const
@@ -532,13 +534,13 @@ Var
   procedure _LoadPointerType;
   begin
     If SrcType.ElementType <> 0 Then
-    Begin
+    begin
       LoadType(UnitInfo, SrcType.ElementType, DstType.BaseType);
       If DstType.BaseType.Kind = tkClass Then
         DstType.Kind := tkObject
       Else If (DstType.BaseType.Kind = tkArray) And (DstType.BaseType.DataSize = -1) Then
         DstType.Kind := tkDynamicArray;
-    End;
+    end;
   end;
 
   procedure _LoadClassType;
@@ -557,7 +559,7 @@ Var
     DstType.Members := TNameList.Create;
     DstType.Members.Capacity := SrcList.Members.Count;
     For I := 0 To SrcList.Members.Count - 1 Do
-    Begin
+    begin
       //DstMember := Nil;
       SrcMember := TJclTD32MemberSymbolInfo(SrcList.Members[I]);
 
@@ -580,20 +582,20 @@ Var
           DstMember.Scope := msPrivate;
         2:
           DstMember.Scope := msProtected;
-      End;
+      end;
 
       If SrcMemberType.Kind = stkClassRef Then
         LoadType(UnitInfo, SrcMemberType.ElementType, DstMember.DataType);
 
       If SrcMemberType.Kind <> stkProperty Then
-      Begin
+      begin
         If SrcMemberType.Kind <> stkClassRef Then
           LoadType(UnitInfo, SrcMember.TypeIndex, DstMember.DataType);
         DstMember.Offset := SrcMember.Offset;
         DstMember.DataSize := DstMember.DataType.DataSize;
       End
       Else
-      Begin
+      begin
         LoadType(UnitInfo, SrcMemberType.ElementType, DstMember.DataType);
 
         DstMember.IsDefault := (SrcMemberType.Flags And 1) = 1;
@@ -601,26 +603,26 @@ Var
         If (SrcMemberType.Flags And 2) = 2 Then
           DstMember.MethodNameId := SrcMemberType.MinValue
         Else
-        Begin
+        begin
           DstMember.Offset := SrcMemberType.MinValue;
           DstMember.DataSize := DstMember.DataType.DataSize;
-        End;
+        end;
 
         For J := 0 To DstType.Members.Count - 1 Do
-        Begin
+        begin
           DstTypeMember := TStructMember(DstType.Members[J]);
           If DstTypeMember.Offset = SrcMemberType.MinValue Then
-          Begin
+          begin
             // TODO: ¬озможно, надо здесь надо указывать на всю структуру DstTypeMember
             DstMember.AliasNameId := DstTypeMember.NameId;
             Break;
-          End;
-        End;
-      End;
+          end;
+        end;
+      end;
 
       If DstMember <> Nil Then
         DstType.Members.Add(DstMember);
-    End;
+    end;
   end;
 
   procedure _LoadStructureType;
@@ -635,7 +637,7 @@ Var
     DstType.Members := TNameList.Create;
     DstType.Members.Capacity := SrcList.Members.Count;
     For I := 0 To SrcList.Members.Count - 1 Do
-    Begin
+    begin
       SrcMember := TJclTD32MemberSymbolInfo(SrcList.Members[I]);
 
       DstMember := TStructMember.Create;
@@ -649,7 +651,7 @@ Var
       DstMember.DataSize := DstMember.DataType.DataSize;
 
       DstType.Members.Add(DstMember);
-    End;
+    end;
   end;
 
   procedure _LoadEnumType;
@@ -668,7 +670,7 @@ Var
     SrcList := FImage.TD32Scanner.SymbolTypes[SrcType.Elements];
     DstType.Elements.Capacity := SrcList.Members.Count;
     For I := 0 To SrcList.Members.Count - 1 Do
-    Begin
+    begin
       SrcEnum := TJclEnumerateSymbolInfo(SrcList.Members[I]);
 
       EnumMember := TEnumInfo.Create;
@@ -684,7 +686,7 @@ Var
         DstType.MinValue := SrcEnum.Value;
       If SrcEnum.Value > DstType.MaxValue Then
         DstType.MaxValue := SrcEnum.Value;
-    End;
+    end;
   end;
 
   procedure _LoadSubRangeType;
@@ -704,14 +706,14 @@ Var
             DstType.Kind := tkWordBool;
           4:
             DstType.Kind := tkLongBool;
-        End;
+        end;
       stkChar, stkWideChar:
         Case DstType.DataSize Of
           1:
             DstType.Kind := tkChar;
           2:
             DstType.Kind := tkWideChar;
-        End;
+        end;
     Else
       Case DstType.DataSize Of
         1:
@@ -720,23 +722,23 @@ Var
               DstType.Kind := tkShortInt;
           Else
             DstType.Kind := tkByte;
-          End;
+          end;
         2:
           Case SrcList.Kind Of
             stkShortInt, stkSmallInt, stkInteger:
               DstType.Kind := tkSmallInt;
           Else
             DstType.Kind := tkWord;
-          End;
+          end;
         4:
           Case SrcList.Kind Of
             stkShortInt, stkSmallInt, stkInteger:
               DstType.Kind := tkInteger;
           Else
             DstType.Kind := tkCardinal;
-          End;
-      End;
-    End;
+          end;
+      end;
+    end;
   end;
 
   procedure _LoadArrayType;
@@ -750,7 +752,7 @@ Var
     SrcList := FImage.TD32Scanner.SymbolTypes[SrcType.IndexType];
     Case SrcList.Kind Of
       stkSubRange:
-        Begin
+        begin
           DstType.MinValue := SrcList.MinValue;
           DstType.MaxValue := SrcList.MaxValue;
         End
@@ -759,10 +761,10 @@ Var
         DstType.MinValue := DstType.IndexType.MinValue;
         DstType.MaxValue := DstType.IndexType.MaxValue;
       end;
-    End;
+    end;
   end;
 
-Begin
+begin
   SrcType := FImage.TD32Scanner.SymbolTypes[TypeIndex];
 
   If (SrcType <> Nil) and (SrcType.UnitInfo = UnitInfo) Then
@@ -794,51 +796,51 @@ Begin
 
   Case SrcType.Kind Of
     stkBoolean:
-      Begin
+      begin
         DstType.MinValue := 0;
         DstType.MaxValue := 1;
-      End;
+      end;
     stkWordBool:
-      Begin
+      begin
         DstType.MinValue := 0;
         DstType.MaxValue := 1;
-      End;
+      end;
     stkLongBool:
-      Begin
+      begin
         DstType.MinValue := 0;
         DstType.MaxValue := 1;
-      End;
+      end;
     stkShortInt:
-      Begin
+      begin
         DstType.MinValue := Low(ShortInt);
         DstType.MaxValue := High(ShortInt);
-      End;
+      end;
     stkSmallInt:
-      Begin
+      begin
         DstType.MinValue := Low(SmallInt);
         DstType.MaxValue := High(SmallInt);
-      End;
+      end;
     stkInteger:
-      Begin
+      begin
         DstType.MinValue := Low(Integer);
         DstType.MaxValue := High(Integer);
-      End;
+      end;
     stkInt64: ;
     stkByte:
-      Begin
+      begin
         DstType.MinValue := Low(Byte);
         DstType.MaxValue := High(Byte);
-      End;
+      end;
     stkWord:
-      Begin
+      begin
         DstType.MinValue := Low(Word);
         DstType.MaxValue := High(Word);
-      End;
+      end;
     stkCardinal:
-      Begin
+      begin
         DstType.MinValue := Low(Cardinal);
         Cardinal(DstType.MaxValue) := High(Cardinal);
-      End;
+      end;
     stkUInt64: ;
     stkSingle: ;
     stkReal48: ;
@@ -847,90 +849,90 @@ Begin
     stkCurrency: ;
     stkComplex: ;
     stkPString:
-      Begin
+      begin
         DstType.DataSize := SizeOf(ShortString);
         LoadType(UnitInfo, SrcType.IndexType, DstType.BaseType);
-      End;
+      end;
     stkLString:
-      Begin
+      begin
         DstType.DataSize := SizeOf(AnsiString);
         LoadType(UnitInfo, SrcType.ElementType, DstType.BaseType);
-      End;
+      end;
     stkWString:
-      Begin
+      begin
         DstType.DataSize := SizeOf(WideString);
         LoadType(UnitInfo, SrcType.ElementType, DstType.BaseType);
-      End;
+      end;
     stkChar:
-      Begin
+      begin
         DstType.MinValue := 0;
         DstType.MaxValue := Ord(High(AnsiChar));
-      End;
+      end;
     stkPointer:
-      Begin
+      begin
         _LoadPointerType;
-      End;
+      end;
     stkSubRange:
-      Begin
+      begin
         _LoadSubRangeType;
-      End;
+      end;
     stkArray:
-      Begin
+      begin
         _LoadArrayType;
-      End;
+      end;
     stkEnum:
-      Begin
+      begin
         _LoadEnumType;
-      End;
+      end;
     stkStructure:
-      Begin
+      begin
         _LoadStructureType;
-      End;
+      end;
     stkClass:
-      Begin
+      begin
         _LoadClassType;
-      End;
+      end;
     stkSet:
-      Begin
+      begin
         LoadType(UnitInfo, SrcType.ElementType, DstType.BaseType);
         DstType.DataSize := SrcType.DataSize;
-      End;
+      end;
     stkVariant: ; // ???
     stkProperty:
-      Begin
+      begin
         // TODO:
-      End;
+      end;
     stkFieldList: ; // ???
     stkClosure:
-      Begin
+      begin
         DstType.Kind := tkPointer;
-      End;
+      end;
     stkClassRef:
-      Begin
+      begin
         // TODO:
-      End;
+      end;
     stkWideChar:
-      Begin
+      begin
         DstType.MinValue := Low(Word);
         DstType.MaxValue := High(Word);
-      End;
+      end;
     stkProcedure:
-      Begin
+      begin
         // TODO: Params
-      End;
+      end;
     stkArgList: ;
     stkMFunction: ;
     stkVoid: ;
     else
-      Begin
+      begin
         SrcType.Kind := SrcType.Kind;
         RaiseDebugCoreException();
-      End;
-  End;
-End;
+      end;
+  end;
+end;
 
-Procedure TDelphiDebugInfo.LoadConst(OwnerInfo: TSegmentCodeInfo; ConstSymbol: TJclTD32ConstantSymbolInfo);
-Var
+procedure TDelphiDebugInfo.LoadConst(OwnerInfo: TSegmentCodeInfo; ConstSymbol: TJclTD32ConstantSymbolInfo);
+var
   ConstInfo: TConstInfo;
   TypeInfo: TJclSymbolTypeInfo;
   ConstName: String;
@@ -959,7 +961,7 @@ Var
     //TODO: ConstInfo.Value := GetValueNonRef(Nil, ConstInfo.TypeInfo, TUIntPtr(ConstSymbol.Value^), False);
   end;
 
-Begin
+begin
   ConstInfo := Nil;
   TypeInfo := FImage.TD32Scanner.SymbolTypes[ConstSymbol.TypeIndex];
   If TypeInfo <> Nil Then
@@ -1014,7 +1016,7 @@ Begin
           LoadSubRange;
       Else
         FreeAndNil(ConstInfo);
-      End;
+      end;
     except
       on E: Exception do
       begin
@@ -1024,16 +1026,16 @@ Begin
     end;
 
   If ConstInfo <> Nil Then
-  Begin
+  begin
     If ConstInfo.Owner is TFuncInfo Then
       TFuncInfo(ConstInfo.Owner).Consts.Add(ConstInfo)
     Else
       ConstInfo.UnitInfo.Consts.Add(ConstInfo);
-  End;
-End;
+  end;
+end;
 
 Function TDelphiDebugInfo.RegisterIndex(const Index: Byte): Integer;
-Begin
+begin
   Case Index Of
     1, 5, 9, 17:
       Result := 0;
@@ -1055,7 +1057,7 @@ Begin
       Result := 8;
   Else
     Result := -1;
-  End;
+  end;
 
   Case Index Of
     1, 2, 3, 4:
@@ -1064,8 +1066,8 @@ Begin
       Result := Result Or (2 Shl 4);
     9, 10, 11, 12, 13, 14, 15, 16, 31:
       Result := Result Or (3 Shl 4);
-  End;
-End;
+  end;
+end;
 
 Function TDelphiDebugInfo.LoadVar(UnitInfo: TUnitInfo; VarSymbol: TJclTD32NamedSymbol; Func: TFuncInfo): TVarInfo;
 
@@ -1092,42 +1094,42 @@ Function TDelphiDebugInfo.LoadVar(UnitInfo: TUnitInfo; VarSymbol: TJclTD32NamedS
     end;
   end;
 
-Begin
+begin
   Result := TVarInfo.Create;
   Result.SymbolInfo := VarSymbol;
 
   Case VarSymbol.SymbolType Of
     SYMBOL_TYPE_REGISTER:
-      Begin
+      begin
         LoadRegister(Result);
-      End;
+      end;
     SYMBOL_TYPE_BPREL32:
-      Begin
+      begin
         Result.VarKind := vkStack;
         Result.Offset := TJclTD32BPRel32SymbolInfo(VarSymbol).Offset;
-      End;
+      end;
     SYMBOL_TYPE_LDATA32, SYMBOL_TYPE_GDATA32:
-      Begin
+      begin
         Result.VarKind := vkGlobal;
         Result.Offset := TJclTD32DataSymbolInfo(VarSymbol).Offset + FImage.ImageSectionHeaders[TJclTD32DataSymbolInfo(VarSymbol).Segment - 1]
           .VirtualAddress + ImageBase;
-      End;
+      end;
     SYMBOL_TYPE_SLINK32:
-      Begin
+      begin
         Result.VarKind := vkLink;
         Result.Offset := TJclTD32LinkSymbolInfo(VarSymbol).Offset;
-      End;
-  End;
+      end;
+  end;
 
   If VarSymbol.SymbolType = SYMBOL_TYPE_SLINK32 Then
   begin
     Result.NameId := -1;
   end
   Else
-  Begin
+  begin
     Result.NameId := VarSymbol.NameIndex;
     LoadType(UnitInfo, VarSymbol.TypeIndex, Result.DataType);
-  End;
+  end;
 
   If Func <> Nil Then
   begin
@@ -1139,13 +1141,13 @@ Begin
     Result.Owner := UnitInfo;
     UnitInfo.Vars.Add(Result);
   end;
-End;
+end;
 
-Procedure TDelphiDebugInfo.LoadSymbols(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
-Var
+procedure TDelphiDebugInfo.LoadSymbols(UnitInfo: TUnitInfo; Module: TJclTD32ModuleInfo);
+var
   I: Integer;
   SymbolInfo: TJclTD32SymbolInfo;
-Begin
+begin
   UnitInfo.Types.Capacity := 128;
   UnitInfo.Funcs.Capacity := 128;
   UnitInfo.FuncsByAddr.Capacity := 128;
@@ -1162,18 +1164,18 @@ Begin
         LoadVar(UnitInfo, TJclTD32NamedSymbol(SymbolInfo), Nil);
       SYMBOL_TYPE_LPROC32, SYMBOL_TYPE_GPROC32:
         LoadFunc(UnitInfo, TJclTD32ProcSymbolInfo(SymbolInfo));
-    End;
+    end;
   end;
-End;
+end;
 
-Procedure TDelphiDebugInfo.LoadFunc(UnitInfo: TUnitInfo; FuncSymbol: TJclTD32ProcSymbolInfo);
-Var
+procedure TDelphiDebugInfo.LoadFunc(UnitInfo: TUnitInfo; FuncSymbol: TJclTD32ProcSymbolInfo);
+var
   I: Integer;
   ProcInfo: TJclSymbolTypeInfo;
   FuncInfo: TFuncInfo;
   SymbolInfo: TJclTD32SymbolInfo;
   VarInfo: TVarInfo;
-Begin
+begin
   FuncInfo := TFuncInfo.Create;
   FuncInfo.NameId := FuncSymbol.NameIndex;
   FuncInfo.SymbolInfo := FuncSymbol;
@@ -1197,16 +1199,16 @@ Begin
       SYMBOL_TYPE_SLINK32:
         LoadVar(UnitInfo, TJclTD32NamedSymbol(SymbolInfo), FuncInfo);
       SYMBOL_TYPE_REGISTER, SYMBOL_TYPE_BPREL32, SYMBOL_TYPE_LDATA32, SYMBOL_TYPE_GDATA32:
-        Begin
+        begin
           VarInfo := LoadVar(UnitInfo, TJclTD32NamedSymbol(SymbolInfo), FuncInfo);
           FuncInfo.Params.Add(VarInfo);
-        End;
-    End;
+        end;
+    end;
   end;
 
   UnitInfo.Funcs.Add(FuncInfo);
   UnitInfo.FuncsByAddr.Add(FuncInfo);
-End;
+end;
 
 procedure TDelphiDebugInfo.ResetMemoryManagerBreakpoints;
 begin
@@ -1226,43 +1228,43 @@ begin
   gvDebuger.Log('Reset slow memory manager hook - ok');
 end;
 
-Procedure TDelphiDebugInfo.ResolveUnits;
-Var
+procedure TDelphiDebugInfo.ResolveUnits;
+var
   I, J, U: Integer;
   Member: TStructMember;
   UInfo: TUnitInfo;
   TInfo: TTypeInfo;
   FuncJ, FuncU: TFuncInfo;
-Begin
+begin
   if Units.Count = 0 then
     Exit;
 
   Units.Sorted := True;
 
   For I := 0 To Units.Count - 1 Do
-  Begin
+  begin
     UInfo := TUnitInfo(Units.Objects[I]);
 
     // DoProgress(Format('Check unit "%s"', [UInfo.Name]), 90 + Round((I + 1) * Delta));
 
     For J := 0 To UInfo.UsedUnits.Count - 1 Do
-    Begin
+    begin
       U := Units.IndexOf(UInfo.UsedUnits[J]);
       If U <> -1 Then
         UInfo.UsedUnits.Objects[J] := Units.Objects[U];
-    End;
+    end;
 
     For J := 0 To UInfo.Types.Count - 1 Do
-    Begin
+    begin
       TInfo := TTypeInfo(UInfo.Types[J]);
       If TInfo.Members <> Nil Then
         For U := 0 To TInfo.Members.Count - 1 Do
-        Begin
+        begin
           Member := TStructMember(TInfo.Members[U]);
           If (Member.MethodNameId <> 0) then
             Member.Method := UInfo.FindFuncByNameId(Member.MethodNameId);
-        End;
-    End;
+        end;
+    end;
 
     UInfo.FuncsByAddr.Capacity := UInfo.Funcs.Count;
     For J := 0 To UInfo.Funcs.Count - 1 Do
@@ -1276,8 +1278,8 @@ Begin
           FuncU.Parent := FuncJ;
       end;
     end;
-  End;
-End;
+  end;
+end;
 
 function TDelphiDebugInfo.SetDebugHook(const Value: Byte): LongBool;
 Const
@@ -1381,7 +1383,7 @@ Function TDelphiDebugInfo.FindUnitByAddr(const Addr: Pointer): TUnitInfo;
 var
   I, J: Integer;
   Segment: TUnitSegmentInfo;
-Begin
+begin
   // TODO:
   //Result := TUnitInfo(UnitsByAddr.FindByAddress(Addr));
 
@@ -1400,7 +1402,7 @@ Begin
   end;
 
   Result := Nil;
-End;
+end;
 
 procedure TDelphiDebugInfo.FillSystemUnits;
 begin
@@ -1453,25 +1455,25 @@ end;
 Function TDelphiDebugInfo.FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo;
 Var
   I: Integer;
-Begin
+begin
   // TODO:
   //Result := TFuncInfo(UnitInfo.FuncsByAddr.FindByAddress(Addr));
 
   For I := 0 To UnitInfo.Funcs.Count - 1 Do
-  Begin
+  begin
     Result := TFuncInfo(UnitInfo.Funcs[I]);
 
     if (Cardinal(Result.Address) <= Cardinal(Addr)) and (Cardinal(Addr) < Cardinal(Result.Address) + Result.Size) then
       Exit;
-  End;
+  end;
   Result := Nil;
-End;
+end;
 
 Function TDelphiDebugInfo.FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
 Var
   LineIdx: Integer;
   //SearchLine: TLineInfo;
-Begin
+begin
   (*
   Result := Nil;
 
@@ -1495,30 +1497,30 @@ Begin
   LineIdx := FuncInfo.Lines.Count - 1;
 
   While (LineIdx >= 0) Do
-  Begin
+  begin
     Result := TLineInfo(FuncInfo.Lines[LineIdx]);
     If Cardinal(Addr) >= Cardinal(Result.Address) Then
-    Begin
+    begin
       If GetPrevLine And (LineIdx > 0) Then
         Result := TLineInfo(FuncInfo.Lines[LineIdx - 1]);
 
       Exit;
-    End;
+    end;
     Dec(LineIdx);
-  End;
+  end;
 
   Result := Nil;
-End;
+end;
 
 Function TDelphiDebugInfo.DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool;
 Var
   I: Integer;
   Module: TJclTD32ModuleInfo;
   Delta: Double;
-Begin
+begin
   Result := FileExists(FileName);
   If Result Then
-  Begin
+  begin
     DoProgress('Prepare', 4);
     if Assigned(FImage) then
       FreeAndNil(FImage);
@@ -1532,7 +1534,7 @@ Begin
     DoProgress('Load debug info', 10);
     Result := FImage.IsTD32DebugPresent;
     If Result And ALoadDebugInfo and (FImage.TD32Scanner.ModuleCount > 0) Then
-    Begin
+    begin
       case FImage.TD32DebugDataType of
         ddtInImage:
           FDebugInfoType := 'Internal';
@@ -1544,55 +1546,55 @@ Begin
 
       Delta := 70 / FImage.TD32Scanner.ModuleCount;
       For I := 0 To FImage.TD32Scanner.ModuleCount - 1 Do
-      Begin
+      begin
         Module := FImage.TD32Scanner.Modules[I];
         ParseUnit(Module);
 
         DoProgress('Load debug info', 10 + Round((I + 1) * Delta));
-      End;
+      end;
 
       DoProgress('Check debug info', 80);
       ResolveUnits;
 
       // ¬ыгружать нельз€, так как используетс€ дл€ DebugInfo
       //UnMapAndLoad(FImage.LoadedImage);
-    End;
+    end;
     DoProgress('Debug info loaded', 99);
-  End;
-End;
+  end;
+end;
 
-Function TDelphiDebugInfo.CheckAddr(Const Addr: Pointer): LongBool;
-Begin
+function TDelphiDebugInfo.CheckAddr(Const Addr: Pointer): LongBool;
+begin
   Result := FindUnitByAddr(Addr) <> Nil;
-End;
+end;
 
-Function TDelphiDebugInfo.CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool;
-Begin
+function TDelphiDebugInfo.CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool;
+begin
   Result := Inherited CheckDebugException(ExceptionRecord, IsTraceException);
 
   If Not Result And IsDelphiException(ExceptionRecord) Then
-  Begin
+  begin
     IsTraceException := IsDelphiTraceException(ExceptionRecord);
     Result := ExceptionRecord^.ExceptionFlags = cContinuable;
-  End;
-End;
+  end;
+end;
 
-Function TDelphiDebugInfo.CheckSystemFile(Const FileName: String): LongBool;
-Var
+function TDelphiDebugInfo.CheckSystemFile(Const FileName: String): LongBool;
+var
   FN: String;
   SL: TStringArray;
-Begin
+begin
   Result := False;
   FN := ExtractFileName(FileName);
   SplitStr(FN, '.', SL);
   if Length(SL) > 0 then
     Result := (FSystemUnits.IndexOf(SL[0]) >= 0);
-End;
+end;
 
-Procedure TDelphiDebugInfo.ClearDebugInfo;
+procedure TDelphiDebugInfo.ClearDebugInfo;
 var
   DbgFileName: String;
-Begin
+begin
   FIsHookSet := False;
 
   if Assigned(FImage) then
@@ -1617,46 +1619,46 @@ Begin
     FAddressInfoList.Clear;
 
   Inherited ClearDebugInfo;
-End;
+end;
 
 Function TDelphiDebugInfo.HasDebugInfo(Const FileName: String): LongBool;
-Begin
+begin
   Result := HasDelphiDebugInfo(FileName);
-End;
+end;
 
 Function TDelphiDebugInfo.GetAddrInfo(Var Addr: Pointer; Const FileName: String; Line: Cardinal): TFindResult;
 Var
   Index: Integer;
   UnitInfo: TUnitInfo;
   ExactMatch: LongBool;
-Begin
+begin
   Result := slNotFound;
 
   Index := Units.IndexOf(LowerCase(FileName));
   If Index <> -1 Then
-  Begin
+  begin
     UnitInfo := TUnitInfo(Units.Objects[Index]);
 
     // TODO: переделать на неточный поиск (ближний по адресу)
     Index := UnitInfo.Lines.IndexOf(Pointer(Line));
     ExactMatch := (Index >= 0);
     If (Index >= 0) And (Index < UnitInfo.Lines.Count) Then
-    Begin
+    begin
       Addr := TLineInfo(UnitInfo.Lines[Index]).Address;
       If ExactMatch Then
         Result := slFoundExact
       Else
         Result := slFoundNotExact;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 function TDelphiDebugInfo.GetClassName(Const ObjectPtr: Pointer): String;
 Const
   _ValidChars = ['_', 'a' .. 'z', 'A' .. 'Z', '0' .. '9'];
 Var
   ObjTypePtr: Pointer;
-  ClassNamePtr: Pointer;
+  classNamePtr: Pointer;
   ClassName: ShortString;
   I: Integer;
 begin
@@ -1664,7 +1666,7 @@ begin
   ObjTypePtr := Nil;
   if gvDebuger.ReadData(ObjectPtr, @ObjTypePtr, SizeOf(Pointer)) then
   begin
-    ClassNamePtr := Nil;
+    classNamePtr := Nil;
     if gvDebuger.ReadData(IncPointer(ObjTypePtr, RTLInfo.vmtClassName), @ClassNamePtr, SizeOf(Pointer)) then
     begin
       ClassName := gvDebuger.ReadStringP(IncPointer(ClassNamePtr, SizeOf(Byte)));
@@ -1711,29 +1713,29 @@ begin
 end;
 
 Function TDelphiDebugInfo.GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer;
-Begin
+begin
   If IsDelphiException(ExceptionRecord) And (ExceptionRecord^.NumberParameters > 0) Then
     Result := Pointer(ExceptionRecord^.ExceptionInformation[0])
   Else
     Result := Inherited GetExceptionAddress(ExceptionRecord);
-End;
+end;
 
 Function TDelphiDebugInfo.GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer;
-Begin
+begin
   If ExceptionRecord^.ExceptionCode = cDelphiException Then
     Result := Pointer(ExceptionRecord^.ExceptionInformation[5])
   Else
     Result := Inherited GetExceptionFrame(ExceptionRecord);
-End;
+end;
 
 Function TDelphiDebugInfo.GetExceptionMessage(ExceptionRecord: PExceptionRecord; const ThreadId: TThreadId): String;
 Var
   ExceptTypeAddr: Pointer;
   ExceptMsgPtr: Pointer;
-Begin
+begin
   Result := '';
   If ExceptionRecord^.ExceptionCode = cDelphiException Then
-  Begin
+  begin
     ExceptTypeAddr := Pointer(ExceptionRecord^.ExceptionInformation[1]);
 
     ExceptMsgPtr := nil;
@@ -1742,33 +1744,33 @@ Begin
   End
   Else
     Result := Inherited GetExceptionMessage(ExceptionRecord, ThreadId);
-End;
+end;
 
 Function TDelphiDebugInfo.GetExceptionName(ExceptionRecord: PExceptionRecord): String;
 Var
   ExceptTypeAddr: Pointer;
-Begin
+begin
   If ExceptionRecord^.ExceptionCode = cDelphiException Then
-  Begin
+  begin
     ExceptTypeAddr := Pointer(ExceptionRecord^.ExceptionInformation[1]);
     Result := GetClassName(ExceptTypeAddr);
   End
   Else
     Result := Inherited GetExceptionName(ExceptionRecord);
-End;
+end;
 
 Function TDelphiDebugInfo.GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo;
   GetPrevLine: LongBool): TFindResult;
 var
   AddressInfo: PAddressInfo;
-Begin
+begin
   Result := slNotFound;
 
   UnitInfo := Nil;
   FuncInfo := Nil;
   LineInfo := Nil;
 
-  FAddressInfoList.Lock.BeginRead;
+  FAddressInfoList.Lock.beginRead;
   try
     if FAddressInfoList.TryGetValue(Addr, AddressInfo) then
     begin
@@ -1781,22 +1783,22 @@ Begin
     begin
       UnitInfo := FindUnitByAddr(Addr);
       If UnitInfo <> Nil Then
-      Begin
+      begin
         FuncInfo := FindFuncByAddr(UnitInfo, Addr);
         If FuncInfo <> Nil Then
-        Begin
+        begin
           LineInfo := FindLineByAddr(FuncInfo, Addr, GetPrevLine);
           If LineInfo = Nil Then
             Result := slFoundWithoutLine
           Else
-          Begin
+          begin
             If LineInfo.Address = Addr Then
               Result := slFoundExact
             Else
               Result := slFoundNotExact;
-          End;
-        End;
-      End;
+          end;
+        end;
+      end;
 
       AddressInfo := AllocMem(SizeOf(RAddressInfo));
       AddressInfo.Addr := Addr;
@@ -1805,7 +1807,7 @@ Begin
       AddressInfo.LineInfo := LineInfo;
       AddressInfo.FindResult := Result;
 
-      FAddressInfoList.Lock.BeginWrite;
+      FAddressInfoList.Lock.beginWrite;
       try
         FAddressInfoList.AddOrSetValue(Addr, AddressInfo);
       finally
@@ -1815,7 +1817,7 @@ Begin
   finally
     FAddressInfoList.Lock.EndRead;
   end;
-End;
+end;
 
 function TDelphiDebugInfo.GetMemoryManager: TVarInfo;
 const
@@ -1845,37 +1847,37 @@ begin
 end;
 
 Function TDelphiDebugInfo.MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString;
-Begin
+begin
   Result := '@' + ClassName + '@' + MethodName;
-End;
+end;
 
 Function TDelphiDebugInfo.MakeFuncShortName(Const MethodName: AnsiString): AnsiString;
 Var
   I: Integer;
-Begin
+begin
   Result := MethodName;
   I := Pos(AnsiString('@'), Result);
   If I = 1 Then
-  Begin
+  begin
     Delete(Result, 1, 1);
     I := Pos(AnsiString('@'), Result);
     If I > -1 Then
       Delete(Result, 1, I)
     Else
       Insert('@', Result, 1);
-  End;
-End;
+  end;
+end;
 
 Function TDelphiDebugInfo.MakeFuncNativeName(Const MethodName: AnsiString): AnsiString;
-Begin
+begin
   Result := MethodName;
   If Result <> '' Then
-  Begin
+  begin
     If Result[1] = '@' Then
       Delete(Result, 1, 1);
     Result := AnsiString(StringReplace(String(Result), '@', '.', [rfReplaceAll]));
-  End;
-End;
+  end;
+end;
 
 Function TDelphiDebugInfo.Evaluate(BriefMode: LongBool; Const Expression: String; Const TimeOut: Cardinal = INFINITE): String;
 // Var
@@ -1883,7 +1885,7 @@ Function TDelphiDebugInfo.Evaluate(BriefMode: LongBool; Const Expression: String
 // UnitInfo : TUnitInfo;
 // FuncInfo : TFuncInfo;
 // LineInfo : TLineInfo;
-Begin
+begin
   // Result := '';
   // If Expression <> '' Then
   // Try
@@ -1893,14 +1895,14 @@ Begin
   // Result := Parser.CalculateAsString;
   // Finally
   // Parser.Free;
-  // End;
+  // end;
   // Except
   // On E : EDebugException Do
   // Raise;
   // On E : Exception Do
   // Raise EEvaluateException.Create(E.Message);
-  // End;
-End;
+  // end;
+end;
 
 function TDelphiDebugInfo.EvaluateVariable(VarInfo: TVarInfo): Variant;
 //var
@@ -1974,8 +1976,8 @@ begin
   end;
 end;
 
-Procedure TDelphiDebugInfo.InitDebugHook;
-Begin
+procedure TDelphiDebugInfo.InitDebugHook;
+begin
   if not FIsHookSet then
   begin
     FIsHookSet := True;
@@ -2002,7 +2004,7 @@ Begin
       gvDebuger.DbgSysncObjsProfiler.SyncObjsTracking
     );
   end;
-End;
+end;
 
 procedure TDelphiDebugInfo.InitSegments;
 var
@@ -2041,29 +2043,29 @@ begin
   *)
 end;
 
-Function TDelphiDebugInfo.IsDelphiException(ExceptionRecord: PExceptionRecord): LongBool;
-Begin
-  Case ExceptionRecord^.ExceptionCode Of
+function TDelphiDebugInfo.IsDelphiException(ExceptionRecord: PExceptionRecord): LongBool;
+begin
+  case ExceptionRecord^.ExceptionCode Of
     cDelphiUnhandled, cDelphiTerminate, cDelphiException, cDelphiReRaise, cDelphiExcept, cDelphiFinally, cNonDelphiException, cDelphiExitFinally:
       Result := True;
-  Else
+  else
     Result := False;
-  End;
-End;
+  end;
+end;
 
-Function TDelphiDebugInfo.IsDelphiTraceException(ExceptionRecord: PExceptionRecord): LongBool;
-Begin
-  Case ExceptionRecord^.ExceptionCode Of
+function TDelphiDebugInfo.IsDelphiTraceException(ExceptionRecord: PExceptionRecord): LongBool;
+begin
+  case ExceptionRecord^.ExceptionCode Of
     // cDelphiUnhandled,
     // cDelphiTerminate,
     cDelphiException, cDelphiReRaise, cDelphiExcept, cDelphiFinally,
     // cNonDelphiException,
     cDelphiExitFinally:
       Result := True;
-  Else
+  else
     Result := False;
-  End;
-End;
+  end;
+end;
 
 initialization
 
@@ -2073,4 +2075,4 @@ finalization
 
 // _UnhookThreads;
 
-End.
+end.

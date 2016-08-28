@@ -141,7 +141,7 @@ type
 
     function CheckError(const ErrorCode: Integer; const ValidCodes: TSQLCodes = [SQLITE_OK]; const Query: String = ''): Boolean;
     function PrepareQuery(const AQueryStr: String; out AQuery: HSQLQUERY): Boolean;
-    Function DoExecStep(AQueryHandle: HSQLQUERY): Integer;
+    function DoExecStep(AQueryHandle: HSQLQUERY): Integer;
 
     function GetFileName: String;
 
@@ -185,25 +185,25 @@ type
 
     // Blobs: Use "?" symbol in Query for set data position
     function ExecInsertBlob(const AQuery: String; AData: TMemoryStream): Boolean;
-    // Properties
-    property FileName: String read GetFileName;
 
     //кол-во модифицированных строк
-    Function GetRowAffected : Integer;
+    function GetRowAffected : Integer;
     //кол-во столбцов в таблице
-    Function GetColCount(Const ATableName: String): Integer;
+    function GetColCount(Const ATableName: String): Integer;
     //пустая таблица
-    Function IsEmpty(Const ATableName: String): Boolean;
-    Function DeleteTable(Const ATableName: String): Boolean;
+    function IsEmpty(Const ATableName: String): Boolean;
+    function DeleteTable(Const ATableName: String): Boolean;
 
-    Procedure Lock(const LockType: TRWNodeState = nsWriter);
-    Procedure UnLock;
+    procedure Lock(const LockType: TRWNodeState = nsWriter);
+    procedure UnLock;
 
-    Procedure GlobalLock; inline;
+    procedure GlobalLock; inline;
     procedure GlobalUnLock; inline;
 
-    Function GetVersion: Integer;
+    function GetVersion: Integer;
 
+    // Properties
+    property FileName: String read GetFileName;
     property ConnectMgr: TSQLConnectMgr read FConnectMgr;
     property OnError: TOnErrorEvent read FOnError write FOnError;
     property JournalModeType: TSQLJournalModeType read FJournalModeType write SetJournalModeType;
@@ -1295,7 +1295,7 @@ begin
   end;
 end;
 
-Function TSQLBase.IsEmpty(Const ATableName: String): Boolean;
+function TSQLBase.IsEmpty(Const ATableName: String): Boolean;
 var
   ATable: TSQLTable;
 begin
@@ -1334,10 +1334,10 @@ begin
   UnLock;
 end;
 
-Procedure TSQLBase.Lock(const LockType: TRWNodeState = nsWriter);
-Begin
+procedure TSQLBase.Lock(const LockType: TRWNodeState = nsWriter);
+begin
   FLock.Lock(LockType);
-End;
+end;
 
 procedure TSQLBase.Open;
 begin
@@ -1367,8 +1367,8 @@ begin
   end;
 end;
 
-Procedure TSQLBase.UnLock;
-Begin
+procedure TSQLBase.UnLock;
+begin
   FLock.UnLock;
 End;
 

@@ -2,7 +2,8 @@ unit DbgWorkerThread;
 
 interface
 
-uses System.Classes, System.SysUtils;
+uses
+  System.Classes, System.SysUtils;
 
 type
   TDbgWorkerThread = class(TThread)
@@ -23,7 +24,8 @@ var
 
 implementation
 
-uses Debuger;
+uses
+  Debuger;
 
 { TDbgWorkerThread }
 

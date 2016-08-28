@@ -3,9 +3,9 @@ unit Spider.ShareData;
 interface
 
 uses
-  SysUtils, Classes, ImgList, Controls, XPMan, ActnMan, ActnColorMaps,
-  SynEditHighlighter, SynHighlighterPas, SynEditMiscClasses,
-  SynEditRegexSearch, SynEditSearch, SynEditOptionsDialog;
+  System.SysUtils, System.Classes, Vcl.ImgList, Vcl.Controls, Vcl.XPMan,
+  Vcl.ActnMan, Vcl.ActnColorMaps, SynEditHighlighter, SynHighlighterPas,
+  SynEditMiscClasses, SynEditRegexSearch, SynEditSearch, SynEditOptionsDialog;
 
 type
   TdmShareData = class(TDataModule)

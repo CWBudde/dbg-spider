@@ -3,7 +3,8 @@ unit Spider.UpdateInfo;
 interface
 
 uses
-  Classes, SysUtils, XMLDoc, XMLIntf, System.Generics.Collections;
+  System.Classes, System.SysUtils, System.Generics.Collections, Xml.XMLDoc,
+  Xml.XMLIntf;
 
 type
   TChangeLogItemType = (cliInfo = 0, cliFix, cliAdd, cliUpdate);
@@ -51,7 +52,7 @@ var
 implementation
 
 uses
-  Forms, IdHTTP, ClassUtils, WinAPIUtils;
+  Vcl.Forms, IdHTTP, ClassUtils, WinAPIUtils;
 
 const
   _UpdateInfoURL = 'http://dbg-spider.net/update_info.txt';

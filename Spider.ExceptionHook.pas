@@ -3,7 +3,7 @@ unit Spider.ExceptionHook;
 interface
 
 uses
-  Classes, SysUtils, Windows;
+  WinApi.Windows, System.Classes, System.SysUtils;
 
 implementation
 

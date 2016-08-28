@@ -192,8 +192,8 @@ type
     procedure ProcessDebugEvents;
 
     // чтение запись данных
-    Function ProcAllocMem(const Size: Cardinal): Pointer;
-    Procedure ProcFreeMem(Data : Pointer; const Size: NativeUInt = 0);
+    function ProcAllocMem(const Size: Cardinal): Pointer;
+    procedure ProcFreeMem(Data : Pointer; const Size: NativeUInt = 0);
 
     procedure InjectThread(hProcess: THandle; Func: Pointer; FuncSize: Cardinal; aParams: Pointer;
       aParamsSize: Cardinal; WaitAndFree: LongBool = True);
@@ -224,9 +224,9 @@ type
     procedure SetSingleStepMode(const ThreadID: TThreadId; const RestoreEIPAfterBP: LongBool); overload;
     procedure SetSingleStepMode(ThData: PThreadData; const RestoreEIPAfterBP: LongBool); overload;
 
-    Function IsValidAddr(Const Addr: Pointer): LongBool;
-    Function IsValidCodeAddr(Const Addr: Pointer): LongBool;
-    Function IsValidProcessCodeAddr(Const Addr: Pointer): LongBool;
+    function IsValidAddr(Const Addr: Pointer): LongBool;
+    function IsValidCodeAddr(Const Addr: Pointer): LongBool;
+    function IsValidProcessCodeAddr(Const Addr: Pointer): LongBool;
 
     procedure GetCallStack(ThData: PThreadData; var Stack: TDbgInfoStack);
     procedure GetCallStackEx(ThData: PThreadData; var Stack: TDbgInfoStack);
@@ -239,7 +239,7 @@ type
     procedure GetActiveThreads(var Res: TDbgActiveThreads);
 
     // выполнение кода
-    Procedure ExecuteCode(AddrPtr: Pointer; const TimeOut: Cardinal);
+    procedure ExecuteCode(AddrPtr: Pointer; const TimeOut: Cardinal);
 
     function GetDllName(lpImageName, lpBaseOfDll: Pointer; var Unicode: LongBool): AnsiString;
 
@@ -375,7 +375,6 @@ end;
 function TDebuger.AddThreadPointInfo(ThreadData: PThreadData; const PointType: TDbgPointType; DebugEvent: PDebugEvent = nil): LongBool;
 var
   Cur: UInt64;
-  //Prev: UInt64;
   PrevTime: UInt64;
   Delta: UInt64;
   ThPoint: PThreadPoint;
@@ -383,10 +382,6 @@ begin
   Result := False;
 
   if ThreadData = Nil then Exit;
-
-  //Delta := 0;
-  //Prev := 0;
-  //Cur := 0;
 
   case PointType of
     ptStart:

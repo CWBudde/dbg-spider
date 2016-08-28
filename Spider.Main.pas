@@ -3,12 +3,14 @@ unit Spider.Main;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, Mask, ExtCtrls, ComCtrls, ActnList, DebugInfo,
-  Grids, Menus, ToolWin, ImgList, ActnMan, ActnCtrls, ActnMenus, ActnColorMaps,
-  XPMan, PlatformDefaultStyleActnCtrls, Ribbon, RibbonLunaStyleActnCtrls,
-  RibbonSilverStyleActnCtrls, RibbonActnMenus, System.Actions, VirtualTrees,
-  GdiPlus, GdiPlusHelpers, Debuger, DebugerTypes, DelphiDebugInfo,
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  System.Actions, Vcl.ActnColorMaps, Vcl.ActnCtrls, Vcl.ActnList, Vcl.ActnMan,
+  Vcl.ActnMenus, Vcl.Buttons, Vcl.ComCtrls, Vcl.Controls, Vcl.Dialogs,
+  Vcl.ExtCtrls, Vcl.Forms, Vcl.Graphics, Vcl.ImgList, Vcl.Mask, Vcl.Menus,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.Ribbon, Vcl.RibbonActnMenus,
+  Vcl.RibbonLunaStyleActnCtrls, Vcl.RibbonSilverStyleActnCtrls, Vcl.StdCtrls,
+  Vcl.ToolWin, Vcl.XPMan, VirtualTrees,
+  GdiPlus, GdiPlusHelpers, DebugInfo, Debuger, DebugerTypes, DelphiDebugInfo,
   Spider.ActionController, Spider.SpiderOptions, Spider.UpdateInfo, 
   Spider.SourceViewFrame, Spider.ShareData;
 
@@ -90,6 +92,7 @@ type
     acCodeTrackHistoryBack: TAction;
     acCodeTracking: TAction;
     acCodeTrackRefresh: TAction;
+    acCollapseAll: TAction;
     acContinue: TAction;
     acCopy: TAction;
     acCPUTimeLine: TAction;
@@ -187,6 +190,7 @@ type
     lbStatusEventsCntValue: TLabel;
     lbStatusTrackEventCntLabel: TLabel;
     lbStatusTrackEventCntValue: TLabel;
+    mnuCollapseAll: TMenuItem;
     mnViewSource: TMenuItem;
     OD: TFileOpenDialog;
     p2: TPanel;
@@ -211,6 +215,7 @@ type
     pMemInfoTreeLeft: TPanel;
     pMemoryInfoAdv: TPanel;
     pmTrackFuncAdvParents: TPopupMenu;
+    pmVirtualTreeView: TPopupMenu;
     pnl1: TPanel;
     pnl2: TPanel;
     pStatusBar: TPanel;
@@ -317,9 +322,6 @@ type
     vstTrackFuncs: TVirtualStringTree;
     vstTrackThreads: TVirtualStringTree;
     vstUpdateInfo: TVirtualStringTree;
-    pmVirtualTreeView: TPopupMenu;
-    mnuCollapseAll: TMenuItem;
-    acCollapseAll: TAction;
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -655,10 +657,10 @@ implementation
 {$R *.dfm}
 
 uses 
-  Math, ClassUtils, Spider.ProcessList, Spider.DebugerThread,
-  Spider.ProjectOptions, WinAPIUtils, System.UITypes, System.Types,
-  Spider.GA, System.Win.Registry, Winapi.ActiveX, Winapi.ShellAPI, 
-  Spider.Feedback, DbgHookTypes, Collections.Dictionaries, Collections.Base;
+  System.Math, System.Win.Registry, System.UITypes, System.Types,
+  Winapi.ActiveX, Winapi.ShellAPI, DbgHookTypes, ClassUtils, WinAPIUtils,
+  Collections.Dictionaries, Collections.Base, Spider.GA, Spider.Feedback,
+  Spider.ProcessList, Spider.DebugerThread, Spider.ProjectOptions;
 
 const
   _TrackingID_web = 'UA-44820931-1';

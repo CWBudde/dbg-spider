@@ -98,7 +98,7 @@ type
 implementation
 
 uses
-  IdGlobal, IdUriUtils, System.SyncObjs, Winapi.Windows;
+  System.SyncObjs, Winapi.Windows, IdGlobal, IdUriUtils;
 
 const
   GA_URL = 'http://www.google-analytics.com/collect';

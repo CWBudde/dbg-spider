@@ -3,10 +3,11 @@ unit Spider.SelectSource;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PlatformDefaultStyleActnCtrls, ActnMan, ActnList, ActnCtrls,
-  ToolWin, ComCtrls, ExtCtrls, StdCtrls, Buttons, RibbonSilverStyleActnCtrls,
-  Grids, System.Actions;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  System.Actions, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ActnMan, Vcl.ActnList, Vcl.ActnCtrls, Vcl.PlatformDefaultStyleActnCtrls,
+  Vcl.ToolWin, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.RibbonSilverStyleActnCtrls, Vcl.Grids;
 
 type
   TfmSelectSource = class(TForm)

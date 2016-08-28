@@ -3,10 +3,11 @@ unit Spider.ProjectOptions;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, PlatformDefaultStyleActnCtrls, ActnList, ActnMan,
-  ComCtrls, ActnCtrls, ToolWin, StdCtrls, Buttons, ImgList,
-  RibbonSilverStyleActnCtrls, System.Actions;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnList, Vcl.ActnMan, Vcl.ComCtrls,
+  Vcl.ActnCtrls, Vcl.ToolWin, Vcl.StdCtrls, Vcl.Buttons, Vcl.ImgList,
+  Vcl.RibbonSilverStyleActnCtrls, System.Actions;
 
 type
   TOpenType = (otNew, otEdit, otSaveAs);
@@ -87,7 +88,7 @@ type
 implementation
 
 uses
-  IOUtils, Spider.ShareData, Spider.SelectSource, Spider.ActionController;
+  System.IOUtils, Spider.ShareData, Spider.SelectSource, Spider.ActionController;
 
 {$R *.dfm}
 

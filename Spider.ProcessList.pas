@@ -3,10 +3,11 @@ unit Spider.ProcessList;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Grids, ExtCtrls, ActnList, StdCtrls, Buttons,
-  PlatformDefaultStyleActnCtrls, ActnMan, ActnCtrls, ToolWin, ComCtrls,
-  RibbonSilverStyleActnCtrls, System.Actions;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  System.Actions, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Grids, Vcl.ExtCtrls, Vcl.ActnList, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ToolWin, Vcl.ComCtrls,
+  Vcl.PlatformDefaultStyleActnCtrls;
 
 type
   TfrmProcessList = class(TForm)
@@ -26,8 +27,6 @@ type
     procedure acCancelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-  private
-    { Private declarations }
   public
     function GetSelProcessID: DWORD;
     function GetSelProcessName: String;

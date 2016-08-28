@@ -3,7 +3,7 @@ unit DebugerTypes;
 interface
 
 uses
-  System.SysUtils, WinApi.Windows, System.Classes, System.SyncObjs,
+  WinApi.Windows, System.SysUtils, System.Classes, System.SyncObjs,
   System.Generics.Collections, System.Contnrs, JclPeImage,
   ClassUtils, DbgHookTypes, Collections.Dictionaries, Collections.Queues,
   CollectList,

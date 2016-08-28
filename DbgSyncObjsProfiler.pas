@@ -31,7 +31,8 @@ type
 
 implementation
 
-uses Debuger, CollectList;
+uses
+  Debuger, CollectList;
 
 const
   _MAX_SYNC_OBJS_INFO_BUF_COUNT = 512;

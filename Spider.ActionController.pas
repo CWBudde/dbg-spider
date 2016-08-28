@@ -3,8 +3,8 @@ unit Spider.ActionController;
 interface
 
 uses
-  Classes, DebugInfo, DebugerTypes, XMLDoc, XMLIntf, Collections.Queues,
-  System.SyncObjs;
+  System.Classes, System.SyncObjs, DebugInfo, DebugerTypes, XMLDoc, XMLIntf,
+  Collections.Queues;
 
 type
   TacAction = (acCreateProcess, acAddThread, acUpdateInfo, acProgress, acSetProjectName, acChangeProjectSettings, acChangeDbgState);

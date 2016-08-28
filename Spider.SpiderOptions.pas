@@ -3,7 +3,8 @@ unit Spider.SpiderOptions;
 interface
 
 uses
-  Classes, XMLDoc, XMLIntf, DebugerTypes, DbgHookTypes, Graphics, UITypes;
+  System.Classes, System.UITypes, Xml.XMLDoc, Xml.XMLIntf, Vcl.Graphics,
+  DebugerTypes, DbgHookTypes;
 
 type
   TColorOptions = class
@@ -72,7 +73,7 @@ type
 implementation
 
 uses
-  Windows, SysUtils, SyncObjs, ClassUtils;
+  WinApi.Windows, System.SysUtils, System.SyncObjs, ClassUtils;
 
 const
   _RECENT = 'recent';

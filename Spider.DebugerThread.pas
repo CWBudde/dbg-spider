@@ -3,7 +3,8 @@ unit Spider.DebugerThread;
 interface
 
 uses
-  SysUtils, Windows, Classes, DebugerTypes, Spider.ActionController;
+  WinApi.Windows, System.Classes, System.SysUtils, DebugerTypes,
+  Spider.ActionController;
 
 type
   TDebugerThread = class(TThread)

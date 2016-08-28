@@ -34,26 +34,26 @@ type
 
     function FindSegmentByAddr(const Addr: Pointer; const SegmentID: Word = 0): TUnitSegmentInfo;
     function FindFuncByAddr(const Addr: Pointer; const SegmentID: Word = 0): TFuncInfo; overload;
-    Function FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo; overload;
-    Function FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
-  Protected
-    Function DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool; Override;
+    function FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo; overload;
+    function FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
+  protected
+    function DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool; Override;
   public
-    Constructor Create;
-    Destructor Destroy; Override;
+    constructor Create;
+    destructor Destroy; Override;
 
-    Procedure ClearDebugInfo; Override;
+    procedure ClearDebugInfo; Override;
 
-    Function GetNameById(const Idx: TNameId): AnsiString; override;
+    function GetNameById(const Idx: TNameId): AnsiString; override;
 
-    Function HasDebugInfo(Const FileName: String): LongBool; override;
+    function HasDebugInfo(Const FileName: String): LongBool; override;
 
-    Function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo;
+    function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo;
       GetPrevLine: LongBool): TFindResult; override;
 
-    Function MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString; override;
-    Function MakeFuncShortName(Const MethodName: AnsiString): AnsiString; override;
-    Function MakeFuncNativeName(Const MethodName: AnsiString): AnsiString; override;
+    function MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString; override;
+    function MakeFuncShortName(Const MethodName: AnsiString): AnsiString; override;
+    function MakeFuncNativeName(Const MethodName: AnsiString): AnsiString; override;
 
     function GetMemoryManager: TVarInfo; override;
   end;

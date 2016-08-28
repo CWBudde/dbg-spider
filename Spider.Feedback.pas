@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Vcl.ComCtrls, Vcl.Buttons, Vcl.ActnList, System.Actions;
+  System.Actions, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons, Vcl.ActnList;
 
 type
   TfrmFeedback = class(TForm)
@@ -34,6 +34,8 @@ uses
   Spider.ShareData;
 
 {$R *.dfm}
+
+{ TfrmFeedback }
 
 procedure TfrmFeedback.acSendExecute(Sender: TObject);
 begin
