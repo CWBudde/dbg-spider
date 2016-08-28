@@ -2,9 +2,12 @@ unit DebugerTypes;
 
 interface
 
-uses System.SysUtils, WinApi.Windows, System.Classes, JclPeImage, System.SyncObjs, ClassUtils, DbgHookTypes, System.Contnrs,
-  System.Generics.Collections, Collections.Dictionaries, Collections.Queues, CollectList,
-  uSharedObject;
+uses
+  System.SysUtils, WinApi.Windows, System.Classes, System.SyncObjs,
+  System.Generics.Collections, System.Contnrs, JclPeImage,
+  ClassUtils, DbgHookTypes, Collections.Dictionaries, Collections.Queues,
+  CollectList,
+  Spider.SharedObject;
 
 type
   TSysUInt = NativeUInt;
@@ -759,7 +762,8 @@ procedure RaiseDebugCoreException(const Msg: String = '');
 
 implementation
 
-uses Debuger, DebugInfo, WinAPIUtils, Collections.Base;
+uses
+  Debuger, DebugInfo, WinAPIUtils, Collections.Base;
 
 procedure RaiseDebugCoreException(const Msg: String);
 begin

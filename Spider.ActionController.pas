@@ -1,4 +1,4 @@
-unit uActionController;
+unit Spider.ActionController;
 
 interface
 
@@ -130,8 +130,9 @@ var
 
 implementation
 
-uses SysUtils, uMain, Debuger, uDebugerThread, ClassUtils, JclIDEUtils,
-  System.IOUtils, System.Types, Vcl.Dialogs;
+uses
+  System.SysUtils, System.IOUtils, System.Types, Vcl.Dialogs, Spider.Main,
+  Debuger, Spider.DebugerThread, ClassUtils, JclIDEUtils;
 
 var
   gvActionThread: TActionThread = nil;

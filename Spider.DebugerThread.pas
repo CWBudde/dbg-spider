@@ -1,8 +1,9 @@
-unit uDebugerThread;
+unit Spider.DebugerThread;
 
 interface
 
-uses SysUtils, Windows, Classes, DebugerTypes, uActionController;
+uses
+  SysUtils, Windows, Classes, DebugerTypes, Spider.ActionController;
 
 type
   TDebugerThread = class(TThread)
@@ -56,7 +57,8 @@ var
 
 implementation
 
-uses Debuger, DebugInfo, DelphiDebugInfo, MapDebugInfo;
+uses
+  Debuger, DebugInfo, DelphiDebugInfo, MapDebugInfo;
 
 { TDebugerThread }
 

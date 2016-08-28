@@ -2,8 +2,10 @@ unit MapDebugInfo;
 
 interface
 
-uses System.Classes, System.SysUtils, DebugInfo, JclDebug, Windows, DelphiDebugInfo,
-  uFastList;
+uses
+  System.Classes, System.SysUtils, WinApi.Windows, DebugInfo, JclDebug,
+  DelphiDebugInfo,
+  Spider.FastList;
 
 type
   TMapScanner = class;
