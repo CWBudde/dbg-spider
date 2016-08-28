@@ -2,7 +2,8 @@ unit uSharedObject;
 
 interface
 
-uses System.Classes;
+uses
+  System.Classes;
 
 type
   TSpinLock = record

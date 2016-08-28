@@ -49,7 +49,6 @@ type
   end;
 
   // SyncObjs
-
   TDbgSyncObjsType = (
     soUnknown = 0,
     soSleep,

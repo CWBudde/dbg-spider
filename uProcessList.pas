@@ -10,17 +10,17 @@ uses
 
 type
   TfrmProcessList = class(TForm)
-    sgProcessList: TStringGrid;
-    AL: TActionList;
-    acOk: TAction;
     acCancel: TAction;
+    acmgr1: TActionManager;
+    acOk: TAction;
     acRefresh: TAction;
-    cbTop: TCoolBar;
     actbTop: TActionToolBar;
-    pActions: TPanel;
+    AL: TActionList;
     btnAttach: TBitBtn;
     btnCancel: TBitBtn;
-    acmgr1: TActionManager;
+    cbTop: TCoolBar;
+    pActions: TPanel;
+    sgProcessList: TStringGrid;
     procedure acRefreshExecute(Sender: TObject);
     procedure acOkExecute(Sender: TObject);
     procedure acCancelExecute(Sender: TObject);
@@ -33,12 +33,10 @@ type
     function GetSelProcessName: String;
   end;
 
-var
-  frmProcessList: TfrmProcessList;
-
 implementation
 
-uses PsAPI, uShareData;
+uses
+  PsAPI, uShareData;
 
 procedure GetProcessList(List: TStringList);
 var

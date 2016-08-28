@@ -1,7 +1,9 @@
 unit uUpdateInfo;
 
 interface
-  uses Classes, SysUtils, XMLDoc, XMLIntf, System.Generics.Collections;
+
+uses
+  Classes, SysUtils, XMLDoc, XMLIntf, System.Generics.Collections;
 
 type
   TChangeLogItemType = (cliInfo = 0, cliFix, cliAdd, cliUpdate);

@@ -2,7 +2,8 @@ unit uExceptionHook;
 
 interface
 
-uses Classes, SysUtils, Windows;
+uses
+  Classes, SysUtils, Windows;
 
 implementation
 
@@ -42,12 +43,12 @@ var
 function IsValidCodeAddr(const Addr: Pointer): LongBool;
 const
   _PAGE_CODE: Cardinal = (PAGE_EXECUTE Or PAGE_EXECUTE_READ or PAGE_EXECUTE_READWRITE Or PAGE_EXECUTE_WRITECOPY);
-Begin
+begin
   Result := (VirtualQuery(Addr, _Buf, SizeOf(TMemoryBasicInformation)) <> 0) And ((_Buf.Protect And _PAGE_CODE) <> 0);
 end;
 
 function IsValidAddr(const Addr: Pointer): LongBool;
-Begin
+begin
   Result := (VirtualQuery(Addr, _Buf, SizeOf(TMemoryBasicInformation)) <> 0);
 end;
 

@@ -29,7 +29,6 @@ object frmProcessList: TfrmProcessList
     DefaultRowHeight = 18
     FixedCols = 0
     TabOrder = 0
-    ExplicitHeight = 331
     ColWidths = (
       519)
   end
@@ -44,24 +43,24 @@ object frmProcessList: TfrmProcessList
         Control = actbTop
         ImageIndex = -1
         MinHeight = 26
-        Width = 567
+        Width = 569
       end>
     EdgeBorders = []
     EdgeInner = esNone
     EdgeOuter = esNone
     FixedOrder = True
     object actbTop: TActionToolBar
-      Left = 2
+      Left = 0
       Top = 0
-      Width = 567
+      Width = 569
       Height = 26
       ActionManager = acmgr1
       Caption = 'actbTop'
-      ColorMap.MenuColor = clMenu
+      ColorMap.HighlightColor = 14410210
       ColorMap.BtnSelectedColor = clBtnFace
-      ColorMap.UnusedColor = 13684944
+      ColorMap.UnusedColor = 14410210
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
+      Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []

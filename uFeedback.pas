@@ -3,34 +3,30 @@ unit uFeedback;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
-  Vcl.Buttons, System.Actions, Vcl.ActnList;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ComCtrls, Vcl.Buttons, Vcl.ActnList, System.Actions;
 
 type
   TfrmFeedback = class(TForm)
+    acSend: TAction;
+    AL: TActionList;
+    btnSend: TBitBtn;
     cbbType: TComboBoxEx;
+    eEMail: TEdit;
+    lbEmail: TLabel;
     lbFeedbackType: TLabel;
     lbMessage: TLabel;
     mMessage: TMemo;
-    btnSend: TBitBtn;
-    AL: TActionList;
-    acSend: TAction;
-    lbEmail: TLabel;
-    eEMail: TEdit;
     procedure acSendExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     function GetFeedbackText: String;
     function GetFeedbackType: String;
-    { Private declarations }
   public
     property FeedbackType: String read GetFeedbackType;
     property FeedbackText: String read GetFeedbackText;
   end;
-
-var
-  frmFeedback: TfrmFeedback;
 
 implementation
 

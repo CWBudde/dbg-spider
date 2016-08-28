@@ -2,7 +2,9 @@ unit ClassUtils;
 
 interface
 
-uses Windows, Classes, SysUtils, StrUtils, XMLDoc, XMLIntf, Graphics, GdiPlus, GdiPlusHelpers, Collections.Dictionaries;
+uses
+  Windows, Classes, SysUtils, StrUtils, XMLDoc, XMLIntf, Graphics,
+  GdiPlus, GdiPlusHelpers, Collections.Dictionaries;
 
 const
   EIndexError: String = 'List index error: %d';

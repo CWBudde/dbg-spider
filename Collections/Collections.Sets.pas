@@ -26,10 +26,11 @@
 *)
 
 unit Collections.Sets;
+
 interface
-uses SysUtils,
-     Generics.Defaults,
-     Collections.Base;
+
+uses
+  SysUtils, Generics.Defaults, Collections.Base;
 
 type
   ///  <summary>The asbstract base for all generic <c>set</c> collections.</summary>

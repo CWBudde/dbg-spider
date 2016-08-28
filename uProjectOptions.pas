@@ -3,7 +3,7 @@ unit uProjectOptions;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, PlatformDefaultStyleActnCtrls, ActnList, ActnMan,
   ComCtrls, ActnCtrls, ToolWin, StdCtrls, Buttons, ImgList,
   RibbonSilverStyleActnCtrls, System.Actions;
@@ -83,9 +83,6 @@ type
   end;
 
   function OpenProjectOptions(const OpenType: TOpenType): Integer;
-
-var
-  fmProjectOptions: TfmProjectOptions;
 
 implementation
 

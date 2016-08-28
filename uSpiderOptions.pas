@@ -3,8 +3,7 @@ unit uSpiderOptions;
 interface
 
 uses
-  Classes, XMLDoc, XMLIntf, DebugerTypes, DbgHookTypes, Graphics,
-  UITypes;
+  Classes, XMLDoc, XMLIntf, DebugerTypes, DbgHookTypes, Graphics, UITypes;
 
 type
   TColorOptions = class

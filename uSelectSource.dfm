@@ -43,7 +43,7 @@ object fmSelectSource: TfmSelectSource
       Caption = 'actbTop'
       ColorMap.MenuColor = clMenu
       ColorMap.BtnSelectedColor = clBtnFace
-      ColorMap.UnusedColor = 13684944
+      ColorMap.UnusedColor = 14410210
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11

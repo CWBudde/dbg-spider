@@ -2,7 +2,8 @@ unit DbgMemoryProfiler;
 
 interface
 
-uses System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
+uses
+  System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
   System.SysUtils, System.SyncObjs, DebugerTypes;
 
 type

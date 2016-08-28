@@ -2,7 +2,8 @@ unit uActionController;
 
 interface
 
-uses Classes, DebugInfo, DebugerTypes, XMLDoc, XMLIntf, Collections.Queues,
+uses
+  Classes, DebugInfo, DebugerTypes, XMLDoc, XMLIntf, Collections.Queues,
   System.SyncObjs;
 
 type
@@ -562,10 +563,6 @@ initialization
   gvActionThread := TActionThread.Create;
 
 finalization
-  // Destroys in gvActionThread
-  //FreeAndNil(gvActionThread);
-  //FreeAndNil(gvActionQueue);
-
   FreeAndNil(gvProjectOptions);
 
 end.

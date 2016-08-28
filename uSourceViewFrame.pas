@@ -3,14 +3,14 @@ unit uSourceViewFrame;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
-  SynEdit, SynMemo, Vcl.StdCtrls;
+  Vcl.StdCtrls, SynEdit, SynMemo;
 
 type
   TSourceViewFrame = class(TFrame)
-    synmSourceView: TSynMemo;
     eSrcFileName: TEdit;
+    synmSourceView: TSynMemo;
   private
     FSourceFileName: String;
     procedure SetSourceFileName(const Value: String);

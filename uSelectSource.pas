@@ -5,27 +5,27 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, PlatformDefaultStyleActnCtrls, ActnMan, ActnList, ActnCtrls,
-  ToolWin, ComCtrls, RibbonSilverStyleActnCtrls, Grids, System.Actions,
-  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons;
+  ToolWin, ComCtrls, ExtCtrls, StdCtrls, Buttons, RibbonSilverStyleActnCtrls,
+  Grids, System.Actions;
 
 type
   TfmSelectSource = class(TForm)
-    alSelectSource: TActionList;
+    acAdd: TAction;
+    acCancel: TAction;
+    acDown: TAction;
+    acEdit: TAction;
     acmgrSelectSource: TActionManager;
     acOk: TAction;
-    acCancel: TAction;
-    acAdd: TAction;
     acRemove: TAction;
-    acEdit: TAction;
-    cbTop: TCoolBar;
     actbTop: TActionToolBar;
-    sgSource: TStringGrid;
+    acUp: TAction;
+    alSelectSource: TActionList;
+    btnCancel: TBitBtn;
+    btnOk: TBitBtn;
+    cbTop: TCoolBar;
     odSelectSource: TFileOpenDialog;
     pActions: TPanel;
-    btnOk: TBitBtn;
-    btnCancel: TBitBtn;
-    acUp: TAction;
-    acDown: TAction;
+    sgSource: TStringGrid;
     procedure acOkExecute(Sender: TObject);
     procedure acCancelExecute(Sender: TObject);
     procedure acAddExecute(Sender: TObject);
@@ -47,9 +47,6 @@ type
   end;
 
   function SelectSource(const SourceList: String): String;
-
-var
-  fmSelectSource: TfmSelectSource;
 
 implementation
 
@@ -73,6 +70,8 @@ begin
     F.Release;
   end;
 end;
+
+{ TfmSelectSource }
 
 procedure TfmSelectSource.acAddExecute(Sender: TObject);
 begin

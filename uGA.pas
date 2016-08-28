@@ -2,7 +2,8 @@ unit uGA;
 
 interface
 
-uses System.Classes, System.SysUtils, System.Generics.Collections, IdHTTP;
+uses
+  System.Classes, System.SysUtils, System.Generics.Collections, IdHTTP;
 
 type
   TGAType = (gatPageview, gatAppview, gatEvent, gatTransaction, gatItem, gatSocial, gatException, gatTiming);
@@ -96,7 +97,8 @@ type
 
 implementation
 
-uses IdGlobal, IdUriUtils, System.SyncObjs, Winapi.Windows;
+uses
+  IdGlobal, IdUriUtils, System.SyncObjs, Winapi.Windows;
 
 const
   GA_URL = 'http://www.google-analytics.com/collect';

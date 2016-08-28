@@ -3,23 +3,23 @@ unit uMain;
 interface
 
 uses
-  Windows, uShareData, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, uShareData, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, Mask, ExtCtrls, ComCtrls, ActnList, DebugInfo,
-  Grids, VirtualTrees, GdiPlus, GdiPlusHelpers,
-  Debuger, DebugerTypes, DelphiDebugInfo,
-  PlatformDefaultStyleActnCtrls, ActnMan, Ribbon, RibbonLunaStyleActnCtrls,
-  RibbonSilverStyleActnCtrls, ToolWin, ActnCtrls, ActnMenus,
-  RibbonActnMenus, ImgList, ActnColorMaps, XPMan,
-  uActionController, uSpiderOptions, System.Actions,
-  Vcl.Menus, uUpdateInfo, uSourceViewFrame;
+  Grids, Menus, ToolWin, ImgList, ActnMan, ActnCtrls, ActnMenus, ActnColorMaps,
+  XPMan, PlatformDefaultStyleActnCtrls, Ribbon, RibbonLunaStyleActnCtrls,
+  RibbonSilverStyleActnCtrls, RibbonActnMenus, System.Actions, VirtualTrees,
+  GdiPlus, GdiPlusHelpers, Debuger, DebugerTypes, DelphiDebugInfo,
+  uActionController, uSpiderOptions, uUpdateInfo, uSourceViewFrame;
 
 type
   TProgectType = (ptEmpty, ptSpider, ptApplication, ptDebugInfo);
 
-  TLinkType = (ltNone = 0, ltProject, ltProcess, ltThread, ltMemInfo, ltMemStack, ltExceptInfo, ltExceptStack,
-    ltDbgUnitGroup, ltDbgUnitInfo, ltDbgConstInfo, ltDbgTypeInfo, ltDbgVarInfo, ltDbgFuncInfo, ltDbgStructMemberInfo,
-    ltDbgFuncParamInfo, ltDbgLogItem, ltTrackFuncInfo, ltTrackUnitInfo, ltTrackCallFuncInfo,
-    ltSpiderInfo, ltVersionInfo, ltChangeLogItemInfo, ltSyncObjInfo, ltSyncObjChildInfo, ltSyncObjStack);
+  TLinkType = (ltNone = 0, ltProject, ltProcess, ltThread, ltMemInfo,
+    ltMemStack, ltExceptInfo, ltExceptStack, ltDbgUnitGroup, ltDbgUnitInfo,
+    ltDbgConstInfo, ltDbgTypeInfo, ltDbgVarInfo, ltDbgFuncInfo,
+    ltDbgStructMemberInfo, ltDbgFuncParamInfo, ltDbgLogItem, ltTrackFuncInfo,
+    ltTrackUnitInfo, ltTrackCallFuncInfo, ltSpiderInfo, ltVersionInfo,
+    ltChangeLogItemInfo, ltSyncObjInfo, ltSyncObjChildInfo, ltSyncObjStack);
 
   PLinkData = ^TLinkData;
   TLinkData = record

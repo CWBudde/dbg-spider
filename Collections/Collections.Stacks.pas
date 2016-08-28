@@ -26,12 +26,12 @@
 *)
 
 unit Collections.Stacks;
+
 interface
-uses SysUtils,
-     Generics.Defaults,
-     Generics.Collections,
-     Collections.Lists,
-     Collections.Base;
+
+uses
+  SysUtils, Generics.Defaults, Generics.Collections, Collections.Lists,
+  Collections.Base;
 
 type
   ///  <summary>The abstract base class for all generic <c>stack (LIFO)</c> collection.</summary>

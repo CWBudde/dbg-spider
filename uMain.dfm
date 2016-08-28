@@ -912,7 +912,6 @@ object MainForm: TMainForm
                   inherited synmSourceView: TSynMemo
                     Width = 582
                     Height = 364
-                    SearchEngine = dmShareData.synEditSearch1
                   end
                   inherited eSrcFileName: TEdit
                     Width = 582
@@ -1645,7 +1644,6 @@ object MainForm: TMainForm
               inherited synmSourceView: TSynMemo
                 Width = 459
                 Height = 400
-                SearchEngine = dmShareData.synEditSearch1
               end
               inherited eSrcFileName: TEdit
                 Width = 459
@@ -2052,7 +2050,6 @@ object MainForm: TMainForm
                 inherited synmSourceView: TSynMemo
                   Width = 374
                   Height = 590
-                  SearchEngine = dmShareData.synEditSearch1
                 end
                 inherited eSrcFileName: TEdit
                   Width = 374
@@ -2485,7 +2482,6 @@ object MainForm: TMainForm
                 inherited synmSourceView: TSynMemo
                   Width = 439
                   Height = 320
-                  SearchEngine = dmShareData.synEditSearch1
                 end
                 inherited eSrcFileName: TEdit
                   Width = 439
@@ -2671,7 +2667,7 @@ object MainForm: TMainForm
         Columns = <
           item
             Position = 0
-            Width = 1383
+            Width = 1387
             WideText = 'Info'
           end>
       end
@@ -3182,7 +3178,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 44
-          Height = 19
+          Height = 13
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3206,7 +3202,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 51
-          Height = 19
+          Height = 13
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3245,7 +3241,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 59
-          Height = 19
+          Height = 13
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3285,7 +3281,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 66
-          Height = 19
+          Height = 13
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
