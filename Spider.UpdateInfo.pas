@@ -1,4 +1,4 @@
-unit uUpdateInfo;
+unit Spider.UpdateInfo;
 
 interface
 

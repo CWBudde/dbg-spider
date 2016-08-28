@@ -1,10 +1,10 @@
-unit uSQLiteDB;
+unit Spider.SQLiteDB;
 
 interface
 
 uses
   System.Contnrs, System.SysUtils, System.Classes, System.Types, System.Sqlite,
-  uRWLock;
+  Spider.RWLock;
 
 type
   HSQLCONTEXT = Pointer;

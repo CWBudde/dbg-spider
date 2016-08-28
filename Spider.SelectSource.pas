@@ -1,4 +1,4 @@
-unit uSelectSource;
+unit Spider.SelectSource;
 
 interface
 
@@ -51,7 +51,7 @@ type
 implementation
 
 uses
-  uShareData;
+  Spider.ShareData;
 
 {$R *.dfm}
 

@@ -1,4 +1,4 @@
-unit uSpiderOptions;
+unit Spider.SpiderOptions;
 
 interface
 

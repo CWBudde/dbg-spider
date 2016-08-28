@@ -1,4 +1,4 @@
-unit uShareData;
+unit Spider.ShareData;
 
 interface
 
@@ -16,10 +16,6 @@ type
     synRegexSearch: TSynEditRegexSearch;
     synEditSearch: TSynEditSearch;
     synEditOptDlg: TSynEditOptionsDialog;
-  private
-    { Private declarations }
-  public
-    { Public declarations }
   end;
 
 var

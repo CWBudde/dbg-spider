@@ -1,4 +1,4 @@
-unit uFeedback;
+unit Spider.Feedback;
 
 interface
 
@@ -31,7 +31,7 @@ type
 implementation
 
 uses
-  uShareData;
+  Spider.ShareData;
 
 {$R *.dfm}
 

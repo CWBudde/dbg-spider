@@ -1,4 +1,4 @@
-unit uProcessList;
+unit Spider.ProcessList;
 
 interface
 
@@ -36,7 +36,7 @@ type
 implementation
 
 uses
-  PsAPI, uShareData;
+  PsAPI, Spider.ShareData;
 
 procedure GetProcessList(List: TStringList);
 var

@@ -1,4 +1,4 @@
-unit uProjectOptions;
+unit Spider.ProjectOptions;
 
 interface
 
@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  IOUtils, uShareData, uSelectSource, uActionController;
+  IOUtils, Spider.ShareData, Spider.SelectSource, Spider.ActionController;
 
 {$R *.dfm}
 

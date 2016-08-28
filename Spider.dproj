@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{99256B98-0F1D-4707-BC25-85850B6A52B7}</ProjectGuid>
         <ProjectVersion>14.6</ProjectVersion>
@@ -107,38 +107,38 @@
         <DCCReference Include="GdiPlus\GdiPlus.pas"/>
         <DCCReference Include="GdiPlus\GdiPlusHelpers.pas"/>
         <DCCReference Include="MapDebugInfo.pas"/>
-        <DCCReference Include="uActionController.pas"/>
-        <DCCReference Include="uDebugerThread.pas"/>
-        <DCCReference Include="uExceptionHook.pas"/>
-        <DCCReference Include="uFeedback.pas">
+        <DCCReference Include="Spider.ActionController.pas"/>
+        <DCCReference Include="Spider.DebugerThread.pas"/>
+        <DCCReference Include="Spider.ExceptionHook.pas"/>
+        <DCCReference Include="Spider.Feedback.pas">
             <Form>frmFeedback</Form>
         </DCCReference>
-        <DCCReference Include="uGA.pas"/>
-        <DCCReference Include="uMain.pas">
+        <DCCReference Include="Spider.GA.pas"/>
+        <DCCReference Include="Spider.Main.pas">
             <Form>MainForm</Form>
         </DCCReference>
-        <DCCReference Include="uProcessList.pas">
+        <DCCReference Include="Spider.ProcessList.pas">
             <Form>frmProcessList</Form>
         </DCCReference>
-        <DCCReference Include="uProjectOptions.pas">
+        <DCCReference Include="Spider.ProjectOptions.pas">
             <Form>fmProjectOptions</Form>
         </DCCReference>
-        <DCCReference Include="uRWLock.pas"/>
-        <DCCReference Include="uSelectSource.pas">
+        <DCCReference Include="Spider.RWLock.pas"/>
+        <DCCReference Include="Spider.SelectSource.pas">
             <Form>fmSelectSource</Form>
         </DCCReference>
-        <DCCReference Include="uShareData.pas">
+        <DCCReference Include="Spider.ShareData.pas">
             <Form>dmShareData</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="uSharedObject.pas"/>
-        <DCCReference Include="uSourceViewFrame.pas">
+        <DCCReference Include="Spider.SharedObject.pas"/>
+        <DCCReference Include="Spider.SourceViewFrame.pas">
             <Form>SourceViewFrame</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="uSpiderOptions.pas"/>
-        <DCCReference Include="uSQLiteDB.pas"/>
-        <DCCReference Include="uUpdateInfo.pas"/>
+        <DCCReference Include="Spider.SpiderOptions.pas"/>
+        <DCCReference Include="Spider.SQLiteDB.pas"/>
+        <DCCReference Include="Spider.UpdateInfo.pas"/>
         <DCCReference Include="DbgMemoryProfiler.pas"/>
         <DCCReference Include="DbgWorkerThread.pas"/>
         <DCCReference Include="DbgSyncObjsProfiler.pas"/>

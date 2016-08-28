@@ -1,15 +1,16 @@
-unit uMain;
+unit Spider.Main;
 
 interface
 
 uses
-  Windows, uShareData, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, Mask, ExtCtrls, ComCtrls, ActnList, DebugInfo,
   Grids, Menus, ToolWin, ImgList, ActnMan, ActnCtrls, ActnMenus, ActnColorMaps,
   XPMan, PlatformDefaultStyleActnCtrls, Ribbon, RibbonLunaStyleActnCtrls,
   RibbonSilverStyleActnCtrls, RibbonActnMenus, System.Actions, VirtualTrees,
   GdiPlus, GdiPlusHelpers, Debuger, DebugerTypes, DelphiDebugInfo,
-  uActionController, uSpiderOptions, uUpdateInfo, uSourceViewFrame;
+  Spider.ActionController, Spider.SpiderOptions, Spider.UpdateInfo, 
+  Spider.SourceViewFrame, Spider.ShareData;
 
 type
   TProgectType = (ptEmpty, ptSpider, ptApplication, ptDebugInfo);
@@ -653,10 +654,11 @@ implementation
 
 {$R *.dfm}
 
-uses Math, ClassUtils, uProcessList, uDebugerThread,
-  uProjectOptions, WinAPIUtils, System.UITypes, System.Types,
-  uGA, System.Win.Registry, Winapi.ActiveX, Winapi.ShellAPI, uFeedback,
-  DbgHookTypes, Collections.Dictionaries, Collections.Base;
+uses 
+  Math, ClassUtils, Spider.ProcessList, Spider.DebugerThread,
+  Spider.ProjectOptions, WinAPIUtils, System.UITypes, System.Types,
+  Spider.GA, System.Win.Registry, Winapi.ActiveX, Winapi.ShellAPI, 
+  Spider.Feedback, DbgHookTypes, Collections.Dictionaries, Collections.Base;
 
 const
   _TrackingID_web = 'UA-44820931-1';

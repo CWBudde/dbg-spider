@@ -1,4 +1,4 @@
-unit uSharedObject;
+unit Spider.SharedObject;
 
 interface
 
