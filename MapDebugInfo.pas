@@ -37,23 +37,23 @@ type
     function FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo; overload;
     function FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool = False): TLineInfo;
   protected
-    function DoReadDebugInfo(Const FileName: String; ALoadDebugInfo: LongBool): LongBool; Override;
+    function DoReadDebugInfo(const FileName: String; ALoadDebugInfo: LongBool): LongBool; override;
   public
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
-    procedure ClearDebugInfo; Override;
+    procedure ClearDebugInfo; override;
 
     function GetNameById(const Idx: TNameId): AnsiString; override;
 
-    function HasDebugInfo(Const FileName: String): LongBool; override;
+    function HasDebugInfo(const FileName: String): LongBool; override;
 
-    function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo;
+    function GetLineInfo(const Addr: Pointer; var UnitInfo: TUnitInfo; var FuncInfo: TFuncInfo; var LineInfo: TLineInfo;
       GetPrevLine: LongBool): TFindResult; override;
 
-    function MakeFuncDbgFullName(Const ClassName, MethodName: AnsiString): AnsiString; override;
-    function MakeFuncShortName(Const MethodName: AnsiString): AnsiString; override;
-    function MakeFuncNativeName(Const MethodName: AnsiString): AnsiString; override;
+    function MakeFuncDbgFullName(const ClassName, MethodName: AnsiString): AnsiString; override;
+    function MakeFuncShortName(const MethodName: AnsiString): AnsiString; override;
+    function MakeFuncNativeName(const MethodName: AnsiString): AnsiString; override;
 
     function GetMemoryManager: TVarInfo; override;
   end;
@@ -159,7 +159,7 @@ begin
   begin
     UnitInfo := TUnitInfo(Units.Objects[I]);
 
-    PrevFuncInfo := Nil;
+    PrevFuncInfo := nil;
     for J := 0 to UnitInfo.Funcs.Count - 1 do
     begin
       FuncInfo := TFuncInfo(UnitInfo.Funcs[J]);
@@ -198,7 +198,7 @@ constructor TMapDebugInfo.Create;
 begin
   inherited;
 
-  FMapScanner := Nil;
+  FMapScanner := nil;
   FUnitSegmentInfoList := TUnitSegmentInfoList.Create;
 end;
 
@@ -271,7 +271,7 @@ function TMapDebugInfo.FindFuncByAddr(const Addr: Pointer; const SegmentID: Word
 var
   Segment: TUnitSegmentInfo;
 begin
-  Result := Nil;
+  Result := nil;
 
   Segment := FindSegmentByAddr(Addr, SegmentID);
   if Assigned(Segment) then
@@ -279,30 +279,30 @@ begin
 end;
 
 function TMapDebugInfo.FindFuncByAddr(const UnitInfo: TUnitInfo; const Addr: Pointer): TFuncInfo;
-Begin
+begin
   Result := TFuncInfo(UnitInfo.FuncsByAddr.FindByAddress(Addr));
 end;
 
 function TMapDebugInfo.FindLineByAddr(const FuncInfo: TFuncInfo; const Addr: Pointer; const GetPrevLine: LongBool): TLineInfo;
-Var
+var
   LineIdx: Integer;
-Begin
+begin
   LineIdx := FuncInfo.Lines.Count - 1;
 
-  While (LineIdx >= 0) Do
-  Begin
+  while (LineIdx >= 0) Do
+  begin
     Result := TLineInfo(FuncInfo.Lines[LineIdx]);
-    If Cardinal(Addr) >= Cardinal(Result.Address) Then
-    Begin
-      If GetPrevLine And (LineIdx > 0) Then
+    if Cardinal(Addr) >= Cardinal(Result.Address) then
+    begin
+      if GetPrevLine and (LineIdx > 0) then
         Result := TLineInfo(FuncInfo.Lines[LineIdx - 1]);
 
       Exit;
-    End;
+    end;
     Dec(LineIdx);
-  End;
+  end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TMapDebugInfo.FindSegmentByAddr(const Addr: Pointer; const SegmentID: Word = 0): TUnitSegmentInfo;
@@ -310,7 +310,7 @@ var
   I, j: Integer;
   UnitInfo: TUnitInfo;
   seg: TUnitSegmentInfo;
-Begin
+begin
   //need to fill the fast sorted list the first time?
   if FUnitSegmentInfoList.Count = 0 then
   begin
@@ -352,7 +352,7 @@ Begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TMapDebugInfo.GetLineInfo(const Addr: Pointer; var UnitInfo: TUnitInfo; var FuncInfo: TFuncInfo;
@@ -370,7 +370,7 @@ begin
     if Assigned(FuncInfo) then
     begin
       LineInfo := FindLineByAddr(FuncInfo, Addr, GetPrevLine);
-      if LineInfo = Nil then
+      if LineInfo = nil then
         Result := slFoundWithoutLine
       else
       begin
@@ -389,7 +389,7 @@ const
 Var
   USystem: TUnitInfo;
 begin
-  Result := Nil;
+  Result := nil;
 
   USystem := GetSystemUnit;
   if Assigned(USystem) then
@@ -465,13 +465,13 @@ var
     FuncInfo := TFuncInfo.Create;
 
     FuncInfo.NameId := Integer(@Proc^.ProcName);
-    FuncInfo.SymbolInfo := Nil;
+    FuncInfo.SymbolInfo := nil;
     FuncInfo.Address := ProcAddress;
     FuncInfo.Size := 0;
     FuncInfo.UnitInfo := UnitSegmentInfo.UnitInfo;
     FuncInfo.UnitSegment := UnitSegmentInfo;
-    FuncInfo.ID := Nil;
-    FuncInfo.ParentID := Nil;
+    FuncInfo.ID := nil;
+    FuncInfo.ParentID := nil;
 
     UnitSegmentInfo.UnitInfo.Funcs.Add(FuncInfo);
     UnitSegmentInfo.UnitInfo.FuncsByAddr.Add(FuncInfo);
@@ -484,7 +484,7 @@ var
     VarInfo := TVarInfo.Create;
 
     VarInfo.NameId := Integer(@Proc^.ProcName);
-    VarInfo.SymbolInfo := Nil;
+    VarInfo.SymbolInfo := nil;
 
     if SegmentClassInfo.SegType = ustTLS then
       VarInfo.VarKind := vkTLS
@@ -512,12 +512,12 @@ begin
   begin
     (*
     UnitSourceModuleInfo := UnitSegmentInfo.UnitInfo.FindSourceSegmentByNameId(TNameId(@Proc^.ProcName));
-    if UnitSourceModuleInfo = Nil then
+    if UnitSourceModuleInfo = nil then
     begin
       UnitSourceModuleInfo := TUnitSourceModuleInfo.Create;
 
       UnitSourceModuleInfo.NameId := TNameId(@Proc^.ProcName);
-      UnitSourceModuleInfo.SymbolInfo := Nil;
+      UnitSourceModuleInfo.SymbolInfo := nil;
       UnitSourceModuleInfo.UnitInfo := UnitSegmentInfo.UnitInfo;
 
       UnitSegmentInfo.UnitInfo.SourceSegments.Add(UnitSourceModuleInfo);
@@ -574,7 +574,7 @@ begin
     UnitSourceModuleInfo := TUnitSourceModuleInfo.Create;
 
     UnitSourceModuleInfo.NameId := TNameId(@Source^.ProcName);
-    UnitSourceModuleInfo.SymbolInfo := Nil;
+    UnitSourceModuleInfo.SymbolInfo := nil;
     UnitSourceModuleInfo.UnitInfo := UnitSegmentInfo.UnitInfo;
     UnitSourceModuleInfo.Address := StartAddress;
 
@@ -609,7 +609,7 @@ begin
   Idx := Units.IndexOf(UnitInfo.ShortName);
   if Idx < 0 then
   begin
-    UnitInfo.SymbolInfo := Nil;
+    UnitInfo.SymbolInfo := nil;
     Units.AddObject(UnitInfo.ShortName, UnitInfo);
   end
   else
@@ -631,7 +631,7 @@ begin
 
   UnitSegmentInfo.Size := Segment^.Size;
 
-  if (UnitInfo.Address = Nil) and Assigned(UnitSegmentInfo.SegmentClassInfo) and
+  if (UnitInfo.Address = nil) and Assigned(UnitSegmentInfo.SegmentClassInfo) and
     (UnitSegmentInfo.SegmentClassInfo.SegType in [ustCode, ustICode])
   then
     UnitInfo.Address := Pointer(UnitSegmentInfo.Address);
@@ -745,7 +745,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TMapScanner.GetSource(const Index: Integer): PJclMapProcName;

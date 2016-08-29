@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
-  System.SysUtils, System.SyncObjs, DebugerTypes;
+  System.SysUtils, System.SyncObjs, DebuggerTypes;
 
 type
   TSyncObjsInfoQueue = TQueue<PDbgSyncObjsInfoListBuf>;
@@ -32,7 +32,7 @@ type
 implementation
 
 uses
-  Debuger, CollectList;
+  Debugger, CollectList;
 
 const
   _MAX_SYNC_OBJS_INFO_BUF_COUNT = 512;
@@ -108,15 +108,15 @@ var
   SyncObjsLink: PSyncObjsInfo;
   SyncObjsLinkExt: PSyncObjsInfo;
 begin
-  ThData := Nil;
+  ThData := nil;
 
   for Idx := 0 to Buf^.Count - 1 do
   begin
     SyncObjsInfo := @Buf^.DbgSyncObjsInfoList^[Idx];
-    if (ThData = Nil) or (ThData^.ThreadID <> SyncObjsInfo^.ThreadId) then
+    if (ThData = nil) or (ThData^.ThreadID <> SyncObjsInfo^.ThreadId) then
       ThData := gvDebuger.GetThreadData(SyncObjsInfo^.ThreadId, True);
 
-    if ThData = Nil then
+    if ThData = nil then
       Continue; // TODO: В каких-то случаях сюда заходит
       //RaiseDebugCoreException();
 

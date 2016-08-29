@@ -192,7 +192,7 @@ begin
         Result := FXML.Active;
       end;
     except
-      FXML := Nil;
+      FXML := nil;
     end;
   finally
     FreeAndNil(IdHttp);

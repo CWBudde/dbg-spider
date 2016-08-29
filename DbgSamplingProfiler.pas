@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
-  System.SysUtils, System.SyncObjs, DebugerTypes;
+  System.SysUtils, System.SyncObjs, DebuggerTypes;
 
 type
   TDbgSamplingProfiler = class
@@ -35,7 +35,7 @@ type
 implementation
 
 uses
-  Debuger, WinAPIUtils, DebugInfo;
+  Debugger, WinAPIUtils, DebugInfo;
 
 procedure _DbgSamplingEvent(Context: Pointer; Success: LongBool); stdcall;
 begin

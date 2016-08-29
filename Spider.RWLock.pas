@@ -215,8 +215,8 @@ begin
 
   {$IFDEF RWLOCK_DEBUG}
   FLockInfoList := TLockInfoList.Create;
-  FLockEvent := Nil;
-  FLockWaitEvent := Nil;
+  FLockEvent := nil;
+  FLockWaitEvent := nil;
   {$ENDIF}
 end;
 
@@ -579,7 +579,7 @@ begin
 
   for I := 0 to High(Stack) do
   begin
-    if Stack[I] = Nil then
+    if Stack[I] = nil then
       Break;
 
     Result := Result + Format(' $%p', [Stack[I]])

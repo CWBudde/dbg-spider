@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
-  System.SysUtils, System.SyncObjs, DebugerTypes;
+  System.SysUtils, System.SyncObjs, DebuggerTypes;
 
 type
   TTrackPointInfo = class
@@ -68,7 +68,7 @@ type
 implementation
 
 uses
-  DebugInfo, WinAPIUtils, Debuger, System.Contnrs;
+  System.Contnrs, DebugInfo, WinAPIUtils, Debugger;
 
 { TDbgCodeProfiler }
 
@@ -545,7 +545,7 @@ end;
 
 procedure TDbgCodeProfiler.StartWorkerThread;
 begin
-  if FWorkerThread = Nil then
+  if FWorkerThread = nil then
     FWorkerThread := TDbgCodeProfilerWorkerThread.Create(Self);
 end;
 

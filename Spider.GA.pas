@@ -434,7 +434,7 @@ begin
   Exit;
   {$ENDIF}
 
-  if (Self = Nil) or Terminated then
+  if (Self = nil) or Terminated then
   begin
     Result := True;
     Exit;
@@ -447,7 +447,7 @@ begin
     try
       FHTTP.Post(GA_URL, S);
 
-      if (Self <> Nil) and not Terminated then
+      if (Self <> nil) and not Terminated then
         Result := (FHTTP.ResponseCode = 200);
     except
       // Игнорим все ошибки
@@ -482,7 +482,7 @@ begin
 
             while not DoSend(Data) do
             begin
-              if (Self = Nil) or Terminated then Exit;
+              if (Self = nil) or Terminated then Exit;
               ThSleep(GA_TIMEOUT * 60);
             end;
 
@@ -513,7 +513,7 @@ var
   StartTime: Cardinal;
 begin
   StartTime := GetTickCount;
-  while (Self <> Nil) and not Terminated and (Abs(GetTickCount - StartTime) < MSec) do
+  while (Self <> nil) and not Terminated and (Abs(GetTickCount - StartTime) < MSec) do
     Sleep(50);
 end;
 

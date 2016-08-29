@@ -3,8 +3,8 @@ unit DebugInfo;
 interface
 
 uses
-  WinApi.Windows, System.SysUtils, System.Classes,
-  Debuger, DebugerTypes, Generics.Collections, Generics.Defaults;
+  WinApi.Windows, System.SysUtils, System.Classes, System.Generics.Collections,
+  System.Generics.Defaults, Debugger, DebuggerTypes;
 
 type
   TFindResult = (slNotFound = 0, slFoundExact, slFoundNotExact,
@@ -84,7 +84,7 @@ type
     TypeInfoIdx: Integer; // Index in UnitInfo.Types
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
     function Name: AnsiString; override;
     function ShortName: String; override;
@@ -141,7 +141,7 @@ type
     RegisterRanges: TList;
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
     function UnitInfo: TUnitInfo;
 
@@ -204,11 +204,11 @@ type
     Address: Pointer;
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
-    procedure Clear; Virtual;
+    procedure Clear; virtual;
 
-    function Name: AnsiString; Override;
+    function Name: AnsiString; override;
     function ShortName: String; override;
 
     function FullUnitName: String;
@@ -229,12 +229,12 @@ type
     Lines: TLineInfoList;
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
     function Name: AnsiString; override;
     function ShortName: String; override;
 
-    procedure Clear; Virtual;
+    procedure Clear; virtual;
 
     function FindTypeByName(const TypeName: AnsiString; const SubStr: LongBool = False): TTypeInfo;
     function FindFuncByName(const FuncName: AnsiString; const SubStr: LongBool = False): TFuncInfo;
@@ -278,7 +278,7 @@ type
     ParentID: TObject;
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
     function ShortName: String; override;
 
@@ -297,11 +297,11 @@ type
     FuncsByAddr: TSegmentCodeInfoList;
 
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
-    procedure Clear; Override;
+    procedure Clear; override;
 
-    function ShortName: String; Override;
+    function ShortName: String; override;
 
     function FullUnitName: String;
 
@@ -430,7 +430,7 @@ type
     FUseShortNames: LongBool;
 
     procedure DoProgress(const Action: String; const Progress: Integer); virtual;
-    function DoReadDebugInfo(const FileName: String; ALoadDebugInfo: LongBool): LongBool; Virtual; abstract;
+    function DoReadDebugInfo(const FileName: String; ALoadDebugInfo: LongBool): LongBool; virtual; abstract;
 
     function GetSegmentByID(const ID: Word): TSegmentClassInfo;
     function GetSegmentByType(const SegType: TSegmentType): TSegmentClassInfo;
@@ -443,19 +443,19 @@ type
     function ParseStructMemberName(StructMember: TStructMember): String; virtual;
   public
     constructor Create;
-    destructor Destroy; Override;
+    destructor Destroy; override;
 
-    procedure ClearDebugInfo; Virtual;
-    function HasDebugInfo(const FileName: String): LongBool; Virtual; abstract;
-    function ReadDebugInfo(const FileName: String): LongBool; Virtual;
-    function GetFileCount: Integer; Virtual;
-    function GetFile(Index: Integer): String; Virtual;
-    function GetTypeInfo(const TypeName: String): TTypeInfo; Virtual;
-    function GetAddrInfo(Var Addr: Pointer; Const FileName: String; Line: Cardinal): TFindResult; Virtual; abstract;
-    procedure GetCallStackItems(const ThreadID: TThreadId; Const ExceptAddr, ExceptFrame: Pointer; StackItems: TList); Virtual;
+    procedure ClearDebugInfo; virtual;
+    function HasDebugInfo(const FileName: String): LongBool; virtual; abstract;
+    function ReadDebugInfo(const FileName: String): LongBool; virtual;
+    function GetFileCount: Integer; virtual;
+    function GetFile(Index: Integer): String; virtual;
+    function GetTypeInfo(const TypeName: String): TTypeInfo; virtual;
+    function GetAddrInfo(var Addr: Pointer; const FileName: String; Line: Cardinal): TFindResult; virtual; abstract;
+    procedure GetCallStackItems(const ThreadID: TThreadId; const ExceptAddr, ExceptFrame: Pointer; StackItems: TList); virtual;
 
-    function GetLineInfo(const Addr: Pointer; Var UnitInfo: TUnitInfo; Var FuncInfo: TFuncInfo; Var LineInfo: TLineInfo; GetPrevLine: LongBool): TFindResult; Virtual; abstract;
-    function GetLineInformation(const Addr: Pointer; Var UnitName: String; Var FuncName: String; Var Line: LongInt; GetPrevLine: LongBool): TFindResult; Virtual;
+    function GetLineInfo(const Addr: Pointer; var UnitInfo: TUnitInfo; var FuncInfo: TFuncInfo; var LineInfo: TLineInfo; GetPrevLine: LongBool): TFindResult; virtual; abstract;
+    function GetLineInformation(const Addr: Pointer; var UnitName: String; var FuncName: String; var Line: LongInt; GetPrevLine: LongBool): TFindResult; virtual;
 
     procedure UpdateSourceDirs(const SourceType: TUnitType; const SourceDirs: String); virtual;
     procedure AddSourceDir(const SourceDir: TDbgSourceDirList; const Dir: String; const Recursive: LongBool = True); virtual;
@@ -463,40 +463,40 @@ type
     function FullUnitName(const UnitName: String): String;
     function GetUnitType(const UnitName: String): TUnitType;
 
-    function MakeFuncDbgFullName(const className, MethodName: AnsiString): AnsiString; Virtual; abstract;
-    function MakeFuncShortName(const MethodName: AnsiString): AnsiString; Virtual; abstract;
-    function MakeFuncNativeName(const MethodName: AnsiString): AnsiString; Virtual; abstract;
+    function MakeFuncDbgFullName(const className, MethodName: AnsiString): AnsiString; virtual; abstract;
+    function MakeFuncShortName(const MethodName: AnsiString): AnsiString; virtual; abstract;
+    function MakeFuncNativeName(const MethodName: AnsiString): AnsiString; virtual; abstract;
 
     function FuncByName(const FuncName: AnsiString): TFuncInfo;
 
-    function Evaluate(BriefMode: LongBool; Const Expression: String; Const TimeOut: Cardinal = INFINITE): String; Virtual; abstract;
+    function Evaluate(BriefMode: LongBool; const Expression: String; const TimeOut: Cardinal = INFINITE): String; virtual; abstract;
 
     function EvaluateVariable(VarInfo: TVarInfo): Variant; virtual; abstract;
     function VarValueAsString(const Value: Variant): String; virtual; abstract;
 
-    procedure SetMemoryManagerBreakpoints; Virtual; abstract;
-    procedure ResetMemoryManagerBreakpoints; Virtual; abstract;
+    procedure SetMemoryManagerBreakpoints; virtual; abstract;
+    procedure ResetMemoryManagerBreakpoints; virtual; abstract;
 
-    procedure InitDebugHook; Virtual; abstract;
+    procedure InitDebugHook; virtual; abstract;
 
     function GetNameById(const Idx: TNameId): AnsiString; virtual; abstract;
 
-    function CheckAddr(const Addr: Pointer): LongBool; Virtual;
+    function CheckAddr(const Addr: Pointer): LongBool; virtual;
     function DumpLineInformation(const Addr: Pointer): String;
-    function GetParamsStr(FuncInfo: TFuncInfo; Const EBP: Pointer; IsTopStack: LongBool): String;
+    function GetParamsStr(FuncInfo: TFuncInfo; const EBP: Pointer; IsTopStack: LongBool): String;
 
-    function GetClassName(const ObjectPtr: Pointer): String; Virtual; abstract;
-    function GetExceptionName(ExceptionRecord: PExceptionRecord): String; Virtual;
-    function GetExceptionMessage(ExceptionRecord: PExceptionRecord; const ThreadID: TThreadId): String; Virtual;
-    function GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer; Virtual;
-    function GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer; Virtual;
-    function CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool; Virtual;
-    function CheckSystemFile(const FileName: String): LongBool; Virtual; abstract;
+    function GetClassName(const ObjectPtr: Pointer): String; virtual; abstract;
+    function GetExceptionName(ExceptionRecord: PExceptionRecord): String; virtual;
+    function GetExceptionMessage(ExceptionRecord: PExceptionRecord; const ThreadID: TThreadId): String; virtual;
+    function GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer; virtual;
+    function GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer; virtual;
+    function CheckDebugException(ExceptionRecord: PExceptionRecord; var IsTraceException: LongBool): LongBool; virtual;
+    function CheckSystemFile(const FileName: String): LongBool; virtual; abstract;
 
     function IsSystemException(const ExceptionCode: DWORD): LongBool;
 
     function CheckDebugOutputMessage(DebugEvent: PDebugEvent): LongBool;
-    function ProcessDebugOutputMessage(const Msg: WideString; DebugEvent: PDebugEvent): LongBool; Virtual;
+    function ProcessDebugOutputMessage(const Msg: WideString; DebugEvent: PDebugEvent): LongBool; virtual;
 
     function IsValidAddr(const Addr: Pointer): LongBool;
     function IsValidCodeAddr(const Addr: Pointer): LongBool;
@@ -578,7 +578,7 @@ end;
 Constructor TDebugInfo.Create;
 var
   ST: TUnitType;
-Begin
+begin
   inherited Create;
 
   for ST := Low(TUnitType) to High(TUnitType) do
@@ -596,7 +596,7 @@ Begin
   FDebugInfoLoaded := False;
   FDebugInfoType := '';
 
-  FDebugInfoProgressCallback := Nil;
+  FDebugInfoProgressCallback := nil;
   FLastProgressAction := '';
   FLastProgress := 0;
 
@@ -670,7 +670,7 @@ begin
   Result := GetLineInfo(Addr, UnitInfo, FuncInfo, LineInfo, False) <> slNotFound;
 end;
 
-function TDebugInfo.CheckDebugException(ExceptionRecord: PExceptionRecord; Var IsTraceException: LongBool): LongBool;
+function TDebugInfo.CheckDebugException(ExceptionRecord: PExceptionRecord; var IsTraceException: LongBool): LongBool;
 begin
   IsTraceException := False;
   case ExceptionRecord^.ExceptionCode Of
@@ -683,7 +683,7 @@ end;
 
 procedure TDebugInfo.ClearDebugInfo;
 begin
-  if FDebugInfoLoaded Then
+  if FDebugInfoLoaded then
   begin
     FDebugInfoLoaded := False;
 
@@ -711,14 +711,14 @@ end;
 
 function TDebugInfo.ReadDebugInfo(const FileName: String): LongBool;
 begin
-  Result := FDebugInfoLoaded And SameText(FExeFileName, FileName);
+  Result := FDebugInfoLoaded and SameText(FExeFileName, FileName);
 
-  If Not Result Then
-  Begin
+  if not Result then
+  begin
     Result := DoReadDebugInfo(FileName, True);
 
-    If Result Then
-    Begin
+    if Result then
+    begin
       FExeFileName := FileName;
       FDebugInfoLoaded := True;
     end;
@@ -762,9 +762,9 @@ var
   FuncName: String;
   Line: Integer;
 begin
-  If GetLineInformation(Addr, UnitName, FuncName, Line, False) <> slNotFound Then
+  if GetLineInformation(Addr, UnitName, FuncName, Line, False) <> slNotFound then
     Result := Format('%p: %s@%s(%d)', [Pointer(Addr), UnitName, FuncName, Line])
-  Else
+  else
     Result := Format('%p: no source info', [Pointer(Addr)]);
 end;
 
@@ -828,7 +828,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TDebugInfo.GetFileCount: Integer;
@@ -837,21 +837,21 @@ begin
 end;
 
 function TDebugInfo.GetLineInformation(const Addr: Pointer; var UnitName, FuncName: String; var Line: Integer; GetPrevLine: LongBool): TFindResult;
-Var
+var
   UnitInfo: TUnitInfo;
   FuncInfo: TFuncInfo;
   LineInfo: TLineInfo;
-Begin
+begin
   UnitName := '';
   FuncName := '';
   Line := -1;
 
   Result := GetLineInfo(Addr, UnitInfo, FuncInfo, LineInfo, GetPrevLine);
-  If Result <> slNotFound Then
-  Begin
+  if Result <> slNotFound then
+  begin
     UnitName := UnitInfo.FullUnitName;
     FuncName := String(FuncInfo.Name);
-    If LineInfo <> Nil Then
+    if LineInfo <> nil then
       Line := LineInfo.LineNo;
   end;
 end;
@@ -861,34 +861,34 @@ begin
   Result := TUnitInfo(FUnits[Index]).FullUnitName;
 end;
 
-Function TDebugInfo.GetParamsStr(FuncInfo: TFuncInfo; Const EBP: Pointer; IsTopStack: LongBool): String;
-// Var
+function TDebugInfo.GetParamsStr(FuncInfo: TFuncInfo; const EBP: Pointer; IsTopStack: LongBool): String;
+// var
 // I            : Integer;
 // ToStringData : TToStringData;
 // ParamName    : String;
 // ParamValue   : TVarInfo;
 // ParamEval    : Variant;
 // ParamRes     : String;
-Begin
+begin
   // Result := '';
   //
-  // If (FuncInfo <> Nil) And (FuncInfo.Params.Count > 0) Then
-  // Begin
+  // if (FuncInfo <> nil) and (FuncInfo.Params.Count > 0) then
+  // begin
   // ToStringData.DebuggeeControl := DebuggeeControl;
   // ToStringData.DebugInfo       := Self;
   // ToStringData.Mode            := tsmBrief;
   // ToStringData.RecursionLevel  := 0;
   //
-  // For I := 0 To FuncInfo.Params.Count - 1 Do
-  // Begin
+  // for I := 0 To FuncInfo.Params.Count - 1 Do
+  // begin
   // ParamName := FuncInfo.Params[I];
   // ParamValue := TVarInfo(FuncInfo.Params.Objects[I]);
   //
   // ParamRes := '???';
   //
-  // If (EBP <> 0) And ((ParamValue.VarKind In [vkGlobal, vkStack]) Or (IsTopStack And (ParamValue.VarKind = vkRegister))) Then
-  // Begin
-  // Try
+  // if (EBP <> 0) and ((ParamValue.VarKind In [vkGlobal, vkStack]) or (IsTopStack and (ParamValue.VarKind = vkRegister))) then
+  // begin
+  // try
   // ParamEval := EvaluateVariable(DebuggeeControl, ParamValue, EBP, False);
   // ParamRes  := VariantToString(ParamEval, ToStringData);
   // Except
@@ -896,11 +896,11 @@ Begin
   // end;
   // end;
   //
-  // If Result <> '' Then Result := Result + ', ';
+  // if Result <> '' then Result := Result + ', ';
   // Result := Result + Format('%s=%s', [ParamName, ParamRes]);
   // end;
   //
-  // If Result <> '' Then
+  // if Result <> '' then
   // Result := '(' + Result + ')';
   // end;
 end;
@@ -916,7 +916,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TDebugInfo.GetSegmentByType(const SegType: TSegmentType): TSegmentClassInfo;
@@ -930,20 +930,20 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
-Function TDebugInfo.GetTypeInfo(const TypeName: String): TTypeInfo;
-Var
+function TDebugInfo.GetTypeInfo(const TypeName: String): TTypeInfo;
+var
   UnitInfo: TUnitInfo;
   I: Integer;
-Begin
-  Result := Nil;
-  For I := 0 To Units.Count - 1 Do
-  Begin
+begin
+  Result := nil;
+  for I := 0 To Units.Count - 1 Do
+  begin
     UnitInfo := TUnitInfo(Units.Objects[I]);
     Result := UnitInfo.FindTypeByName(AnsiString(TypeName));
-    if Result <> Nil then
+    if Result <> nil then
       Exit;
   end;
 end;
@@ -965,8 +965,8 @@ begin
   Result := utUnknown;
 end;
 
-Function TDebugInfo.GetExceptionName(ExceptionRecord: PExceptionRecord): String;
-Begin
+function TDebugInfo.GetExceptionName(ExceptionRecord: PExceptionRecord): String;
+begin
   case ExceptionRecord^.ExceptionCode of
     STATUS_ACCESS_VIOLATION:
       Result := 'EACCESS_VIOLATION';
@@ -1001,18 +1001,18 @@ Begin
   end;
 end;
 
-Function TDebugInfo.GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer;
-Begin
+function TDebugInfo.GetExceptionAddress(ExceptionRecord: PExceptionRecord): Pointer;
+begin
   Result := ExceptionRecord^.ExceptionAddress;
 end;
 
 function TDebugInfo.GetExceptionFrame(ExceptionRecord: PExceptionRecord): Pointer;
 begin
-  Result := Nil;
+  Result := nil;
 end;
 
-Function TDebugInfo.GetExceptionMessage(ExceptionRecord: PExceptionRecord; const ThreadID: TThreadId): String;
-Begin
+function TDebugInfo.GetExceptionMessage(ExceptionRecord: PExceptionRecord; const ThreadID: TThreadId): String;
+begin
   Result := '';
   // Result := Format('Exception "%s($%x)" at $%p, TID = $%x', [
   // GetExceptionName(ExceptionRecord),
@@ -1021,13 +1021,13 @@ Begin
   // ThreadId]);
 end;
 
-procedure TDebugInfo.GetCallStackItems(const ThreadID: TThreadId; Const ExceptAddr, ExceptFrame: Pointer; StackItems: TList);
+procedure TDebugInfo.GetCallStackItems(const ThreadID: TThreadId; const ExceptAddr, ExceptFrame: Pointer; StackItems: TList);
 
-  Function AddStackEntry(const Addr, EBP: Pointer): TStackEntry;
+  function AddStackEntry(const Addr, EBP: Pointer): TStackEntry;
   var
     LastStackEntry: TStackEntry;
-  Begin
-    Result := Nil;
+  begin
+    Result := nil;
 
     if StackItems.Count > 0 then
     begin
@@ -1036,8 +1036,8 @@ procedure TDebugInfo.GetCallStackItems(const ThreadID: TThreadId; Const ExceptAd
         Exit;
     end;
 
-    If IsValidCodeAddr(Addr) Then
-    Begin
+    if IsValidCodeAddr(Addr) then
+    begin
       Result := TStackEntry.Create;
       Result.UpdateInfo(Addr);
       Result.EBP := EBP;
@@ -1046,7 +1046,7 @@ procedure TDebugInfo.GetCallStackItems(const ThreadID: TThreadId; Const ExceptAd
     end
   end;
 
-Var
+var
   EIP: Pointer;
   EBP: Pointer;
   ESP: Pointer;
@@ -1054,18 +1054,18 @@ Var
   OpCode: Byte;
   StackEntry: TStackEntry;
   ThData: PThreadData;
-Begin
-  If (ExceptAddr <> nil) And (ExceptFrame <> nil) Then
-  Begin
+begin
+  if (ExceptAddr <> nil) and (ExceptFrame <> nil) then
+  begin
     EIP := ExceptAddr;
     EBP := ExceptFrame;
     ESP := nil;
   end
-  Else
-  Begin
+  else
+  begin
     ThData := gvDebuger.UpdateThreadContext(ThreadID);
 
-    if ThData = Nil then
+    if ThData = nil then
       Exit;
 
     EIP := Pointer(ThData^.Context.EIP);
@@ -1075,54 +1075,54 @@ Begin
 
   StackEntry := AddStackEntry(EIP, EBP);
 
-  If (ESP <> nil) And (StackEntry <> Nil) And (StackEntry.FuncInfo <> Nil) And (StackEntry.LineInfo <> Nil) Then
-  Begin
-    If (StackEntry.LineInfo = TLineInfo(StackEntry.FuncInfo.Lines[0])) Then
-    Begin
-      If (EIP = StackEntry.FuncInfo.Address) Then
-      Begin
+  if (ESP <> nil) and (StackEntry <> nil) and (StackEntry.FuncInfo <> nil) and (StackEntry.LineInfo <> nil) then
+  begin
+    if (StackEntry.LineInfo = TLineInfo(StackEntry.FuncInfo.Lines[0])) then
+    begin
+      if (EIP = StackEntry.FuncInfo.Address) then
+      begin
         StackEntry.EBP := nil;
-        ESPV := Nil;
+        ESPV := nil;
         if gvDebuger.ReadData(ESP, @ESPV, SizeOf(ESPV)) then
           AddStackEntry(ESPV, EBP);
       end
-      Else
-      Begin
+      else
+      begin
         StackEntry.EBP := nil;
-        ESPV := Nil;
+        ESPV := nil;
         if gvDebuger.ReadData(ESP, @ESPV, SizeOf(ESPV)) then
         begin
           // push ebp; move ebp, esp;
-          If (ESPV = EBP) Then
-          Begin
+          if (ESPV = EBP) then
+          begin
             gvDebuger.ReadData(Pointer(Cardinal(ESP) + 4), @ESPV, SizeOf(ESPV));
             AddStackEntry(ESPV, EBP);
           end;
         end;
       end;
     end
-    Else If (StackEntry.LineInfo = TLineInfo(StackEntry.FuncInfo.Lines[StackEntry.FuncInfo.Lines.Count - 1])) Then
-    Begin
+    else if (StackEntry.LineInfo = TLineInfo(StackEntry.FuncInfo.Lines[StackEntry.FuncInfo.Lines.Count - 1])) then
+    begin
       StackEntry.EBP := nil;
-      ESPV := Nil;
+      ESPV := nil;
       OpCode := $00;
       // ret;
       if gvDebuger.ReadData(EIP, @OpCode, SizeOf(Byte)) then
-        If OpCode In [$C3, $CB] Then
-        Begin
+        if OpCode In [$C3, $CB] then
+        begin
           if gvDebuger.ReadData(ESP, @ESPV, SizeOf(ESPV)) then
             AddStackEntry(ESPV, EBP);
         end;
     end;
   end;
 
-  While IsValidAddr(EBP) Do
-  Begin
+  while IsValidAddr(EBP) Do
+  begin
     if gvDebuger.ReadData(IncPointer(EBP, 4), @EIP, SizeOf(Pointer)) then
     begin
       if gvDebuger.ReadData(EBP, @EBP, SizeOf(Pointer)) then
       begin
-        If AddStackEntry(EIP, EBP) = Nil Then
+        if AddStackEntry(EIP, EBP) = nil then
           Break;
       end
       else
@@ -1171,25 +1171,25 @@ begin
   Result := String(VarInfo.Name);
 end;
 
-Function TDebugInfo.ProcessDebugOutputMessage(const Msg: WideString; DebugEvent: PDebugEvent): LongBool;
-Begin
+function TDebugInfo.ProcessDebugOutputMessage(const Msg: WideString; DebugEvent: PDebugEvent): LongBool;
+begin
   Result := False;
 
   // IDEAPI_AddToOutputPanel(PWideChar(Msg), False, False);
 end;
 
-Function TDebugInfo.CheckDebugOutputMessage(DebugEvent: PDebugEvent): LongBool;
-Var
+function TDebugInfo.CheckDebugOutputMessage(DebugEvent: PDebugEvent): LongBool;
+var
   OutputStringW: WideString;
   OutputStringA: AnsiString;
 
   isUnicode: LongBool;
   StrAddr: Pointer;
   StrSize: Word;
-Begin
+begin
   Result := False;
 
-  If DebugEvent^.dwDebugEventCode <> OUTPUT_DEBUG_STRING_EVENT Then
+  if DebugEvent^.dwDebugEventCode <> OUTPUT_DEBUG_STRING_EVENT then
     Exit;
 
   isUnicode := WordBool(DebugEvent^.DebugString.fUnicode);
@@ -1214,41 +1214,41 @@ Begin
   Result := ProcessDebugOutputMessage(OutputStringW, DebugEvent);
 end;
 
-Function TDebugInfo.IsSystemException(const ExceptionCode: DWORD): LongBool;
-Begin
-  Case ExceptionCode Of
+function TDebugInfo.IsSystemException(const ExceptionCode: DWORD): LongBool;
+begin
+  case ExceptionCode Of
     STATUS_ACCESS_VIOLATION, STATUS_ARRAY_BOUNDS_EXCEEDED, STATUS_FLOAT_DENORMAL_OPERAND, STATUS_FLOAT_DIVIDE_BY_ZERO, STATUS_FLOAT_INEXACT_RESULT, STATUS_FLOAT_INVALID_OPERATION,
       STATUS_FLOAT_OVERFLOW, STATUS_FLOAT_STACK_CHECK, STATUS_FLOAT_UNDERFLOW, STATUS_INTEGER_DIVIDE_BY_ZERO, STATUS_INTEGER_OVERFLOW, STATUS_PRIVILEGED_INSTRUCTION, STATUS_STACK_OVERFLOW,
       STATUS_CONTROL_C_EXIT:
       Result := True;
-  Else
+  else
     Result := False;
   end;
 end;
 
 function TDebugInfo.IsValidAddr(const Addr: Pointer): LongBool;
-Begin
+begin
   Result := gvDebuger.IsValidAddr(Addr);
 end;
 
 function TDebugInfo.IsValidCodeAddr(const Addr: Pointer): LongBool;
-Begin
+begin
   Result := gvDebuger.IsValidCodeAddr(Addr);
 end;
 
 function TDebugInfo.IsValidDataAddr(const Addr: Pointer; const ThreadID: TThreadId): LongBool;
 begin
-  Result := IsValidAddr(Addr) And Not(IsValidCodeAddr(Addr) Or IsValidStackAddr(Addr, ThreadID));
+  Result := IsValidAddr(Addr) and not(IsValidCodeAddr(Addr) or IsValidStackAddr(Addr, ThreadID));
 end;
 
 function TDebugInfo.IsValidStackAddr(const Addr: Pointer; const ThreadID: TThreadId): LongBool;
-Var
+var
   TIB: Pointer;
   TopStack: Pointer;
   ThreadData: PThreadData;
   ThreadContext: TContext;
   ldtSel: LDT_ENTRY;
-Begin
+begin
   Result := False;
 
   ThreadData := gvDebuger.GetThreadData(ThreadID);
@@ -1256,33 +1256,33 @@ Begin
   if ThreadData <> nil then
   begin
     ThreadContext := gvDebuger.GetRegisters(ThreadID);
-    If GetThreadSelectorEntry(ThreadData^.ThreadHandle, ThreadContext.SegFs, ldtSel) Then
-    Begin
-      TIB := Pointer((ldtSel.BaseHi shl 24) Or (ldtSel.BaseMid shl 16) Or (ldtSel.BaseLow));
+    if GetThreadSelectorEntry(ThreadData^.ThreadHandle, ThreadContext.SegFs, ldtSel) then
+    begin
+      TIB := Pointer((ldtSel.BaseHi shl 24) or (ldtSel.BaseMid shl 16) or (ldtSel.BaseLow));
       TopStack := nil;
       if gvDebuger.ReadData(Pointer(Cardinal(TIB) + 4), @TopStack, SizeOf(Pointer)) { fs:[4] } then
-        Result := (TopStack <> nil) And (Cardinal(Addr) <= Cardinal(TopStack)) And (Cardinal(Addr) >= (ThreadContext.ESP));
+        Result := (TopStack <> nil) and (Cardinal(Addr) <= Cardinal(TopStack)) and (Cardinal(Addr) >= (ThreadContext.ESP));
     end;
   end;
 end;
 
 { TFuncInfo }
 
-Constructor TFuncInfo.Create;
-Begin
-  Inherited;
+constructor TFuncInfo.Create;
+begin
+  inherited;
 
-  UnitSegment := Nil;
+  UnitSegment := nil;
 
   Params := TNameList.Create;
   Params.FreeItems := False;
 end;
 
-Destructor TFuncInfo.Destroy;
-Begin
+destructor TFuncInfo.Destroy;
+begin
   FreeAndNil(Params);
 
-  Inherited;
+  inherited;
 end;
 
 function TFuncInfo.ParamsAsString: String;
@@ -1333,11 +1333,11 @@ end;
 
 constructor TTypeInfo.Create;
 begin
-  Inherited;
+  inherited;
 
   NameId := -1;
-  Members := Nil;
-  Elements := Nil;
+  Members := nil;
+  Elements := nil;
 end;
 
 destructor TTypeInfo.Destroy;
@@ -1345,7 +1345,7 @@ begin
   FreeAndNil(Members);
   FreeAndNil(Elements);
 
-  Inherited;
+  inherited;
 end;
 
 function TTypeInfo.ElementsToString: String;
@@ -1354,7 +1354,7 @@ var
 begin
   Result := '';
 
-  if (Kind = tkEnum) And (Elements <> Nil) then
+  if (Kind = tkEnum) and (Elements <> nil) then
   begin
     for I := 0 to Elements.Count - 1 do
     begin
@@ -1458,7 +1458,7 @@ begin
 
   if NameId > 0 then
     Result := gvDebugInfo.GetNameById(NameId)
-  else if (Kind = tkObject) and (BaseType <> Nil) then
+  else if (Kind = tkObject) and (BaseType <> nil) then
     Result := BaseType.Name
   else
     Result := AnsiString(KindAsString);
@@ -1505,13 +1505,13 @@ begin
     Result := ShortName;
 end;
 
-Constructor TVarInfo.Create;
-Begin
+constructor TVarInfo.Create;
+begin
   inherited;
 
   // Будет создаваться по необходимости
   // RegisterRanges := TList.Create;
-  RegisterRanges := Nil;
+  RegisterRanges := nil;
 end;
 
 function TVarInfo.DataTypeName: String;
@@ -1522,8 +1522,8 @@ begin
     Result := '';
 end;
 
-Destructor TVarInfo.Destroy;
-Begin
+destructor TVarInfo.Destroy;
+begin
   if Assigned(RegisterRanges) then
     FreeList(RegisterRanges);
 
@@ -1532,7 +1532,7 @@ end;
 
 function TVarInfo.UnitInfo: TUnitInfo;
 begin
-  Result := Nil;
+  Result := nil;
 
   if Owner is TFuncInfo then
     Result := TFuncInfo(Owner).UnitInfo
@@ -1594,7 +1594,7 @@ begin
   FreeAndNil(SourceSegments);
   FreeAndNil(FuncsByAddr);
 
-  Inherited;
+  inherited;
 end;
 
 function TUnitInfo.FindSegmentByAddr(const Addr: Pointer; const SegmentID: Word = 0): TUnitSegmentInfo;
@@ -1612,7 +1612,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TUnitInfo.FindSourceSegmentByAddr(const Addr: Pointer): TUnitSourceModuleInfo;
@@ -1627,7 +1627,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TUnitInfo.FindSourceSegmentByNameId(const NameId: TNameId): TUnitSourceModuleInfo;
@@ -1641,7 +1641,7 @@ begin
       Exit;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TUnitInfo.FullUnitName: String;
@@ -1665,30 +1665,30 @@ constructor TStackEntry.Create;
 begin
   inherited Create;
 
-  UnitInfo := Nil;
-  FuncInfo := Nil;
-  LineInfo := Nil;
-  EIP := Nil;
-  RET := Nil;
-  EBP := Nil;
+  UnitInfo := nil;
+  FuncInfo := nil;
+  LineInfo := nil;
+  EIP := nil;
+  RET := nil;
+  EBP := nil;
 end;
 
 function TStackEntry.GetInfo: String;
 begin
   Result := Format('[$%p] ', [EIP]);
-  If UnitInfo <> Nil Then
-  Begin
+  if UnitInfo <> nil then
+  begin
     // В XE4 имя модуля уже в названии функции
-    // If UnitInfo <> Nil Then
+    // if UnitInfo <> nil then
     // Result := Result + String(UnitInfo.Name);
-    If FuncInfo <> Nil Then
+    if FuncInfo <> nil then
     begin
       Result := Result + FuncInfo.ShortName;
     end;
-    If LineInfo <> Nil Then
+    if LineInfo <> nil then
       Result := Result + Format(' (%d)', [LineInfo.LineNo]);
   end
-  Else
+  else
     Result := Result + 'no source';
 end;
 
@@ -1723,7 +1723,7 @@ begin
   if Owner is TFuncInfo then
     Result := TFuncInfo(Owner).UnitInfo
   else
-    Result := Nil;
+    Result := nil;
 end;
 
 function TConstInfo.ValueAsString: String;
@@ -1862,7 +1862,7 @@ constructor TNameList.Create;
 begin
   inherited;
 
-  FNameIdList := Nil;
+  FNameIdList := nil;
   FFreeItems := True;
   // Capacity := 16;
 end;
@@ -1896,7 +1896,7 @@ begin
     end;
   end;
 
-  Result := Nil;
+  Result := nil;
 end;
 
 function TNameList.FindByNameId(const NameId: TNameId): TNameInfo;
@@ -1904,7 +1904,7 @@ begin
   CheckNameIdList;
 
   if not FNameIdList.TryGetValue(NameId, Result) then
-    Result := Nil;
+    Result := nil;
 end;
 
 function TNameList.GetNameInfoItem(const Index: Integer): TNameInfo;
@@ -1993,7 +1993,7 @@ var
   Idx: Integer;
   D: Integer;
 begin
-  Result := Nil;
+  Result := nil;
 
   if Count = 0 then
     Exit;
@@ -2011,7 +2011,7 @@ begin
     else if Idx = Count then
       Result := Items[Count - 1];
 
-    if (Result <> Nil) then
+    if (Result <> nil) then
     begin
       D := Result.CheckAddress(Address);
 
@@ -2024,10 +2024,10 @@ begin
           Result := Items[Idx];
 
           if Result.CheckAddress(Address) <> 0 then
-            Result := Nil;
+            Result := nil;
         end
         else
-          Result := Nil;
+          Result := nil;
       end;
     end;
   finally
@@ -2237,11 +2237,11 @@ end;
 
 procedure TMemoryManagerInfo.Clear;
 begin
-  VarInfo := Nil;
-  GetMem := Nil;
-  FreeMem := Nil;
-  ReallocMem := Nil;
-  AllocMem := Nil;
+  VarInfo := nil;
+  GetMem := nil;
+  FreeMem := nil;
+  ReallocMem := nil;
+  AllocMem := nil;
 end;
 
 constructor TMemoryManagerInfo.Create;
@@ -2283,7 +2283,7 @@ end;
 
 procedure TRTLInfo.Clear;
 begin
-  vmtClassNameInfo := Nil;
+  vmtClassNameInfo := nil;
 end;
 
 constructor TRTLInfo.Create;

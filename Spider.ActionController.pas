@@ -3,8 +3,8 @@ unit Spider.ActionController;
 interface
 
 uses
-  System.Classes, System.SyncObjs, DebugInfo, DebugerTypes, XMLDoc, XMLIntf,
-  Collections.Queues;
+  System.Classes, System.SyncObjs, Xml.XMLDoc, Xml.XMLIntf, DebugInfo,
+  DebuggerTypes, Collections.Queues;
 
 type
   TacAction = (acCreateProcess, acAddThread, acUpdateInfo, acProgress, acSetProjectName, acChangeProjectSettings, acChangeDbgState);
@@ -132,7 +132,7 @@ implementation
 
 uses
   System.SysUtils, System.IOUtils, System.Types, Vcl.Dialogs, Spider.Main,
-  Debuger, Spider.DebugerThread, ClassUtils, JclIDEUtils;
+  Debugger, Spider.DebugerThread, ClassUtils, JclIDEUtils;
 
 var
   gvActionThread: TActionThread = nil;

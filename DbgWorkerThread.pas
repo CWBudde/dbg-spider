@@ -20,12 +20,12 @@ type
   end;
 
 var
-  gvDbgWorkerThread: TDbgWorkerThread = Nil;
+  gvDbgWorkerThread: TDbgWorkerThread = nil;
 
 implementation
 
 uses
-  Debuger;
+  Debugger;
 
 { TDbgWorkerThread }
 
@@ -69,7 +69,7 @@ begin
     gvDebuger.DbgSysncObjsProfiler.SyncObjsTracking
   then
   begin
-    if gvDbgWorkerThread = Nil then
+    if gvDbgWorkerThread = nil then
       gvDbgWorkerThread := TDbgWorkerThread.Create;
   end;
 end;

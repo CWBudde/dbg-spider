@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, System.UITypes, Xml.XMLDoc, Xml.XMLIntf, Vcl.Graphics,
-  DebugerTypes, DbgHookTypes;
+  DebuggerTypes, DbgHookTypes;
 
 type
   TColorOptions = class

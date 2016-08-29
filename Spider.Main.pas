@@ -10,7 +10,7 @@ uses
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.Ribbon, Vcl.RibbonActnMenus,
   Vcl.RibbonLunaStyleActnCtrls, Vcl.RibbonSilverStyleActnCtrls, Vcl.StdCtrls,
   Vcl.ToolWin, Vcl.XPMan, VirtualTrees,
-  GdiPlus, GdiPlusHelpers, DebugInfo, Debuger, DebugerTypes, DelphiDebugInfo,
+  GdiPlus, GdiPlusHelpers, DebugInfo, Debugger, DebuggerTypes, DelphiDebugInfo,
   Spider.ActionController, Spider.SpiderOptions, Spider.UpdateInfo, 
   Spider.SourceViewFrame, Spider.ShareData;
 
@@ -1194,7 +1194,7 @@ function TMainForm.AddProcessToTree(Tree: TBaseVirtualTree): PVirtualNode;
 var
   LinkData: PLinkData;
 begin
-  Result := Tree.AddChild(Nil);
+  Result := Tree.AddChild(nil);
   LinkData := Tree.GetNodeData(Result);
   LinkData^.SyncNode := nil;
   LinkData^.ProcessData := gvDebuger.ProcessData;
@@ -1206,9 +1206,9 @@ var
   CurNode: PVirtualNode;
   LinkData: PLinkData;
 begin
-  Result := Nil;
+  Result := nil;
   CurNode := Node^.FirstChild;
-  if CurNode <> Nil then
+  if CurNode <> nil then
   repeat
     LinkData := vTree.GetNodeData(CurNode);
     if CheckFunc(LinkData, CmpData) then
@@ -1219,7 +1219,7 @@ begin
 
     Result := FindNode(vTree, CurNode, CheckFunc, CmpData);
     CurNode := CurNode^.NextSibling;
-  until (CurNode = nil) or (Result <> Nil);
+  until (CurNode = nil) or (Result <> nil);
 end;
 
 function TMainForm.FindThreadNode(vTree: TBaseVirtualTree; ThData: PThreadData): PVirtualNode;
@@ -1345,7 +1345,7 @@ begin
   Tree.BeginUpdate;
   CurNode := Tree.FocusedNode;
   try
-    ParentNode := Nil;
+    ParentNode := nil;
 
     ParentId := ThData^.ThreadAdvInfo^.ThreadParentId;
 
@@ -1365,7 +1365,7 @@ begin
       *)
     end;
 
-    if ParentNode = Nil then
+    if ParentNode = nil then
       ParentNode := Tree.RootNode^.FirstChild;
 
     Result := Tree.AddChild(ParentNode);
@@ -2280,7 +2280,7 @@ var
   ChildData: PLinkData;
   I: Integer;
 begin
-  if SyncObjsInfo = Nil then Exit;
+  if SyncObjsInfo = nil then Exit;
 
   Tree.BeginUpdate;
   try
@@ -2310,7 +2310,7 @@ begin
           if Assigned(SyncObjsItem.LinkExt) then
           begin
             // Leave
-            if SyncObjsItem.Leave <> Nil then
+            if SyncObjsItem.Leave <> nil then
             begin
               SyncObjsChildNode := Tree.AddChild(SyncObjsNode);
               ChildData := Tree.GetNodeData(SyncObjsChildNode);
@@ -2498,7 +2498,7 @@ var
   MemNode: PVirtualNode;
   Data: PLinkData;
 begin
-  if MemInfo = Nil then Exit;
+  if MemInfo = nil then Exit;
 
   Tree.BeginUpdate;
   try
@@ -3616,7 +3616,7 @@ var
   Data: PLinkData;
   OtherTree: TBaseVirtualTree;
 begin
-  if (Tree = Nil) or (Node = Nil) then
+  if (Tree = nil) or (Node = nil) then
     Exit;
 
   Data := Tree.GetNodeData(Node);
@@ -3685,7 +3685,7 @@ var
   DebugePaused: LongBool;
 begin
   DebugInfoLoaded := Assigned(gvDebugInfo) and gvDebugInfo.DebugInfoLoaded;
-  DebugerStoped := (gvDebuger = Nil) or not gvDebuger.Active;
+  DebugerStoped := (gvDebuger = nil) or not gvDebuger.Active;
 
   acRun.Enabled := DebugInfoLoaded and DebugerStoped;
   acStop.Enabled := not DebugerStoped;
@@ -3896,7 +3896,7 @@ end;
 procedure TMainForm.vdtTimeLineAdvancedHeaderDraw(Sender: TVTHeader;
   var PaintInfo: THeaderPaintInfo; const Elements: THeaderPaintElements);
 begin
-  if (PaintInfo.Column <> Nil) and (PaintInfo.Column.Index = 0)then
+  if (PaintInfo.Column <> nil) and (PaintInfo.Column.Index = 0)then
     DrawTimeLineHeaderEx(PaintInfo.TargetCanvas.ToGPGraphics, PaintInfo.PaintRectangle, GetLineTimeOffset);
 end;
 
@@ -4053,7 +4053,7 @@ var
 begin
   svfLockTrackingSource.Clear;
 
-  if vstLockTrackingSyncObjStack.FocusedNode = Nil then
+  if vstLockTrackingSyncObjStack.FocusedNode = nil then
     Exit;
 
   Data := vstLockTrackingSyncObjStack.GetNodeData(vstLockTrackingSyncObjStack.FocusedNode);
@@ -4671,7 +4671,7 @@ begin
   vTree := TVirtualStringTree(Sender);
 
   SaveOnColumnResize := vTree.OnColumnResize;
-  vTree.OnColumnResize := Nil;
+  vTree.OnColumnResize := nil;
   try
     CCnt := vTree.Header.Columns.Count;
 
@@ -4915,9 +4915,9 @@ begin
   vstExceptionCallStack.Clear;
   svfExceptInfoSource.Clear;
 
-  if gvDebuger = Nil then Exit;
+  if gvDebuger = nil then Exit;
 
-  ExceptList := Nil;
+  ExceptList := nil;
   if Assigned(Node) then
   begin
     Data := Sender.GetNodeData(Node);
@@ -4943,7 +4943,7 @@ begin
 
   vstExceptionList.BeginUpdate;
   try
-    if ExceptList <> Nil then
+    if ExceptList <> nil then
     begin
       L := ExceptList.LockList;
       try
@@ -6170,17 +6170,17 @@ begin
   Data := vstMemInfoObjects.GetNodeData(Node);
 
   FuncNode := Data^.SyncNode;
-  if FuncNode = Nil then Exit;
+  if FuncNode = nil then Exit;
 
   FuncLinkData := vstMemInfoFuncTree.GetNodeData(FuncNode);
 
   ThNode := FuncLinkData^.SyncNode;
-  if ThNode = Nil then Exit;
+  if ThNode = nil then Exit;
 
   ThLinkData := vstMemInfoThreads.GetNodeData(ThNode);
-  if ThLinkData = Nil then Exit;
+  if ThLinkData = nil then Exit;
 
-  MemInfo := Nil;
+  MemInfo := nil;
   case ThLinkData^.LinkType of
     ltProcess:
     begin
@@ -6194,7 +6194,7 @@ begin
     end;
   end;
 
-  if (MemInfo <> Nil) then
+  if (MemInfo <> nil) then
   begin
     MemInfo.Lock.BeginRead;
     try
@@ -6221,23 +6221,23 @@ var
   MemInfo: TGetMemInfoList;
   GetMemInfo: TGetMemInfo;
 begin
-  MemInfo := Nil;
+  MemInfo := nil;
   CellText := '';
 
   Data := vstMemInfoObjects.GetNodeData(Node);
 
   FuncNode := Data^.SyncNode;
-  if FuncNode = Nil then Exit;
+  if FuncNode = nil then Exit;
 
   FuncLinkData := vstMemInfoFuncTree.GetNodeData(FuncNode);
 
   //if FuncLinkData^.LinkType <> ltTrackFuncInfo then Exit;
 
   ThNode := FuncLinkData^.SyncNode;
-  if ThNode = Nil then Exit;
+  if ThNode = nil then Exit;
 
   ThLinkData := vstMemInfoThreads.GetNodeData(ThNode);
-  if ThLinkData = Nil then Exit;
+  if ThLinkData = nil then Exit;
 
   case ThLinkData^.LinkType of
     ltProcess:
@@ -6255,7 +6255,7 @@ begin
   case Column of
     0:
       begin
-        if (MemInfo <> Nil) then
+        if (MemInfo <> nil) then
         begin
           MemInfo.Lock.BeginRead;
           if MemInfo.TryGetValue(Data^.MemPtr, GetMemInfo) then
@@ -6266,7 +6266,7 @@ begin
     1: CellText := Format('%p', [Data^.MemPtr]);
     2:
       begin
-        if (MemInfo <> Nil) then
+        if (MemInfo <> nil) then
         begin
           MemInfo.Lock.BeginRead;
           if MemInfo.TryGetValue(Data^.MemPtr, GetMemInfo) then
@@ -6284,7 +6284,7 @@ var
 begin
   svfMemInfoFuncSrc.Clear;
 
-  if vstMemInfoObjStack.FocusedNode = Nil then
+  if vstMemInfoObjStack.FocusedNode = nil then
     Exit;
 
   Data := vstMemInfoObjStack.GetNodeData(vstMemInfoObjStack.FocusedNode);
@@ -6412,12 +6412,12 @@ begin
 
   Data := vstMemList.GetNodeData(Node);
 
-  MemInfo := Nil;
+  MemInfo := nil;
   ThNode := Data^.SyncNode;
-  if ThNode = Nil then Exit;
+  if ThNode = nil then Exit;
 
   ThLinkData := vstMemInfoThreads.GetNodeData(ThNode);
-  if ThLinkData = Nil then Exit;
+  if ThLinkData = nil then Exit;
 
   case ThLinkData^.LinkType of
     ltProcess:
@@ -6432,7 +6432,7 @@ begin
     end;
   end;
 
-  if (MemInfo <> Nil) then
+  if (MemInfo <> nil) then
   begin
     MemInfo.Lock.BeginRead;
     try
@@ -6455,15 +6455,15 @@ var
   MemInfo: TGetMemInfoList;
   GetMemInfo: TGetMemInfo;
 begin
-  MemInfo := Nil;
+  MemInfo := nil;
   CellText := '';
 
   Data := vstMemList.GetNodeData(Node);
   ThNode := Data^.SyncNode;
-  if ThNode = Nil then Exit;
+  if ThNode = nil then Exit;
 
   ThLinkData := vstMemInfoThreads.GetNodeData(ThNode);
-  if ThLinkData = Nil then Exit;
+  if ThLinkData = nil then Exit;
 
   case ThLinkData^.LinkType of
     ltProcess:
@@ -6481,7 +6481,7 @@ begin
   case Column of
     0:
       begin
-        if (MemInfo <> Nil) then
+        if (MemInfo <> nil) then
         begin
           MemInfo.Lock.BeginRead;
           if MemInfo.TryGetValue(Data^.MemPtr, GetMemInfo) then
@@ -6492,7 +6492,7 @@ begin
     1: CellText := Format('%p', [Data^.MemPtr]);
     2:
       begin
-        if (MemInfo <> Nil) then
+        if (MemInfo <> nil) then
         begin
           MemInfo.Lock.BeginRead;
           if MemInfo.TryGetValue(Data^.MemPtr, GetMemInfo) then

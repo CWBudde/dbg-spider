@@ -1,4 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{99256B98-0F1D-4707-BC25-85850B6A52B7}</ProjectGuid>
         <ProjectVersion>16.1</ProjectVersion>
@@ -105,8 +105,8 @@
         <DCCReference Include="DbgSamplingProfiler.pas"/>
         <DCCReference Include="DbgSyncObjsProfiler.pas"/>
         <DCCReference Include="DbgWorkerThread.pas"/>
-        <DCCReference Include="Debuger.pas"/>
-        <DCCReference Include="DebugerTypes.pas"/>
+        <DCCReference Include="Debugger.pas"/>
+        <DCCReference Include="DebuggerTypes.pas"/>
         <DCCReference Include="DebugHook.pas"/>
         <DCCReference Include="DebugInfo.pas"/>
         <DCCReference Include="DelphiDebugInfo.pas"/>

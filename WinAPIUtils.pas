@@ -58,8 +58,8 @@ function NtQueryVirtualMemory(ProcessHandle: THandle; BaseAddress: Pointer; Memo
 
 var
   _KernelLibHandle: THandle = 0;
-  NtSuspendProcess: TProcFunction = Nil;
-  NtResumeProcess: TProcFunction = Nil;
+  NtSuspendProcess: TProcFunction = nil;
+  NtResumeProcess: TProcFunction = nil;
 
 procedure Check(const Value: LongBool);
 begin

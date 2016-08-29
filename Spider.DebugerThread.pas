@@ -3,7 +3,7 @@ unit Spider.DebugerThread;
 interface
 
 uses
-  WinApi.Windows, System.Classes, System.SysUtils, DebugerTypes,
+  WinApi.Windows, System.Classes, System.SysUtils, DebuggerTypes,
   Spider.ActionController;
 
 type
@@ -59,7 +59,7 @@ var
 implementation
 
 uses
-  Debuger, DebugInfo, DelphiDebugInfo, MapDebugInfo;
+  Debugger, DebugInfo, DelphiDebugInfo, MapDebugInfo;
 
 { TDebugerThread }
 
@@ -87,7 +87,7 @@ procedure TDebugerThread.DoTerminate;
 begin
   inherited;
 
-  _DbgThread := Nil;
+  _DbgThread := nil;
 end;
 
 procedure TDebugerThread.Execute;
@@ -323,7 +323,7 @@ end;
 
 procedure TDebugerThread.OnExitThread(Sender: TObject; ThreadId: TThreadId; Data: PExitThreadDebugInfo);
 begin
-  if Data <> Nil then
+  if Data <> nil then
     _AC.Log(dltThreadEvent, 'Thread Exit ID: %d (%d)', [ThreadID, Data^.dwExitCode])
   else
     _AC.Log(dltThreadEvent, 'Thread Exit ID: %d', [ThreadID]);

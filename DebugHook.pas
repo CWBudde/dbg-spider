@@ -2,7 +2,8 @@ unit DebugHook;
 
 interface
 
-uses Windows, DebugInfo;
+uses
+  Windows, DebugInfo;
 
 function LoadDbgHookDll(hProcess: THandle; const DllPath: String; ImageBase: Pointer; MemoryMgr: TVarInfo; _vmtClassName: Integer;
   MemoryCallStack: LongBool; SyncObjsHook: LongBool): LongBool;
@@ -10,7 +11,8 @@ function UnLoadDbgHookDll(hProcess: THandle; const DllPath: String): LongBool;
 
 implementation
 
-uses Debuger;
+uses
+  Debugger;
 
 type
   TInfoName = array[0..31] of AnsiChar;
@@ -90,7 +92,7 @@ begin
           InitSyncObjsHook(ImageBase);
 
         // 2 - перекрываем менеджер памяти
-        if (@InitMemoryHook <> nil) and (MemoryMgr <> Nil) then
+        if (@InitMemoryHook <> nil) and (MemoryMgr <> nil) then
           InitMemoryHook(MemoryMgr, MemoryCallStack);
 
         // 3 - запускаем поток обработки дебажной информации
@@ -192,16 +194,16 @@ begin
     @ResetMemoryHook := GetProcAddress(HLib, sDllProcMemoryHook);
     @ResetPerfomance := GetProcAddress(HLib, sDllProcPerfomance);
 
-    if @ResetPerfomance <> Nil then
+    if @ResetPerfomance <> nil then
       ResetPerfomance();
 
-    if @ResetMemoryHook <> Nil then
+    if @ResetMemoryHook <> nil then
       ResetMemoryHook();
 
-    if @ResetSyncObjsHook <> Nil then
+    if @ResetSyncObjsHook <> nil then
       ResetSyncObjsHook();
 
-    if @ResetThreadHook <> Nil then
+    if @ResetThreadHook <> nil then
       ResetThreadHook();
 
     ExitThread(0);

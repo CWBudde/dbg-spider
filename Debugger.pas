@@ -1,10 +1,10 @@
-unit Debuger;
+unit Debugger;
 
 interface
 
 uses
   WinApi.Windows, System.Classes, System.SysUtils, System.SyncObjs,
-  ClassUtils, JclPeImage, JclDebug, DebugerTypes, DbgHookTypes,
+  ClassUtils, JclPeImage, JclDebug, DebuggerTypes, DbgHookTypes,
   Collections.Queues, Collections.Dictionaries, DbgMemoryProfiler,
   DbgSyncObjsProfiler, DbgSamplingProfiler, DbgCodeProfiler;
 
@@ -224,9 +224,9 @@ type
     procedure SetSingleStepMode(const ThreadID: TThreadId; const RestoreEIPAfterBP: LongBool); overload;
     procedure SetSingleStepMode(ThData: PThreadData; const RestoreEIPAfterBP: LongBool); overload;
 
-    function IsValidAddr(Const Addr: Pointer): LongBool;
-    function IsValidCodeAddr(Const Addr: Pointer): LongBool;
-    function IsValidProcessCodeAddr(Const Addr: Pointer): LongBool;
+    function IsValidAddr(const Addr: Pointer): LongBool;
+    function IsValidCodeAddr(const Addr: Pointer): LongBool;
+    function IsValidProcessCodeAddr(const Addr: Pointer): LongBool;
 
     procedure GetCallStack(ThData: PThreadData; var Stack: TDbgInfoStack);
     procedure GetCallStackEx(ThData: PThreadData; var Stack: TDbgInfoStack);
@@ -381,7 +381,7 @@ var
 begin
   Result := False;
 
-  if ThreadData = Nil then Exit;
+  if ThreadData = nil then Exit;
 
   case PointType of
     ptStart:
@@ -447,7 +447,7 @@ begin
           end;
         ptPerfomance:
           begin
-            ThPoint^.PerfInfo := Nil;
+            ThPoint^.PerfInfo := nil;
             (* TODO:
             ThPoint^.PerfInfo := TPerfInfo.Create;
             ThPoint^.PerfInfo.DeltaTickCPU := Cur - Prev;
@@ -572,7 +572,7 @@ begin
   Result := FThreadAdvInfoList.Add;
 
   Result^.ThreadId := ThreadId;
-  Result^.ThreadData := Nil;
+  Result^.ThreadData := nil;
 
   FThreadAdvInfoList.Commit;
 end;
@@ -580,8 +580,8 @@ end;
 function TDebuger.ProcAllocMem(const Size: Cardinal): Pointer;
 begin
   // TODO: Проверить выделение памяти для маленьких Size
-  Result := VirtualAllocEx(FProcessData.AttachedProcessHandle, Nil, Size, MEM_COMMIT Or MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-  If Result = nil Then
+  Result := VirtualAllocEx(FProcessData.AttachedProcessHandle, nil, Size, MEM_COMMIT or MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+  if Result = nil then
     RaiseLastOsError;
 end;
 
@@ -758,7 +758,7 @@ begin
   FProcessData := TProcessData.Create;
 
   FPerfomanceMode := False;
-  FPerfomanceCheckPtr := Nil; //Pointer($76FED315);
+  FPerfomanceCheckPtr := nil; //Pointer($76FED315);
 
   FDbgSamplingProfiler := TDbgSamplingProfiler.Create;
   FDbgMemoryProfiler := TDbgMemoryProfiler.Create;
@@ -768,7 +768,7 @@ end;
 
 function TDebuger.CurThreadData: PThreadData;
 begin
-  if FCurThreadData = Nil then
+  if FCurThreadData = nil then
     UpdateCurThreadContext;
 
   Result := FCurThreadData;
@@ -1189,7 +1189,7 @@ procedure TDebuger.GetCallStack(ThData: PThreadData; var Stack: TDbgInfoStack);
 const
   _MAX_STACK_CNT = 64;
 
-  function AddStackEntry(Const Addr: Pointer; var Cnt: Integer): LongBool;
+  function AddStackEntry(const Addr: Pointer; var Cnt: Integer): LongBool;
   begin
     Result := (Cnt < _MAX_STACK_CNT) and IsValidAddr(Addr);
 
@@ -1200,11 +1200,11 @@ const
     end;
   end;
 
-Var
+var
   EIP : Pointer;
   EBP : Pointer;
   Cnt: Integer;
-Begin
+begin
   EIP := Pointer(ThData^.Context^.Eip);
   EBP := Pointer(ThData^.Context^.Ebp);
 
@@ -1392,7 +1392,7 @@ function TDebuger.GetThreadInfo(const ThreadId: TThreadId): PThreadAdvInfo;
 var
   Idx: Integer;
 begin
-  Result := Nil;
+  Result := nil;
 
   FThreadAdvInfoList.BeginRead;
   try
@@ -1414,7 +1414,7 @@ begin
     begin
       ThInfo := FThreadAdvInfoList[Result];
       if (ThInfo^.ThreadID = ThreadID) and
-        ((ThInfo^.ThreadData = Nil) or (ThInfo^.ThreadData^.State <> tsFinished))
+        ((ThInfo^.ThreadData = nil) or (ThInfo^.ThreadData^.State <> tsFinished))
       then
         Exit;
     end;
@@ -1449,7 +1449,7 @@ end;
 
 function TDebuger.GetThreadDataByIdx(const Idx: Integer): PThreadData;
 begin
-  Result := Nil;
+  Result := nil;
 
   if Idx < FThreadList.Count then
     Result := FThreadList[Idx];
@@ -1482,9 +1482,9 @@ threadvar
   _mbi: TMemoryBasicInformation;
 
 function TDebuger.IsValidAddr(const Addr: Pointer): LongBool;
-Var
+var
   mbi: PMemoryBasicInformation;
-Begin
+begin
   Result := False;
 
   if (Addr = nil) or (Addr = Pointer(-1)) then Exit;
@@ -1495,24 +1495,24 @@ Begin
 end;
 
 function TDebuger.IsValidCodeAddr(const Addr: Pointer): LongBool;
-Const
-  _PAGE_CODE = DWORD(PAGE_EXECUTE Or PAGE_EXECUTE_READ or PAGE_EXECUTE_READWRITE Or PAGE_EXECUTE_WRITECOPY);
-Var
+const
+  _PAGE_CODE = DWORD(PAGE_EXECUTE or PAGE_EXECUTE_READ or PAGE_EXECUTE_READWRITE or PAGE_EXECUTE_WRITECOPY);
+var
   mbi: PMemoryBasicInformation;
-Begin
+begin
   Result := False;
 
   mbi := @_mbi;
 
   if (VirtualQueryEx(FProcessData.AttachedProcessHandle, Addr, mbi^, SizeOf(TMemoryBasicInformation)) <> 0) then
-    Result := ((mbi^.Protect And _PAGE_CODE) <> 0);
+    Result := ((mbi^.Protect and _PAGE_CODE) <> 0);
 end;
 
 function TDebuger.IsValidProcessCodeAddr(const Addr: Pointer): LongBool;
-Begin
+begin
   Result := False;
 
-  if FProcessData.PEImage <> Nil then
+  if FProcessData.PEImage <> nil then
     Result := (Cardinal(Addr) >= Cardinal(FProcessData.BaseOfImage)) and
       (Cardinal(Addr) <= (Cardinal(FProcessData.BaseOfImage) + FProcessData.PEImage.OptionalHeader32.SizeOfCode));
 end;
@@ -1553,7 +1553,7 @@ begin
     if not Assigned(FPerfomanceCheckPtr) then
       InjectPerfFunc;
 
-    hThread := CreateRemoteThread(FProcessData.AttachedProcessHandle, nil, 0, FPerfomanceCheckPtr, Nil, 0, lpThreadId);
+    hThread := CreateRemoteThread(FProcessData.AttachedProcessHandle, nil, 0, FPerfomanceCheckPtr, nil, 0, lpThreadId);
     if hThread <> 0 then
     begin
       WaitForSingleObject(hThread, INFINITE);
@@ -1584,7 +1584,7 @@ begin
       RaiseDebugCoreException();
   end
   else
-    ParamAddr := Nil;
+    ParamAddr := nil;
 
   // Создаем поток, в котором все это будет выполняться.
   hThread := CreateRemoteThread(hProcess, nil, 2048, ThreadAddr, ParamAddr, CREATE_SUSPENDED, lpThreadId);
@@ -1768,7 +1768,7 @@ begin
 //  Context.ContextFlags := CONTEXT_DEBUG_REGISTERS;
 //  Check(GetThreadContext(ThData^.ThreadHandle, Context));
 
-  if CurThreadData = Nil then
+  if CurThreadData = nil then
     RaiseDebugCoreException();
 
   Context := CurThreadData^.Context;
@@ -2130,7 +2130,7 @@ begin
     ThInfo^.ThreadParentId := ER^.ExceptionInformation[3];
 
     StrAddr := Pointer(ER^.ExceptionInformation[2]);
-    if StrAddr <> Nil then
+    if StrAddr <> nil then
     begin
       Str := ReadStringP(StrAddr, 0);
       if Str <> '' then
@@ -2485,7 +2485,7 @@ end;
 function TDebuger.SetThreadInfo(const ThreadId: TThreadId): PThreadAdvInfo;
 begin
   Result := GetThreadInfo(ThreadId);
-  if Result = Nil then
+  if Result = nil then
     Result := AddThreadInfo(ThreadId);
 end;
 
@@ -2808,7 +2808,7 @@ function TDebuger.UpdateThreadContext(ThreadData: PThreadData; const ContextFlag
 begin
   Result := False;
 
-  if ThreadData <> Nil then
+  if ThreadData <> nil then
   begin
     //ZeroMemory(ThreadData^.Context, SizeOf(TContext));
 
@@ -2839,6 +2839,6 @@ end;
 initialization
 
 finalization
-  if gvDebuger <> Nil then
+  if gvDebuger <> nil then
     FreeAndNil(gvDebuger);
 end.

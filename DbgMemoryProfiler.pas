@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, WinApi.Windows, Collections.Queues, DbgHookTypes,
-  System.SysUtils, System.SyncObjs, DebugerTypes;
+  System.SysUtils, System.SyncObjs, DebuggerTypes;
 
 type
   TProcessMemoryQueue = TQueue<PDbgMemInfoListBuf>;
@@ -44,7 +44,7 @@ type
 implementation
 
 uses
-  Debuger, Collections.Base;
+  Debugger, Collections.Base;
 
 const
   _MAX_MEM_INFO_BUF_COUNT = 512;
@@ -81,7 +81,7 @@ begin
   Result := False;
 
   // »щем в текущем потоке
-  if ThData <> Nil then
+  if ThData <> nil then
     Result := ThData^.DbgGetMemInfo.TryGetValue(Ptr, MemInfo);
 
   if not Result then
@@ -90,13 +90,13 @@ begin
     Idx := 0;
     repeat
       ThData := gvDebuger.GetThreadDataByIdx(Idx);
-      if ThData <> Nil then
+      if ThData <> nil then
       begin
         Result := ThData^.DbgGetMemInfo.TryGetValue(Ptr, MemInfo);
 
         Inc(Idx);
       end;
-    until Result or (ThData = Nil);
+    until Result or (ThData = nil);
   end;
 end;
 
@@ -130,15 +130,15 @@ var
   MemInfo: TGetMemInfo;
   NewMemInfo: TGetMemInfo;
 begin
-  ThData := Nil;
+  ThData := nil;
 
   for Idx := 0 to Buf^.Count - 1 do
   begin
     DbgMemInfo := @Buf^.DbgMemInfoList^[Idx];
-    if (ThData = Nil) or (ThData^.ThreadID <> DbgMemInfo^.ThreadId) then
+    if (ThData = nil) or (ThData^.ThreadID <> DbgMemInfo^.ThreadId) then
       ThData := gvDebuger.GetThreadData(DbgMemInfo^.ThreadId, True);
 
-    if ThData = Nil then
+    if ThData = nil then
       RaiseDebugCoreException();
 
     case DbgMemInfo^.MemInfoType of
@@ -256,12 +256,12 @@ begin
   Idx := 0;
   repeat
     ThData := gvDebuger.GetThreadDataByIdx(Idx);
-    if ThData <> Nil then
+    if ThData <> nil then
     begin
       UpdateMemoryInfoObjectTypesOfThread(ThData);
       Inc(Idx);
     end;
-  until ThData = Nil;
+  until ThData = nil;
 
   // ѕотер€шки
   (*

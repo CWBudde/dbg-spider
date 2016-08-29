@@ -1,4 +1,4 @@
-unit DebugerTypes;
+unit DebuggerTypes;
 
 interface
 
@@ -6,14 +6,12 @@ uses
   WinApi.Windows, System.SysUtils, System.Classes, System.SyncObjs,
   System.Generics.Collections, System.Contnrs, JclPeImage,
   ClassUtils, DbgHookTypes, Collections.Dictionaries, Collections.Queues,
-  CollectList,
-  Spider.SharedObject;
+  CollectList, Spider.SharedObject;
 
 type
   TSysUInt = NativeUInt;
   PReal48 = ^Real48;
   PReal = ^Real;
-
 
 const
   EXCEPTION_SET_THREAD_NAME = $406D1388;
@@ -752,7 +750,7 @@ type
     procedure ClearLog;
 
     procedure Add(const LogType: TDbgLogType; const Msg: String); overload;
-    procedure Add(const LogType: TDbgLogType; const FmtMsg: String; const Args: array of Const); overload;
+    procedure Add(const LogType: TDbgLogType; const FmtMsg: String; const Args: array of const); overload;
 
     property Items[const Index: Integer]: TDbgLogItem read GetItem; default;
     property Lock: TMREWSync read FLock;
@@ -763,7 +761,7 @@ procedure RaiseDebugCoreException(const Msg: String = '');
 implementation
 
 uses
-  Debuger, DebugInfo, WinAPIUtils, Collections.Base;
+  Debugger, DebugInfo, WinAPIUtils, Collections.Base;
 
 procedure RaiseDebugCoreException(const Msg: String);
 begin
@@ -778,7 +776,7 @@ begin
   SamplingCPUTime := 0;
   SamplingCount := 0;
 
-  if DbgPoints <> Nil then
+  if DbgPoints <> nil then
     FreeAndNil(DbgPoints);
 
   FreeAndNil(DbgGetMemInfo);
@@ -794,7 +792,7 @@ begin
   inherited;
 
   State := psNone;
-  DbgPoints := Nil;
+  DbgPoints := nil;
   DbgExceptions := TThreadList.Create;
 end;
 
@@ -868,13 +866,13 @@ procedure TThreadData.Clear;
 var
   I: Integer;
 begin
-  if Breakpoint <> Nil then
+  if Breakpoint <> nil then
   begin
     FreeMemory(Breakpoint);
-    Breakpoint := Nil;
+    Breakpoint := nil;
   end;
 
-  if DbgPoints <> Nil then
+  if DbgPoints <> nil then
   begin
     for I := 0 to DbgPointsCount - 1 do
       DbgPointByIdx(I).Clear;
@@ -899,7 +897,7 @@ begin
 
   FreeMemory(Context);
 
-  ThreadAdvInfo := Nil;
+  ThreadAdvInfo := nil;
 end;
 
 function TThreadData.DbgExceptionsByIdx(const Idx: Cardinal): TExceptInfo;
@@ -934,7 +932,7 @@ begin
   if Idx < DbgPoints.Count then
     Result := DbgPoints[Idx]
   else
-    Result := Nil;
+    Result := nil;
 end;
 
 function TThreadData.DbgPointsCount: Cardinal;
@@ -947,7 +945,7 @@ begin
   if Idx < DbgSyncObjsInfo.Count then
     Result := DbgSyncObjsInfo[Idx]
   else
-    Result := Nil;
+    Result := nil;
 end;
 
 function TThreadData.DbgSyncObjsCount: Cardinal;
@@ -961,7 +959,7 @@ begin
   State := tsNone;
   ThreadHandle := 0;
 
-  ThreadAdvInfo := Nil;
+  ThreadAdvInfo := nil;
 
   Context := GetMemory(SizeOf(TContext));
   Breakpoint := GetMemory(SizeOf(THardwareBreakpoint));
@@ -1158,7 +1156,7 @@ begin
   end;
 end;
 
-procedure TDbgLog.Add(const LogType: TDbgLogType; const FmtMsg: String; const Args: array of Const);
+procedure TDbgLog.Add(const LogType: TDbgLogType; const FmtMsg: String; const Args: array of const);
 begin
   Add(LogType, Format(FmtMsg, Args));
 end;
@@ -1192,7 +1190,7 @@ end;
 
 function TDbgLog.GetItem(const Index: Integer): TDbgLogItem;
 begin
-  Result := Nil;
+  Result := nil;
 
   FLock.BeginRead;
   try
@@ -1256,7 +1254,7 @@ end;
 
 procedure TMemInfoTrackFuncInfo.AddGetMemInfo(const GetMemInfo: TGetMemInfo);
 begin
-  if FGetMemList = Nil then
+  if FGetMemList = nil then
   begin
     FGetMemList := TGetMemInfoList.Create(256, True);
     FGetMemList.OwnsValues := False;
@@ -1276,7 +1274,7 @@ constructor TMemInfoTrackFuncInfo.Create(AFuncInfo: TObject);
 begin
   inherited;
 
-  FGetMemList := Nil;
+  FGetMemList := nil;
 end;
 
 procedure TMemInfoTrackFuncInfo.DecCurCount;
@@ -1319,9 +1317,9 @@ end;
 
 function TCallFuncCounter.AddCallFunc(const Addr: Pointer): TCallFuncInfo;
 begin
-  Result := Nil;
+  Result := nil;
 
-  if (Addr = Nil) or (Addr = Pointer(-1)) then
+  if (Addr = nil) or (Addr = Pointer(-1)) then
     Exit;
 
   if TryGetValue(Addr, Result) then
@@ -1356,7 +1354,7 @@ end;
 function TCallFuncCounter.GetCallFunc(const Addr: Pointer): TCallFuncInfo;
 begin
   if not TryGetValue(Addr, Result) then
-    Result := Nil;
+    Result := nil;
 end;
 
 { TTrackUnitInfoList }
@@ -1622,7 +1620,7 @@ var
   ThData: PThreadData;
   SyncObjsListItem: PRPSyncObjsInfo;
 begin
-  if SyncObjsInfo = Nil then Exit;
+  if SyncObjsInfo = nil then Exit;
 
   DbgSyncObjsInfo := @SyncObjsInfo^.SyncObjsInfo;
 
@@ -1831,7 +1829,7 @@ end;
 
 function RSyncObjsInfo.EnterExt: PSyncObjsInfo;
 begin
-  if (LinkExt <> Nil) and (SyncObjsInfo.SyncObjsType = soInCriticalSection) then
+  if (LinkExt <> nil) and (SyncObjsInfo.SyncObjsType = soInCriticalSection) then
     Result := LinkExt.Enter
   else
     Result := Enter;
@@ -1863,7 +1861,7 @@ end;
 
 function RSyncObjsInfo.LeaveExt: PSyncObjsInfo;
 begin
-  if (LinkExt <> Nil) and (SyncObjsInfo.SyncObjsType = soEnterCriticalSection) then
+  if (LinkExt <> nil) and (SyncObjsInfo.SyncObjsType = soEnterCriticalSection) then
     Result := LinkExt.Leave
   else
     Result := Leave;
@@ -1987,7 +1985,7 @@ begin
     Dec(FTop);
   end
   else
-    Result := Nil;
+    Result := nil;
 end;
 
 function TFastStack<T>.Push: Pointer;

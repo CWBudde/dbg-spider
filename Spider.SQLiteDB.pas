@@ -189,10 +189,10 @@ type
     //кол-во модифицированных строк
     function GetRowAffected : Integer;
     //кол-во столбцов в таблице
-    function GetColCount(Const ATableName: String): Integer;
+    function GetColCount(const ATableName: String): Integer;
     //пустая таблица
-    function IsEmpty(Const ATableName: String): Boolean;
-    function DeleteTable(Const ATableName: String): Boolean;
+    function IsEmpty(const ATableName: String): Boolean;
+    function DeleteTable(const ATableName: String): Boolean;
 
     procedure Lock(const LockType: TRWNodeState = nsWriter);
     procedure UnLock;
@@ -268,9 +268,9 @@ var
   Idx: Integer;
   DBAlias: string;
 begin
-  Result := Nil;
+  Result := nil;
 
-  if _DBConnectMgrLock = Nil then Exit;
+  if _DBConnectMgrLock = nil then Exit;
 
   DBAlias := AnsiLowerCase(ExtractFileName(DBName));
 
@@ -386,7 +386,7 @@ begin
   if Count > 0 then
     Result := PWideChar(Pointer(@StrBuf[1]))
   else
-    Result := Nil;
+    Result := nil;
 end;
 
 function sqlite_StrToString(Str: PChar; Count: Integer): String;
@@ -751,7 +751,7 @@ begin
 
   FJournalModeType := ttDefault;
   FSynchronousType := stDefault;
-  FOnError := Nil;
+  FOnError := nil;
   FConnectMgr := AConnectMgr;
   FLock := TRWLock.Create;
   FLinkedTables := TObjectList.Create;
@@ -782,7 +782,7 @@ begin
   FreeAndNil(FLinkedTables);
 
   FConnectMgr.Remove(Self);
-  FConnectMgr := Nil;
+  FConnectMgr := nil;
 
   FreeAndNil(FGlobalTransactionLock);
   FreeAndNil(FLock);
@@ -1281,7 +1281,7 @@ begin
             repeat
               if ATable.GetColumn(Result).FName <> '' then
               Inc(Result);
-            until Not ATable.NextRecord;
+            until not ATable.NextRecord;
           finally
             GlobalUnLock;
           end;
@@ -1295,7 +1295,7 @@ begin
   end;
 end;
 
-function TSQLBase.IsEmpty(Const ATableName: String): Boolean;
+function TSQLBase.IsEmpty(const ATableName: String): Boolean;
 var
   ATable: TSQLTable;
 begin

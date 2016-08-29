@@ -42,9 +42,9 @@ var
 
 function IsValidCodeAddr(const Addr: Pointer): LongBool;
 const
-  _PAGE_CODE: Cardinal = (PAGE_EXECUTE Or PAGE_EXECUTE_READ or PAGE_EXECUTE_READWRITE Or PAGE_EXECUTE_WRITECOPY);
+  _PAGE_CODE: Cardinal = (PAGE_EXECUTE or PAGE_EXECUTE_READ or PAGE_EXECUTE_READWRITE or PAGE_EXECUTE_WRITECOPY);
 begin
-  Result := (VirtualQuery(Addr, _Buf, SizeOf(TMemoryBasicInformation)) <> 0) And ((_Buf.Protect And _PAGE_CODE) <> 0);
+  Result := (VirtualQuery(Addr, _Buf, SizeOf(TMemoryBasicInformation)) <> 0) and ((_Buf.Protect and _PAGE_CODE) <> 0);
 end;
 
 function IsValidAddr(const Addr: Pointer): LongBool;
