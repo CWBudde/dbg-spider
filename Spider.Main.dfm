@@ -26,7 +26,7 @@ object MainForm: TMainForm
     Top = 167
     Width = 1395
     Height = 693
-    ActivePage = tsMemInfo
+    ActivePage = tsUpdateInfo
     Align = alClient
     TabOrder = 0
     OnChange = pcMainChange
@@ -56,6 +56,7 @@ object MainForm: TMainForm
         Header.Font.Name = 'Tahoma'
         Header.Font.Style = []
         Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+        Header.Style = hsPlates
         Indent = 0
         ScrollBarOptions.AlwaysVisible = True
         TabOrder = 0
@@ -120,6 +121,7 @@ object MainForm: TMainForm
         Header.Font.Style = []
         Header.Options = [hoColumnResize, hoShowImages, hoVisible, hoHeaderClickAutoSort]
         Header.SortColumn = 0
+        Header.Style = hsPlates
         IncrementalSearch = isVisibleOnly
         ScrollBarOptions.AlwaysVisible = True
         TabOrder = 0
@@ -175,7 +177,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 1022
           Height = 665
-          ActivePage = tsDbgUnitTypes
+          ActivePage = tsDbgUnitSource
           Align = alClient
           TabOrder = 0
           object tsDbgUnitConsts: TTabSheet
@@ -204,6 +206,7 @@ object MainForm: TMainForm
               Header.Font.Name = 'Tahoma'
               Header.Font.Style = []
               Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+              Header.Style = hsPlates
               IncrementalSearch = isVisibleOnly
               ScrollBarOptions.AlwaysVisible = True
               TabOrder = 0
@@ -266,6 +269,7 @@ object MainForm: TMainForm
               Header.Font.Name = 'Tahoma'
               Header.Font.Style = []
               Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+              Header.Style = hsPlates
               IncrementalSearch = isVisibleOnly
               ScrollBarOptions.AlwaysVisible = True
               TabOrder = 0
@@ -336,6 +340,7 @@ object MainForm: TMainForm
               Header.Font.Name = 'Tahoma'
               Header.Font.Style = []
               Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+              Header.Style = hsPlates
               IncrementalSearch = isVisibleOnly
               ScrollBarOptions.AlwaysVisible = True
               TabOrder = 0
@@ -404,6 +409,7 @@ object MainForm: TMainForm
               Header.Font.Name = 'Tahoma'
               Header.Font.Style = []
               Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+              Header.Style = hsPlates
               IncrementalSearch = isVisibleOnly
               ScrollBarOptions.AlwaysVisible = True
               TabOrder = 0
@@ -577,7 +583,6 @@ object MainForm: TMainForm
         Colors.SelectionRectangleBorderColor = clBtnFace
         Colors.SelectionTextColor = clWindowText
         Constraints.MinWidth = 200
-        DrawSelectionMode = smBlendedRectangle
         Header.AutoSizeIndex = -1
         Header.Font.Charset = DEFAULT_CHARSET
         Header.Font.Color = clWindowText
@@ -689,6 +694,7 @@ object MainForm: TMainForm
         Width = 486
         Height = 665
         Align = alLeft
+        BorderStyle = bsNone
         ClipboardFormats.Strings = (
           'CSV'
           'HTML Format'
@@ -704,7 +710,7 @@ object MainForm: TMainForm
         Header.Font.Name = 'Tahoma'
         Header.Font.Style = []
         Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-        Header.Style = hsFlatButtons
+        Header.Style = hsPlates
         ScrollBarOptions.AlwaysVisible = True
         TabOrder = 0
         TreeOptions.AutoOptions = [toAutoDropExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -848,6 +854,7 @@ object MainForm: TMainForm
                   Width = 582
                   Height = 225
                   Align = alTop
+                  BorderStyle = bsNone
                   ClipboardFormats.Strings = (
                     'CSV'
                     'HTML Format'
@@ -863,7 +870,7 @@ object MainForm: TMainForm
                   Header.Font.Name = 'Tahoma'
                   Header.Font.Style = []
                   Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-                  Header.Style = hsFlatButtons
+                  Header.Style = hsPlates
                   ScrollBarOptions.AlwaysVisible = True
                   TabOrder = 0
                   TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
@@ -924,6 +931,7 @@ object MainForm: TMainForm
                 Width = 305
                 Height = 613
                 Align = alLeft
+                BorderStyle = bsNone
                 ClipboardFormats.Strings = (
                   'CSV'
                   'HTML Format'
@@ -941,7 +949,7 @@ object MainForm: TMainForm
                 Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
                 Header.SortColumn = 2
                 Header.SortDirection = sdDescending
-                Header.Style = hsFlatButtons
+                Header.Style = hsPlates
                 ScrollBarOptions.AlwaysVisible = True
                 TabOrder = 1
                 TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -1037,6 +1045,7 @@ object MainForm: TMainForm
                 Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
                 Header.SortColumn = 2
                 Header.SortDirection = sdDescending
+                Header.Style = hsPlates
                 ScrollBarOptions.AlwaysVisible = True
                 TabOrder = 0
                 TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -1131,6 +1140,7 @@ object MainForm: TMainForm
                       Header.Font.Name = 'Tahoma'
                       Header.Font.Style = []
                       Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                      Header.Style = hsPlates
                       ScrollBarOptions.AlwaysVisible = True
                       TabOrder = 0
                       TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
@@ -1197,6 +1207,7 @@ object MainForm: TMainForm
                       Header.Font.Name = 'Tahoma'
                       Header.Font.Style = []
                       Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                      Header.Style = hsPlates
                       ScrollBarOptions.AlwaysVisible = True
                       TabOrder = 1
                       TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
@@ -1284,6 +1295,7 @@ object MainForm: TMainForm
                 Width = 356
                 Height = 249
                 Align = alLeft
+                BorderStyle = bsNone
                 ClipboardFormats.Strings = (
                   'CSV'
                   'HTML Format'
@@ -1301,7 +1313,7 @@ object MainForm: TMainForm
                 Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
                 Header.SortColumn = 2
                 Header.SortDirection = sdDescending
-                Header.Style = hsFlatButtons
+                Header.Style = hsPlates
                 ScrollBarOptions.AlwaysVisible = True
                 TabOrder = 0
                 TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -1346,6 +1358,7 @@ object MainForm: TMainForm
                 Width = 531
                 Height = 249
                 Align = alClient
+                BorderStyle = bsNone
                 ClipboardFormats.Strings = (
                   'CSV'
                   'HTML Format'
@@ -1361,7 +1374,7 @@ object MainForm: TMainForm
                 Header.Font.Name = 'Tahoma'
                 Header.Font.Style = []
                 Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-                Header.Style = hsFlatButtons
+                Header.Style = hsPlates
                 ScrollBarOptions.AlwaysVisible = True
                 TabOrder = 1
                 TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
@@ -1418,6 +1431,7 @@ object MainForm: TMainForm
         Width = 411
         Height = 665
         Align = alLeft
+        BorderStyle = bsNone
         ClipboardFormats.Strings = (
           'CSV'
           'HTML Format'
@@ -1433,7 +1447,7 @@ object MainForm: TMainForm
         Header.Font.Name = 'Tahoma'
         Header.Font.Style = []
         Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-        Header.Style = hsFlatButtons
+        Header.Style = hsPlates
         ScrollBarOptions.AlwaysVisible = True
         TabOrder = 0
         TreeOptions.AutoOptions = [toAutoDropExpand, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -1501,6 +1515,7 @@ object MainForm: TMainForm
             Width = 511
             Height = 641
             Align = alLeft
+            BorderStyle = bsNone
             ClipboardFormats.Strings = (
               'CSV'
               'HTML Format'
@@ -1517,7 +1532,7 @@ object MainForm: TMainForm
             Header.Font.Style = []
             Header.Options = [hoColumnResize, hoVisible]
             Header.SortDirection = sdDescending
-            Header.Style = hsFlatButtons
+            Header.Style = hsPlates
             ScrollBarOptions.AlwaysVisible = True
             TabOrder = 0
             TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -1580,6 +1595,7 @@ object MainForm: TMainForm
               Width = 459
               Height = 217
               Align = alTop
+              BorderStyle = bsNone
               ClipboardFormats.Strings = (
                 'CSV'
                 'HTML Format'
@@ -1595,7 +1611,7 @@ object MainForm: TMainForm
               Header.Font.Name = 'Tahoma'
               Header.Font.Style = []
               Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-              Header.Style = hsFlatButtons
+              Header.Style = hsPlates
               ScrollBarOptions.AlwaysVisible = True
               TabOrder = 0
               TreeOptions.MiscOptions = [toAcceptOLEDrop, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
@@ -1826,6 +1842,7 @@ object MainForm: TMainForm
             Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
             Header.SortColumn = 2
             Header.SortDirection = sdDescending
+            Header.Style = hsPlates
             PopupMenu = pmVirtualTreeView
             ScrollBarOptions.AlwaysVisible = True
             TabOrder = 0
@@ -1874,7 +1891,7 @@ object MainForm: TMainForm
             Top = 0
             Width = 382
             Height = 639
-            ActivePage = tsTrackFuncAdvSrc
+            ActivePage = tsTrackFuncAdvLinks
             Align = alClient
             Constraints.MinWidth = 200
             TabOrder = 1
@@ -1924,6 +1941,7 @@ object MainForm: TMainForm
                   Header.Font.Name = 'Tahoma'
                   Header.Font.Style = []
                   Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                  Header.Style = hsPlates
                   PopupMenu = pmTrackFuncAdvParents
                   ScrollBarOptions.AlwaysVisible = True
                   TabOrder = 0
@@ -1991,6 +2009,7 @@ object MainForm: TMainForm
                   Header.Font.Name = 'Tahoma'
                   Header.Font.Style = []
                   Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                  Header.Style = hsPlates
                   PopupMenu = pmVirtualTreeView
                   ScrollBarOptions.AlwaysVisible = True
                   TabOrder = 1
@@ -2258,6 +2277,7 @@ object MainForm: TMainForm
             Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
             Header.SortColumn = 2
             Header.SortDirection = sdDescending
+            Header.Style = hsPlates
             IncrementalSearch = isVisibleOnly
             ScrollBarOptions.AlwaysVisible = True
             TabOrder = 0
@@ -2354,6 +2374,7 @@ object MainForm: TMainForm
                   Header.Font.Name = 'Tahoma'
                   Header.Font.Style = []
                   Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                  Header.Style = hsPlates
                   IncrementalSearch = isVisibleOnly
                   ScrollBarOptions.AlwaysVisible = True
                   TabOrder = 0
@@ -2423,6 +2444,7 @@ object MainForm: TMainForm
                   Header.Font.Name = 'Tahoma'
                   Header.Font.Style = []
                   Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+                  Header.Style = hsPlates
                   IncrementalSearch = isVisibleOnly
                   ScrollBarOptions.AlwaysVisible = True
                   TabOrder = 1
@@ -2513,6 +2535,7 @@ object MainForm: TMainForm
             Width = 331
             Height = 269
             Align = alLeft
+            BorderStyle = bsNone
             ClipboardFormats.Strings = (
               'CSV'
               'HTML Format'
@@ -2530,7 +2553,7 @@ object MainForm: TMainForm
             Header.Options = [hoColumnResize, hoVisible, hoHeaderClickAutoSort]
             Header.SortColumn = 2
             Header.SortDirection = sdDescending
-            Header.Style = hsFlatButtons
+            Header.Style = hsPlates
             IncrementalSearch = isVisibleOnly
             ScrollBarOptions.AlwaysVisible = True
             TabOrder = 0
@@ -2576,6 +2599,7 @@ object MainForm: TMainForm
             Width = 573
             Height = 269
             Align = alClient
+            BorderStyle = bsNone
             ClipboardFormats.Strings = (
               'CSV'
               'HTML Format'
@@ -2591,7 +2615,7 @@ object MainForm: TMainForm
             Header.Font.Name = 'Tahoma'
             Header.Font.Style = []
             Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
-            Header.Style = hsFlatButtons
+            Header.Style = hsPlates
             IncrementalSearch = isVisibleOnly
             ScrollBarOptions.AlwaysVisible = True
             TabOrder = 1
@@ -2644,6 +2668,7 @@ object MainForm: TMainForm
         Width = 1387
         Height = 641
         Align = alClient
+        BorderStyle = bsNone
         ClipboardFormats.Strings = (
           'CSV'
           'HTML Format'
@@ -2658,6 +2683,7 @@ object MainForm: TMainForm
         Header.Font.Name = 'Tahoma'
         Header.Font.Style = []
         Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+        Header.Style = hsPlates
         TabOrder = 0
         TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages]
         TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toMultiSelect]
@@ -3178,7 +3204,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 44
-          Height = 13
+          Height = 19
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3202,7 +3228,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 51
-          Height = 13
+          Height = 19
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3241,7 +3267,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 59
-          Height = 13
+          Height = 19
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5
@@ -3281,7 +3307,7 @@ object MainForm: TMainForm
           Left = 6
           Top = 3
           Width = 66
-          Height = 13
+          Height = 19
           Margins.Left = 5
           Margins.Top = 2
           Margins.Right = 5

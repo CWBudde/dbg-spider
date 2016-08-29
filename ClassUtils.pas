@@ -3,14 +3,15 @@ unit ClassUtils;
 interface
 
 uses
-  Windows, Classes, SysUtils, StrUtils, XMLDoc, XMLIntf, Graphics,
+  WinApi.Windows, System.Classes, System.SysUtils, System.StrUtils,
+  Xml.XMLDoc, Xml.XMLIntf, Vcl.Graphics,
   GdiPlus, GdiPlusHelpers, Collections.Dictionaries;
 
 const
   EIndexError: String = 'List index error: %d';
 
 type
-  TStringArray = Array of String;
+  TStringArray = array of String;
 
   TGradientInfo = class(TObject)
   private

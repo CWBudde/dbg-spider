@@ -1,9 +1,9 @@
-unit uMacroParser;
+unit Spider.MacroParser;
 
 interface
 
 uses
-  Classes, SysUtils, StrUtils;
+  System.Classes, System.SysUtils, StrUtils;
 
 type
   TMacroParser = class;
